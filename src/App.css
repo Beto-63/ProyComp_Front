@@ -7,6 +7,9 @@
   pointer-events: none;
 }
 
+#img {
+  margin:30px
+}
 
 .App-header {
   background-color: #8EA7A9;
@@ -17,6 +20,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .App-link {
