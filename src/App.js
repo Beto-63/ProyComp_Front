@@ -22,14 +22,14 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
      
-      <nav>
+      {/* <nav>
       | <Link to="/">Autenticacion</Link> | 
         | <Link to="/cash">Caja</Link> |
         | <Link to="/product">Gestion de Productos</Link> |
         | <Link to="/sell">Gestion de Ventas</Link> |
         | <Link to="/stock">Gestion de Inventarios</Link> |
         | <Link to="/user">Gestion de Usuarios</Link> |<br /><br />
-      </nav>
+      </nav> */}
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/cash" element={<CashRegister />} />

@@ -1,9 +1,12 @@
 import React from 'react'
+import GeneralNav from '../components/GeneralNav'
+
 
 function Auth() {
     return (
         <div>
-            Pagina de AUTENTICACION
+            <GeneralNav />
+            <h1>Pagina de AUTENTICACION</h1>
         </div>
     )
 }
