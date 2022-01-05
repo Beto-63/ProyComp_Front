@@ -7,16 +7,20 @@
   pointer-events: none;
 }
 
+#img {
+  margin:30px
+}
 
 .App-header {
   background-color: #8EA7A9;
-  min-height: 100vh;
+  min-height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .App-link {
