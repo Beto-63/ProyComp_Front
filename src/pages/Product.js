@@ -1,11 +1,15 @@
 import React from 'react'
 
-function Products() {
+
+function Product() {
     return (
+
+
         <div>
             CREACION Y MANTENIMIENTO DE PRODUCTOS
+
         </div>
     )
 }
 
-export default Products
+export default Product

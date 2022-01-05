@@ -1,7 +1,7 @@
 //Importar dependencias
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { Nav } from 'react-bootstrap'
+//import { Nav } from 'react-bootstrap'
 
 //Importar paginas
 import Auth from './pages/Auth';
