@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
-import GeneralNav from '../components/GeneralNav';
+import GeneralNav from '../components/generic/GeneralNav';
 
 function Stock() {
     const [items, setItems] = useState([]);

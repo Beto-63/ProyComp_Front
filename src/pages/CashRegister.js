@@ -1,5 +1,5 @@
 import React from 'react'
-import GeneralNav from '../components/GeneralNav'
+import GeneralNav from '../components/generic/GeneralNav'
 
 function CashRegister() {
     return (
