@@ -15,11 +15,11 @@ function App() {
   return (
 
     <div className="App">
-      <CanvasClaro />
-      {/* <header className="App-header">
+     
+      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
-      <AppRouter/> */}
+      <AppRouter/>
       
     </div>
 
