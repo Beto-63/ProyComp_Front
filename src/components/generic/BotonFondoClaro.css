@@ -1,0 +1,11 @@
+.centro_bajo {
+    background-color: #8EA7A9 ;
+    border: 2px solid #8EA7A9 ;
+    color: #F1F0E8;
+    position:absolute; 
+    margin-left:-50px;
+    left:50%;
+    width:100px;
+    bottom:2em;
+    border-radius: 0.5em;
+ }
