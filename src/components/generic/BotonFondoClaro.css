@@ -5,8 +5,8 @@
     position:absolute; 
     margin-left:-50px;
     left:50%;
-    width:100px;
-    height: 30px;
-    bottom:2em;
+    width:130px;
+    height: 40px;
+    bottom:10vh;
     border-radius: 0.5em;
  }

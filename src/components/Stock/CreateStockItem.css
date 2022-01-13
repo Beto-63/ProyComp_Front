@@ -2,6 +2,12 @@
     background-color:#F1F0E8 ;
     color: #8EA7A9;
     height: 100vh;
+    align-content: center;
+}
+
+.container {
+    padding-right: 50px;
+    padding-left: 50px;
 }
 
 .campo_entrada {
@@ -9,11 +15,35 @@
     background-color: #F1F0E8;
     border: 1px solid #8EA7A9;
     border-radius: 0.5em;
-    width:max-content;
-    margin-bottom: 0.5em;
+    width:90%;
+    margin-bottom: 0.2em;
     margin-right: 0.5em;
+    
 }
 .error{
     color:red;
+    font-style:italic;
+    font-weight:lighter;
+    font-size: smaller;
+    text-align: left;
     
+}
+.titulo_oscuro{
+    color: #8EA7A9;
+    padding-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 21px;
+}
+
+input, select {
+    
+    height: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight:normal;
+    font-size: 15px;
+    color: #8EA7A9;  
 }
