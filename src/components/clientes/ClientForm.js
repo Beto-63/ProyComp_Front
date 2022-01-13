@@ -26,12 +26,10 @@ const ClientForm = ({ handleClient }) => {
         <div>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="registerName">
-                    <Form.Label>Nombre</Form.Label>
                     <Form.Control value={form.name} onChange={handleForm} name='name' type="name" placeholder="Nombre (opcional)" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="registerEmail">
-                    <Form.Label>Email</Form.Label>
                     <Form.Control value={form.email} onChange={handleForm} name='email' type="email" placeholder="Correo Electrónico (opcional)" />
                 </Form.Group>
 
@@ -126,8 +124,7 @@ const ClientForm = ({ handleClient }) => {
                         />
                     </div>
                 ))}
-                <Button type="submit">Productos</Button>{' '}
-                <Button href="/" variant="primary">Salir</Button>
+                <Button type="submit">Continuar</Button>
             </Form>
 
         </div>

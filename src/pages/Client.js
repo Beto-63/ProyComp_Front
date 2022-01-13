@@ -6,8 +6,24 @@ const Client = () => {
     const [client, setClient] = useState([]);
     //Manejador para el cliente
     const handleClient = (objClient)=>{
-        let array = [...client, objClient]
-        setClient(array)
+        //enviar los datos capturados a la base de datos
+        fetch('https://dokotestback.herokuapp.com/client',{
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            //enviamos los datos por body y se debe convertir el objeto en JSON
+            body: JSON.stringify(objClient)
+        }).then(async resp=>{
+            if(resp.status===201){
+                //almacenar los objetos recibidos del ClientForm en un array
+                let array = [...client, objClient]
+                //enviar el array al useState "client"
+                setClient(array)
+            }
+        }).catch(error=>{
+            console.log(error);
+        });     
     }
     
     return (
