@@ -13,23 +13,19 @@ const NavStock = () => {
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Gestión de Inventario</p>
             <Container>
-                <Row>
+                <Row xs={2} md={4} lg={6}>
                     <Col>
                         <BotonFondoOscuro label='Creación elemento' handleClick={enruteCrear} />
                     </Col>
                     <Col>
                         <BotonFondoOscuro label='Adición de cantidad' />
                     </Col>
-                </Row>
-                <Row>
                     <Col>
                         <BotonFondoOscuro label='Consulta X nombre' />
                     </Col>
                     <Col>
                         <BotonFondoOscuro label='X nombre -ubicación' />
                     </Col>
-                </Row>
-                <Row>
                     <Col>
                         <BotonFondoOscuro label='Traslado cantidad' />
                     </Col>

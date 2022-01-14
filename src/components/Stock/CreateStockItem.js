@@ -4,8 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import BotonFondoClaro from '../generic/BotonFondoClaro';
 import { object, string, number } from 'yup'
 
-import './CreateStockItem.css';
-//import GeneralNav from '../generic/GeneralNav';
+import './StockItem.css';
 
 const CreateStockItem = () => {
   return (
