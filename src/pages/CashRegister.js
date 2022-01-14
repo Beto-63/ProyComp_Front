@@ -1,11 +1,10 @@
 import React from 'react'
-import GeneralNav from '../components/generic/GeneralNav'
+import NavCashRegister from '../components/cashRegister/NavCashRegister'
 
 function CashRegister() {
     return (
         <div>
-            <GeneralNav />
-            OPERACIONES DE CAJA
+            <NavCashRegister />
         </div>
     )
 }

@@ -4,7 +4,7 @@ import './BotonFondoOscuro.css'
 const BotonFondoOscuro = (props) => {
     return (
         <div>
-            <button className='fondo_oscuro'>{props.action}</button>
+            <button className='fondo_oscuro' onClick={props.handleClick}>{props.label}</button>
         </div>
     )
 }
