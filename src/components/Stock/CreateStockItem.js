@@ -46,9 +46,11 @@ const CreateStockItem = () => {
                   <p className='error'>{formik.errors.quantity}</p>
                 </Row>
                 <Row>
+                  <label htmlFor='Channel' className='label'>Ubicación</label>
                   <Field
                     className="campo_entrada"
-                    placeholder="Ubicacion (Bodega/Arsenal) --temporal"
+
+                    placeholder="Ubicación (Bodega/Arsenal) --temporal"
                     name="channel"
                     as='select' >
                     <option value=''>Ingrese Ubicacion</option>

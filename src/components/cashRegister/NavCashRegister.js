@@ -11,29 +11,23 @@ const NavStock = () => {
     }
     return (
         <div className='canvas_oscuro'>
-            <p className="titulo_claro">Gestión de Inventario</p>
+            <p className="titulo_claro">Gestiona tu caja</p>
             <Container>
                 <Row xs={2} md={4} lg={6}>
                     <Col>
-                        <BotonFondoOscuro label='Creación elemento' handleClick={enruteCrear} />
+                        <BotonFondoOscuro label='Apertura de caja' handleClick={enruteCrear} />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Adición de cantidad' />
+                        <BotonFondoOscuro label='Revisión de inventario' />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Consulta X nombre' />
+                        <BotonFondoOscuro label='Cónsignacion' />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='X nombre -ubicación' />
-                    </Col>
-                    <Col>
-                        <BotonFondoOscuro label='Traslado cantidad' />
-                    </Col>
-                    <Col>
-                        <BotonFondoOscuro label='Ajuste cantidad' />
+                        <BotonFondoOscuro label='Gastos menores' />
                     </Col>
                 </Row>
-                <BotonFondoOscuro label='Ajuste a elemento' />
+                <BotonFondoOscuro label='Cierre de caja' />
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>

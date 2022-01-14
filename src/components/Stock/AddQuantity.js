@@ -32,6 +32,7 @@ const AddQuantity = () => {
                         <Container >
                             <Form className='container'>
                                 <Row>
+                                    <label htmlFor='Channel' className='label'>Nombre del elemento</label>
                                     <Field
                                         className="campo_entrada"
                                         placeholder="escoja el Item --Temporal"
@@ -45,12 +46,13 @@ const AddQuantity = () => {
                                     <p className='error'>{formik.errors.name}</p>
                                 </Row>
                                 <Row>
+                                    <label htmlFor='Channel' className='label'>Ubicación</label>
                                     <Field
                                         className="campo_entrada"
-                                        placeholder="Ubicacion (Bodega/Arsenal) --temporal"
+                                        placeholder="Ubicación (Bodega/Arsenal) --temporal"
                                         name="channel"
                                         as='select' >
-                                        <option value=''>Ingrese Ubicacion</option>
+                                        <option value=''>Ingrese Ubicación</option>
                                         <option value='Arsenal'>Arsenal</option>
                                         <option value='Bodega'>Bodega</option>
                                     </Field>
