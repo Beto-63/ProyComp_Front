@@ -1,23 +1,20 @@
 import React from 'react'
-//import { Table } from 'react-bootstrap'
-//import GeneralNav from '../components/generic/GeneralNav';
-//import CreateStockItem from '../components/Stock/CreateStockItem';
 import NavStock from '../components/Stock/NavStock'
 
 function Stock() {
 
-    return (
-        <>
-            <NavStock />
-        </>
-    )
+  return (
+    <>
+      <NavStock />
+    </>
+  )
 }
 
 export default Stock
-/**+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**++++++++++++++++++++++++++++++++++    Ayuda para uso de Fetch   ++++++++++++++++++++++++++++++++++
    const response = await fetch(url= ' ', objOptions = { });
   
-   objOPtions = {                   **********************Opciones Validas**************************
+   objOPtions = {                   **********************Opciones Validas***************************
     method: 'GET',                  **** GET*, POST, PUT, DELETE, PATCH, etc.                    ****
     mode: 'cors',                   **** no-cors, cors*, same-origin                             ****
     cache: 'no-cache',              **** default*, no-cache, reload, force-cache, only-if-cached ****

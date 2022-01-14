@@ -1,5 +1,5 @@
 import React from 'react'
-import GeneralNav from '../components/generic/GeneralNav'
+import NavProduct from '../components/product/NavProduct';
 
 
 function Product() {
@@ -7,8 +7,7 @@ function Product() {
 
 
         <div>
-            <GeneralNav />
-            CREACION Y MANTENIMIENTO DE PRODUCTOS
+            <NavProduct />
 
         </div>
     )
