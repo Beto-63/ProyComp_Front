@@ -1,11 +1,11 @@
 import React from 'react'
-import GeneralNav from '../components/generic/GeneralNav'
+
+import NavUsers from '../components/user/NavUsers'
 
 function Users() {
     return (
         <div>
-            <GeneralNav />
-            CREACION Y MANTENIMIENTO DE USUARIOS
+            <NavUsers />
         </div>
     )
 }
