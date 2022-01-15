@@ -52,3 +52,15 @@ input, select {
     text-align:left;
     margin-top: 0px
 }
+
+.salir{
+    position:absolute;
+    top:2vh;
+    right:5vw;
+}
+
+.volver {
+    position:absolute;
+    top:2vh;
+    left:5vw;
+}

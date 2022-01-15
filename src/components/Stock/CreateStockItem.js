@@ -5,6 +5,7 @@ import BotonFondoClaro from '../generic/BotonFondoClaro';
 import { object, string, number } from 'yup'
 
 import './StockItem.css';
+import { Link } from 'react-router-dom';
 
 const CreateStockItem = () => {
   return (
@@ -30,6 +31,8 @@ const CreateStockItem = () => {
         {formik => (
           <>
             <p className="titulo_oscuro">Crear elemento</p>
+            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/stock" className='volver'>Volver</Link>
             <Container >
               <Form className='container'>
                 <Row>

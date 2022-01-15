@@ -3,12 +3,14 @@ import { Container, Row } from 'react-bootstrap';
 import { Formik, Form, Field } from 'formik';
 import BotonFondoClaro from '../generic/BotonFondoClaro';
 import { object, string, number } from 'yup'
+import { Link } from 'react-router-dom';
 
 import './StockItem.css';
 
 const AddQuantity = () => {
     return (
-        <div className='canvas_claro'>
+
+        <div div className='canvas_claro' >
 
             <Formik
                 validationSchema={
@@ -22,13 +24,16 @@ const AddQuantity = () => {
                     name: '',
                     quantity: null,
                     channel: '',
-                }} onSubmit={(values) => {
+                }}
+                onSubmit={(values) => {
                     console.log("values", values)
                 }}
             >
                 {formik => (
                     <>
                         <p className="titulo_oscuro">Agregar cantidad al sotock</p>
+                        <Link to="/" className='salir' >Salir</Link>
+                        <Link to="/stock" className='volver'>Volver</Link>
                         <Container >
                             <Form className='container'>
                                 <Row>
