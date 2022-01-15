@@ -166,7 +166,7 @@ const AdjustProduct = () => {
                   />
                   <ErrorMessage component='div' className='error' name='stock_qty' />
                 </Row>
-                <BotonFondoClaro label='actualizar' type="submit" />
+                <BotonFondoClaro label='Actualizar' type="submit" />
                 <pre>{JSON.stringify(formik.values, null, 4)}</pre>
                 <pre>{JSON.stringify(formik.errors, null, 4)}</pre>
               </Form>
