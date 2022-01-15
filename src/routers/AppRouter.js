@@ -10,6 +10,7 @@ import Stock from '../pages/Stock';
 import User from '../pages/User';
 import CreateStockItem from '../components/Stock/CreateStockItem';
 import AddQuantity from '../components/Stock/AddQuantity';
+import CreateProduct from '../components/product/CreateProduct';
 
 export const AppRouter = () => {
     return (
@@ -21,8 +22,8 @@ export const AppRouter = () => {
                     <Route path="/cash" element={<CashRegister />} />
 
                     <Route path="/product" element={<Product />} />
-                    {/* <Route path="/product/create" element={<CreateProduct />} />
-                    <Route path="/prduct/adjust" element={<AdjustProduct />} /> */}
+                    <Route path="/product/create" element={<CreateProduct />} />
+                    {/*  <Route path="/prduct/adjust" element={<AdjustProduct />} /> */}
 
                     <Route path="/sell" element={<Sell />} />
 

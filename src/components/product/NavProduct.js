@@ -18,7 +18,7 @@ const NavStock = () => {
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Gestión de Productos</p>
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row >
                     <Col>
                         <BotonFondoOscuro label='Creación de Producto' handleClick={goToCreate} />
                     </Col>

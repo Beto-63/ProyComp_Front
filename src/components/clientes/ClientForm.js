@@ -12,7 +12,13 @@ const ClientForm = () => {
     const [form, setForm] = useState(objForm);
 
     const handleForm = (e) => {
-        let obj = { ...form, [e.target.email]: e.target.value, [e.target.name]: e.target.value, [e.target.gender]: e.target.value, [e.target.age_group]: e.target.value };
+        let obj = {
+            ...form,
+            [e.target.email]: e.target.value,
+            [e.target.name]: e.target.value,
+            [e.target.gender]: e.target.value,
+            [e.target.age_group]: e.target.value
+        };
         setForm(obj)
     }
 

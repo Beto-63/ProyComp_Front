@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
-import { Formik, Form, Field } from 'formik';
+import { ErrorMessage, Formik, Form, Field } from 'formik';
 import BotonFondoClaro from '../generic/BotonFondoClaro';
 import { object, string, number } from 'yup'
 
@@ -14,9 +14,9 @@ const CreateStockItem = () => {
       <Formik
         validationSchema={
           object({
-            name: string('Solo se aceptan caracteres').required('Este campo es requerido').min(6),
-            quantity: number('Solo se aceptan números').required('Este campo es requerido'),
-            channel: string('Solo se aceptan caracteres').required('Este campo es requerido')
+            name: string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
+            quantity: number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
+            channel: string().required('Este campo es requerido')
           })
         }
         initialValues={{
@@ -24,8 +24,15 @@ const CreateStockItem = () => {
           quantity: null,
           channel: '',
           status: 1
-        }} onSubmit={(values) => {
-          console.log("values", values)
+        }}
+        onSubmit={(values, { resetForm }) => {
+          console.log("values", values);
+          values.name = '';
+          values.quantity = null;
+          values.channel = "";
+          resetForm({ values })
+
+
         }}
       >
         {formik => (
@@ -36,8 +43,14 @@ const CreateStockItem = () => {
             <Container >
               <Form className='container'>
                 <Row>
-                  <Field className="campo_entrada" placeholder="Nombre" name="name" type="text" />
-                  <p className='error'>{formik.errors.name}</p>
+                  <Field
+                    className="campo_entrada"
+                    placeholder="Nombre"
+                    name="name"
+                    type="text" />
+                  {/* <p className='error'>{formik.errors.name}</p> */}
+                  <ErrorMessage component='div' className='error' name='name' />
+
                 </Row>
                 <Row>
                   <Field
@@ -46,7 +59,8 @@ const CreateStockItem = () => {
                     name="quantity"
                     type="number"
                   />
-                  <p className='error'>{formik.errors.quantity}</p>
+                  {/* <p className='error'>{formik.errors.quantity}</p> */}
+                  <ErrorMessage component='div' className='error' name='quantity' />
                 </Row>
                 <Row>
                   <label htmlFor='Channel' className='label'>Ubicación</label>
@@ -60,7 +74,8 @@ const CreateStockItem = () => {
                     <option value='Arsenal'>Arsenal</option>
                     <option value='Bodega'>Bodega</option>
                   </Field>
-                  <p className='error'>{formik.errors.channel}</p>
+                  {/* <p className='error'>{formik.errors.channel}</p> */}
+                  <ErrorMessage component='div' className='error' name='channel' />
                 </Row>
                 <BotonFondoClaro label='Crear2' type="submit" />
                 <pre>{JSON.stringify(formik.values, null, 4)}</pre>
