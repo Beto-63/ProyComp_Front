@@ -3,11 +3,16 @@ import { Container, Col, Row } from 'react-bootstrap';
 import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
+import '../generic/BotonFondoOscuro.css'
+import { useNavigate } from 'react-router-dom';
 
 const NavStock = () => {
-    const enruteCrear = () => {
-        console.log('llamo la funcion');
-        //quiero que se vaya a la pagina correspondiente
+    let navigate = useNavigate();
+    const goToCreate = () => {
+        navigate('/product/create');
+    }
+    const goToAdjust = () => {
+        navigate('/product/adjust');
     }
     return (
         <div className='canvas_oscuro'>
@@ -15,10 +20,10 @@ const NavStock = () => {
             <Container>
                 <Row xs={2} md={4} lg={6}>
                     <Col>
-                        <BotonFondoOscuro label='Creación de Producto' handleClick={enruteCrear} />
+                        <BotonFondoOscuro label='Creación de Producto' handleClick={goToCreate} />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste de Producto' />
+                        <BotonFondoOscuro label='Ajuste de Producto' handleClick={goToAdjust} />
                     </Col>
                 </Row>
             </Container>
