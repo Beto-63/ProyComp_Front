@@ -1,0 +1,1 @@
+1. Al hacer reset en Formik , no se resetean los numeros del formulario

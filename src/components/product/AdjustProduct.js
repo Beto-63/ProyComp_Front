@@ -7,7 +7,7 @@ import { object, string, number } from 'yup'
 import '../Stock/StockItem.css';
 import { Link } from 'react-router-dom';
 
-const CreateProduct = () => {
+const AdjustProduct = () => {
   return (
     <div className='canvas_claro'>
       <Formik
@@ -43,20 +43,32 @@ const CreateProduct = () => {
       >
         {formik => (
           <>
-            <p className="titulo_oscuro">Crear producto</p>
+            <p className="titulo_oscuro">Ajuste Datos de Producto</p>
             <Link to="/" className='salir'>Salir</Link>
             <Link to="/product" className='volver'>Volver</Link>
             <Container >
               <Form className='container'>
                 <Row>
+                  <label htmlFor='name' className='label'>Producto a corregir</label>
                   <Field
                     className="campo_entrada"
-                    placeholder="Codigo interno del Producto"
-                    name="product_id"
-                    type="text"
-                  />
-                  <ErrorMessage component='div' className='error' name='product_id' />
+                    placeholder="Nombre del Producto"
+                    name="name"
+                    as='select' >
+                    <option defaultValue=''>Selecciona X nombre</option>
+                    {/* Aqui deberi ir una busqueda a la base de datos de productos incluso de elemento 
+                    de informacion del producto y asi hacer una pantalla mas eficiente refactor de la venta 
+                     */}
+                    <option defaultValue='temp 1'>Temp 1</option>
+                    <option defaultValue='temp 2'>Temp 2</option>
+                  </Field>
+                  <ErrorMessage component='div' className='error' name='name' />
                 </Row>
+                {/* <BotonFondoIntermedio label='Buscar' type="submit" /> //Ajustar posicion */}
+                <button>Buscar</button>
+
+
+                <h6>Datos para corrección</h6>
                 <Row>
                   <Field
                     className="campo_entrada"
@@ -65,6 +77,15 @@ const CreateProduct = () => {
                     type="text"
                   />
                   <ErrorMessage component='div' className='error' name='name' />
+                </Row>
+                <Row>
+                  <Field
+                    className="campo_entrada"
+                    placeholder="Codigo interno del Producto"
+                    name="product_id"
+                    type="text"
+                  />
+                  <ErrorMessage component='div' className='error' name='product_id' />
                 </Row>
                 <Row>
                   <Field
@@ -145,9 +166,9 @@ const CreateProduct = () => {
                   />
                   <ErrorMessage component='div' className='error' name='stock_qty' />
                 </Row>
-                <BotonFondoClaro label='Crear' type="submit" />
-                {/* <pre>{JSON.stringify(formik.values, null, 4)}</pre>
-                <pre>{JSON.stringify(formik.errors, null, 4)}</pre> */}
+                <BotonFondoClaro label='actualizar' type="submit" />
+                <pre>{JSON.stringify(formik.values, null, 4)}</pre>
+                <pre>{JSON.stringify(formik.errors, null, 4)}</pre>
               </Form>
             </Container>
           </>
@@ -157,5 +178,5 @@ const CreateProduct = () => {
   )
 }
 
-export default CreateProduct
+export default AdjustProduct
 

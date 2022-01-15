@@ -27,12 +27,8 @@ const CreateStockItem = () => {
         }}
         onSubmit={(values, { resetForm }) => {
           console.log("values", values);
-          values.name = '';
-          values.quantity = null;
-          values.channel = "";
           resetForm({ values })
-
-
+          //El reset No funciona
         }}
       >
         {formik => (
@@ -48,9 +44,7 @@ const CreateStockItem = () => {
                     placeholder="Nombre"
                     name="name"
                     type="text" />
-                  {/* <p className='error'>{formik.errors.name}</p> */}
                   <ErrorMessage component='div' className='error' name='name' />
-
                 </Row>
                 <Row>
                   <Field
@@ -59,7 +53,6 @@ const CreateStockItem = () => {
                     name="quantity"
                     type="number"
                   />
-                  {/* <p className='error'>{formik.errors.quantity}</p> */}
                   <ErrorMessage component='div' className='error' name='quantity' />
                 </Row>
                 <Row>
@@ -74,12 +67,11 @@ const CreateStockItem = () => {
                     <option value='Arsenal'>Arsenal</option>
                     <option value='Bodega'>Bodega</option>
                   </Field>
-                  {/* <p className='error'>{formik.errors.channel}</p> */}
                   <ErrorMessage component='div' className='error' name='channel' />
                 </Row>
-                <BotonFondoClaro label='Crear2' type="submit" />
-                <pre>{JSON.stringify(formik.values, null, 4)}</pre>
-                <pre>{JSON.stringify(formik.errors, null, 4)}</pre>
+                <BotonFondoClaro label='Crear' type="submit" />
+                {/* <pre>{JSON.stringify(formik.values, null, 4)}</pre>
+                <pre>{JSON.stringify(formik.errors, null, 4)}</pre> */}
               </Form>
             </Container>
           </>

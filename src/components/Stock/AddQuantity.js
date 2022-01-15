@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row } from 'react-bootstrap';
-import { Formik, Form, Field } from 'formik';
+import { ErrorMessage, Formik, Form, Field } from 'formik';
 import BotonFondoClaro from '../generic/BotonFondoClaro';
 import { object, string, number } from 'yup'
 import { Link } from 'react-router-dom';
@@ -15,9 +15,9 @@ const AddQuantity = () => {
             <Formik
                 validationSchema={
                     object({
-                        name: string('Solo se aceptan caracteres').required('Este campo es requerido').min(6),
-                        quantity: number('Solo se aceptan números').required('Este campo es requerido'),
-                        channel: string('Solo se aceptan caracteres').required('Este campo es requerido')
+                        name: string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
+                        quantity: number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
+                        channel: string().required('Este campo es requerido')
                     })
                 }
                 initialValues={{
@@ -27,6 +27,7 @@ const AddQuantity = () => {
                 }}
                 onSubmit={(values) => {
                     console.log("values", values)
+                    // falta el reset
                 }}
             >
                 {formik => (
@@ -44,11 +45,11 @@ const AddQuantity = () => {
                                         name="name"
                                         as='select' >
                                         <option value=''>Elemento a adicionar</option>
-                                        {/*Aqui va una consulta y un map desplegar los items del stock */}
+                                        {/*La consulta va en un SueEffect y aca un  map para desplegar los items del stock */}
                                         <option value='temp uno'>Temp uno</option>
                                         <option value='Temp dos'>Temp dos</option>
                                     </Field>
-                                    <p className='error'>{formik.errors.name}</p>
+                                    <ErrorMessage component='div' className='error' name='name' />
                                 </Row>
                                 <Row>
                                     <label htmlFor='Channel' className='label'>Ubicación</label>
@@ -61,7 +62,7 @@ const AddQuantity = () => {
                                         <option value='Arsenal'>Arsenal</option>
                                         <option value='Bodega'>Bodega</option>
                                     </Field>
-                                    <p className='error'>{formik.errors.channel}</p>
+                                    <ErrorMessage component='div' className='error' name='channel' />
                                 </Row>
                                 <Row>
                                     <Field
@@ -71,9 +72,9 @@ const AddQuantity = () => {
                                         type="number"
 
                                     />
-                                    <p className='error'>{formik.errors.quantity}</p>
+                                    <ErrorMessage component='div' className='error' name='quantity' />
                                 </Row>
-                                <BotonFondoClaro label='Crear2' type="submit" />
+                                <BotonFondoClaro label='Crear' type="submit" />
                                 <pre>{JSON.stringify(formik.values, null, 4)}</pre>
                                 <pre>{JSON.stringify(formik.errors, null, 4)}</pre>
                             </Form>
