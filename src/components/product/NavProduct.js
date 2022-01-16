@@ -4,7 +4,7 @@ import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 import '../generic/BotonFondoOscuro.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NavStock = () => {
     let navigate = useNavigate();
@@ -16,6 +16,9 @@ const NavStock = () => {
     }
     return (
         <div className='canvas_oscuro'>
+            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='volver'>Volver</Link>
+            {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestión de Productos</p>
             <Container>
                 <Row >

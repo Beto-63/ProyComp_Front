@@ -11,12 +11,25 @@ const NavStock = () => {
     const goToCreate = () => {
         navigate('/stock/create');
     }
-    const goToAdjust = () => {
-        navigate('/stock/adjust');
-    }
     const goToAdd = () => {
         navigate('/stock/add');
     }
+    const goToItemByName = () => {
+        navigate('/stock/getbyname');
+    }
+    const goToItemByNameChanne = () => {
+        navigate('/stock/getbynameandchannel');
+    }
+    const goToTransfer = () => {
+        navigate('/stock/transfer');
+    }
+    const goToAdjustQ = () => {
+        navigate('/stock/adjustquantity');
+    }
+    const goToAdjustE = () => {
+        navigate('/stock/adjustelement');
+    }
+
     return (
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Gestión de Inventario</p>
@@ -34,19 +47,19 @@ const NavStock = () => {
                         <BotonFondoOscuro label='Adición de cantidad' handleClick={goToAdd} />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Consulta X nombre' />
+                        <BotonFondoOscuro label='Consulta X nombre' handleClick={goToItemByName} />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='X nombre -ubicación' />
+                        <BotonFondoOscuro label='X nombre -ubicación' handleClick={goToItemByNameChanne} />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Traslado cantidad' />
+                        <BotonFondoOscuro label='Traslado cantidad' handleClick={goToTransfer} />
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste cantidad' handleClick={goToAdjust} />
+                        <BotonFondoOscuro label='Ajuste cantidad' handleClick={goToAdjustQ} />
                     </Col>
                 </Row>
-                <BotonFondoOscuro label='Ajuste a elemento' />
+                <BotonFondoOscuro label='Ajuste a elemento' handleClick={goToAdjustE} />
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>
