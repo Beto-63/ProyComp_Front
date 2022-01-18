@@ -31,7 +31,7 @@ const NavStock = () => {
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestiona tu caja</p>
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row >
                     <Col>
                         <BotonFondoOscuro label='Apertura de caja' handleClick={goToOpen} />
                     </Col>
@@ -44,6 +44,7 @@ const NavStock = () => {
                     <Col>
                         <BotonFondoOscuro label='Gastos menores' handleClick={goToExpenses} />
                     </Col>
+
                 </Row>
                 <BotonFondoOscuro label='Cierre de caja' handleClick={goToClose} />
             </Container>

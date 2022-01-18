@@ -13,7 +13,7 @@ const NavStock = () => {
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Usuarios</p>
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row >
                     <Col>
                         <BotonFondoOscuro label='Crear usuario' handleClick={enruteCrear} />
                     </Col>

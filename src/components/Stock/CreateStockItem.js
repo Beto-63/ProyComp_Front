@@ -7,7 +7,10 @@ import { object, string, number } from 'yup'
 import './StockItem.css';
 import { Link } from 'react-router-dom';
 
+
+
 const CreateStockItem = () => {
+
   return (
     <div className='canvas_claro'>
 
@@ -25,9 +28,9 @@ const CreateStockItem = () => {
           channel: '',
           status: 1
         }}
-        onSubmit={(values, { resetForm }) => {
-          console.log("values", values);
-          resetForm({ values })
+        onSubmit={(e) => {
+          console.log("e", e);
+
           //El reset No funciona
         }}
       >

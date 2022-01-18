@@ -37,7 +37,7 @@ const NavStock = () => {
             <Link to="/" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row  >
                     <Col>
                         <BotonFondoOscuro label='Creación elemento' handleClick={goToCreate} >
                             <Link to='/stock/create' />
