@@ -23,10 +23,10 @@ const NavStock = () => {
             <Container>
                 <Row >
                     <Col>
-                        <BotonFondoOscuro label='Creación de Producto' handleClick={goToCreate} />
+                        <button className='btn-dark-bkg' onClick={goToCreate} >Creación de Producto</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste de Producto' handleClick={goToAdjust} />
+                        <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste de Producto</button>
                     </Col>
                 </Row>
             </Container>

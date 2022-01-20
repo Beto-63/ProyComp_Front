@@ -8,10 +8,10 @@ import { Row, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
-import BotonFondoClaro from '../generic/BotonFondoClaro';
+
 
 /**********************Importacion de Estilos******************************/
-import './StockItem.css';
+import '../generic/Light-bkg.css'
 
 
 const schema = yup.object({
@@ -21,15 +21,9 @@ const schema = yup.object({
     channel: yup.string().required('Este campo es requerido')
 }).required();
 
-const Formas2 = () => {
+const CreateStockItem = () => {
     // Se declaro este arreglo para probar el select con dos valores
     const ubicaciones = ['Arsenal', 'Bodega']
-    const objStockItem = {
-        name: '',
-        quantity: 0,
-        channel: ''
-    }
-
     useEffect(() => {
         console.log("activo useEffect");
         // Reemplazar el console por la consulta a la base de datos para llenar el select
@@ -38,11 +32,9 @@ const Formas2 = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
-    const onSubmit = (data, e) => {
+    const onSubmit = (data) => {
         console.log("data", data);      //aqui va la creacion del item con un fetch al back
         reset();
-
-
     };
 
     return (
@@ -81,13 +73,12 @@ const Formas2 = () => {
                         </select>
                         <p className='error'>{errors.channel?.message}</p>
                     </Row>
-                    <BotonFondoClaro label='Crear' type="submit" />
-                    <input type="submit" />
+                    <button className='btn-light-bkg' type="submit">Crear</button>
                 </form>
             </Container>
         </div>
     );
 };
 
-export default Formas2;
+export default CreateStockItem;
 

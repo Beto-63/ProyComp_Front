@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
@@ -39,27 +38,25 @@ const NavStock = () => {
             <Container>
                 <Row  >
                     <Col>
-                        <BotonFondoOscuro label='Creación elemento' handleClick={goToCreate} >
-                            <Link to='/stock/create' />
-                        </BotonFondoOscuro>
+                        <button className='btn-dark-bkg' onClick={goToCreate} >Creación elemento</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Adición de cantidad' handleClick={goToAdd} />
+                        <button className='btn-dark-bkg' onClick={goToAdd} >Adición de cantidad</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Consulta X nombre' handleClick={goToItemByName} />
+                        <button className='btn-dark-bkg' onClick={goToItemByName} >Consulta X nombre</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='X nombre -ubicación' handleClick={goToItemByNameChanne} />
+                        <button className='btn-dark-bkg' onClick={goToItemByNameChanne} >X nombre -ubicación</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Traslado cantidad' handleClick={goToTransfer} />
+                        <button className='btn-dark-bkg' onClick={goToTransfer} >Traslado cantidad</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste cantidad' handleClick={goToAdjustQ} />
+                        <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
                     </Col>
                 </Row>
-                <BotonFondoOscuro label='Ajuste a elemento' handleClick={goToAdjustE} />
+                <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste a elemento</button>
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>
