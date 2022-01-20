@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 

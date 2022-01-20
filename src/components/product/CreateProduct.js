@@ -8,7 +8,7 @@ import { Row, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
-import BotonFondoClaro from '../generic/BotonFondoClaro';
+
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
