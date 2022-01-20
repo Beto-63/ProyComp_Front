@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Container, Offcanvas, Nav } from 'react-bootstrap'
+import { Navbar, Container, Offcanvas } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 function GeneralNav() {
@@ -18,14 +18,14 @@ function GeneralNav() {
                             <Offcanvas.Title id="offcanvasNavbarLabel">Offcanvas</Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            <Nav className="justify-content-end flex-grow-1 pe-3">
-                                <Nav.Link href="#action1"><Link to="/cash">Caja</Link></Nav.Link>
-                                <Nav.Link href="#action2"><Link to="/product">Gestion de Productos</Link></Nav.Link>
-                                <Nav.Link href="#action2"><Link to="/sell">Gestion de Ventas</Link></Nav.Link>
-                                <Nav.Link href="#action2"><Link to="/stock">Gestion de Inventarios</Link></Nav.Link>
-                                <Nav.Link href="#action2"><Link to="/user">Gestion de Usuarios</Link></Nav.Link>
-                                <Nav.Link href="#action2"><Link to="/">REGRESAR</Link></Nav.Link>
-                            </Nav>
+
+                            <Link to="/cash">Caja</Link><br />
+                            <Link to="/product">Gestion de Productos</Link><br />
+                            <Link to="/sell">Gestion de Ventas</Link><br />
+                            <Link to="/stock">Gestion de Inventarios</Link><br />
+                            <Link to="/user">Gestion de Usuarios</Link><br />
+                            <Link to="/">REGRESAR</Link>
+
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
                 </Container>

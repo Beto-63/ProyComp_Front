@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
@@ -13,15 +12,15 @@ const NavStock = () => {
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Usuarios</p>
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row >
                     <Col>
-                        <BotonFondoOscuro label='Crear usuario' handleClick={enruteCrear} />
+                        <button className='btn-dark-bkg' onClick={enruteCrear} >Crear usuario</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste de Usuario' />
+                        <button className='btn-dark-bkg' >Ajuste de Usuario</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Gestión de Roles' />
+                        <button className='btn-dark-bkg' >Gestión de Roles</button>
                     </Col>
                 </Row>
             </Container>
