@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import '../generic/CanvasOscuro.css'
 
 const ClientForm = ({ handleClient }) => {
@@ -9,6 +10,7 @@ const ClientForm = ({ handleClient }) => {
         gender: '',
         age_group: ''
     }
+    const navigate = useNavigate();
     const [form, setForm] = useState(objForm);
 
     const handleForm = (e) => {
@@ -23,9 +25,9 @@ const ClientForm = ({ handleClient }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         handleClient(form); //estas son las props de Client
-        console.log("Enviar Formulario")
         setForm(objForm) //limpia los campos del formulario
         e.target.reset() //limpia la selección de los botones
+        navigate('/productSelect')
     }
     return (
         <div className='canvas_oscuro'>

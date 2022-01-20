@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 import Auth from '../pages/Auth';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
+import ProductSelect from '../pages/ProductSelect';
 import Sell from '../pages/SellTicket';
 import Stock from '../pages/Stock';
 import User from '../pages/User';
@@ -40,6 +41,7 @@ export const AppRouter = () => {
             <Route path="/product/adjust" element={<AdjustProduct />} />
 
             <Route path="/sell" element={<Sell />} />
+            <Route path="/productSelect" element={<ProductSelect/>}/>
 
             <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />
