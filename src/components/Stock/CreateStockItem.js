@@ -1,75 +1,84 @@
-import React from 'react';
-import { Container, Row } from 'react-bootstrap';
-import { Formik, Form, Field } from 'formik';
-import BotonFondoClaro from '../generic/BotonFondoClaro';
-import { object, string, number } from 'yup'
+/**********************Importacion de Librerias****************************/
 
-import './StockItem.css';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { Row, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+/**********************Importacion de Componentes**************************/
+
+
+/**********************Importacion de Estilos******************************/
+import '../generic/Light-bkg.css'
+
+
+const schema = yup.object({
+    /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
+    name: yup.string().required('Este campo es requerido'),
+    quantity: yup.number('El valor debeser numerico').moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
+    channel: yup.string().required('Este campo es requerido')
+}).required();
 
 const CreateStockItem = () => {
-  return (
-    <div className='canvas_claro'>
+    // Se declaro este arreglo para probar el select con dos valores
+    const ubicaciones = ['Arsenal', 'Bodega']
+    useEffect(() => {
+        console.log("activo useEffect");
+        // Reemplazar el console por la consulta a la base de datos para llenar el select
+    }, [])
 
-      <Formik
-        validationSchema={
-          object({
-            name: string('Solo se aceptan caracteres').required('Este campo es requerido').min(6),
-            quantity: number('Solo se aceptan números').required('Este campo es requerido'),
-            channel: string('Solo se aceptan caracteres').required('Este campo es requerido')
-          })
-        }
-        initialValues={{
-          name: '',
-          quantity: null,
-          channel: '',
-          status: 1
-        }} onSubmit={(values) => {
-          console.log("values", values)
-        }}
-      >
-        {formik => (
-          <>
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
+    const onSubmit = (data) => {
+        console.log("data", data);      //aqui va la creacion del item con un fetch al back
+        reset();
+    };
+
+    return (
+        <div className='canvas_claro' >
             <p className="titulo_oscuro">Crear elemento</p>
-            <Container >
-              <Form className='container'>
-                <Row>
-                  <Field className="campo_entrada" placeholder="Nombre" name="name" type="text" />
-                  <p className='error'>{formik.errors.name}</p>
-                </Row>
-                <Row>
-                  <Field
-                    className="campo_entrada"
-                    placeholder="Cantidad (gr/unidades)"
-                    name="quantity"
-                    type="number"
-                  />
-                  <p className='error'>{formik.errors.quantity}</p>
-                </Row>
-                <Row>
-                  <label htmlFor='Channel' className='label'>Ubicación</label>
-                  <Field
-                    className="campo_entrada"
-
-                    placeholder="Ubicación (Bodega/Arsenal) --temporal"
-                    name="channel"
-                    as='select' >
-                    <option value=''>Ingrese Ubicacion</option>
-                    <option value='Arsenal'>Arsenal</option>
-                    <option value='Bodega'>Bodega</option>
-                  </Field>
-                  <p className='error'>{formik.errors.channel}</p>
-                </Row>
-                <BotonFondoClaro label='Crear2' type="submit" />
-                <pre>{JSON.stringify(formik.values, null, 4)}</pre>
-                <pre>{JSON.stringify(formik.errors, null, 4)}</pre>
-              </Form>
+            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/stock" className='volver'>Volver</Link>
+            <Container>
+                <form className='container' onSubmit={handleSubmit(onSubmit)}>
+                    <Row>
+                        <input {...register("name")}
+                            className="campo_entrada"
+                            placeholder="Nombre"
+                        />
+                        <p className='error'>{errors.name?.message}</p>
+                    </Row>
+                    <Row>
+                        <input {...register("quantity")}
+                            className="campo_entrada"
+                            placeholder="Cantidad (gr/unidades)"
+                        />
+                        <p className='error'>{errors.quantity?.message}</p>
+                    </Row>
+                    <Row>
+                        <select {...register("channel")}
+                            className="campo_entrada"
+                            placeholder="Ubicación (Bodega/Arsenal) --temporal"
+                        >
+                            <option value=''>Ingrese Ubicacion</option>
+                            {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
+                            {ubicaciones.map((element, index) => {
+                                return (
+                                    <option key={index} value={element} >{element}</option>
+                                )
+                            })}
+                        </select>
+                        <p className='error'>{errors.channel?.message}</p>
+                    </Row>
+                    <button className='btn-light-bkg' type="submit">Crear</button>
+                </form>
             </Container>
-          </>
-        )}
-      </Formik>
-    </div >
-  )
-}
+        </div>
+    );
+};
 
-export default CreateStockItem
+export default CreateStockItem;
 

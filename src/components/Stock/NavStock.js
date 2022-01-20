@@ -1,39 +1,62 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import BotonFondoOscuro from '../generic/BotonFondoOscuro';
+import { Link, useNavigate } from 'react-router-dom';
+
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
 const NavStock = () => {
-    const enruteCrear = () => {
-        console.log('llamo la funcion');
-        //quiero que se vaya a la pagina correspondiente
+    let navigate = useNavigate();
+    const goToCreate = () => {
+        navigate('/stock/create');
     }
+    const goToAdd = () => {
+        navigate('/stock/add');
+    }
+    const goToItemByName = () => {
+        navigate('/stock/getbyname');
+    }
+    const goToItemByNameChanne = () => {
+        navigate('/stock/getbynameandchannel');
+    }
+    const goToTransfer = () => {
+        navigate('/stock/transfer');
+    }
+    const goToAdjustQ = () => {
+        navigate('/stock/adjustquantity');
+    }
+    const goToAdjustE = () => {
+        navigate('/stock/adjustelement');
+    }
+
     return (
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Gestión de Inventario</p>
+            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='volver'>Volver</Link>
+            {/* revisar a donde regresa la linea anterior */}
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row  >
                     <Col>
-                        <BotonFondoOscuro label='Creación elemento' handleClick={enruteCrear} />
+                        <button className='btn-dark-bkg' onClick={goToCreate} >Creación elemento</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Adición de cantidad' />
+                        <button className='btn-dark-bkg' onClick={goToAdd} >Adición de cantidad</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Consulta X nombre' />
+                        <button className='btn-dark-bkg' onClick={goToItemByName} >Consulta X nombre</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='X nombre -ubicación' />
+                        <button className='btn-dark-bkg' onClick={goToItemByNameChanne} >X nombre -ubicación</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Traslado cantidad' />
+                        <button className='btn-dark-bkg' onClick={goToTransfer} >Traslado cantidad</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste cantidad' />
+                        <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
                     </Col>
                 </Row>
-                <BotonFondoOscuro label='Ajuste a elemento' />
+                <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste a elemento</button>
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>

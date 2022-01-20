@@ -1,24 +1,31 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
+import '../generic/BotonFondoOscuro.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 const NavStock = () => {
-    const enruteCrear = () => {
-        console.log('llamo la funcion');
-        //quiero que se vaya a la pagina correspondiente
+    let navigate = useNavigate();
+    const goToCreate = () => {
+        navigate('/product/create');
+    }
+    const goToAdjust = () => {
+        navigate('/product/adjust');
     }
     return (
         <div className='canvas_oscuro'>
+            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='volver'>Volver</Link>
+            {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestión de Productos</p>
             <Container>
-                <Row xs={2} md={4} lg={6}>
+                <Row >
                     <Col>
-                        <BotonFondoOscuro label='Creación de Producto' handleClick={enruteCrear} />
+                        <button className='btn-dark-bkg' onClick={goToCreate} >Creación de Producto</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste de Producto' />
+                        <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste de Producto</button>
                     </Col>
                 </Row>
             </Container>
