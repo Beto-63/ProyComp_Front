@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import '../generic/CanvasOscuro.css'
 
 const ClientForm = ({ handleClient }) => {
     const objForm = {
@@ -23,7 +24,7 @@ const ClientForm = ({ handleClient }) => {
         e.target.reset() //limpia la selección de los botones
     }
     return (
-        <div>
+        <div className='canvas_oscuro'>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="registerName">
                     <Form.Control value={form.name} onChange={handleForm} name='name' type="name" placeholder="Nombre (opcional)" />
@@ -37,22 +38,22 @@ const ClientForm = ({ handleClient }) => {
                 {['radio'].map((type) => (
                     <div key={`inline-${type}`} className="mb-3">
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="F"
                             name="gender"
                             type={type}
                             id={`inline-${type}-1`}
-                            value={'F'}
+                            value={"F"}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="M"
                             name="gender"
                             type={type}
                             id={`inline-${type}-2`}
-                            value={'M'}
+                            value={"M"}
                         />
                     </div>
                 ))}
@@ -60,7 +61,7 @@ const ClientForm = ({ handleClient }) => {
                 {['radio'].map((type) => (
                     <div key={`inline-${type}`} className="mb-3">
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="0-11"
                             name="age_group"
@@ -69,7 +70,7 @@ const ClientForm = ({ handleClient }) => {
                             value={'0-11'}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="12-20"
                             name="age_group"
@@ -78,7 +79,7 @@ const ClientForm = ({ handleClient }) => {
                             value={'12-20'}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="21-29"
                             name="age_group"
@@ -87,7 +88,7 @@ const ClientForm = ({ handleClient }) => {
                             value={'21-29'}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="30-40"
                             name="age_group"
@@ -96,7 +97,7 @@ const ClientForm = ({ handleClient }) => {
                             value={'30-40'}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="41-60"
                             name="age_group"
@@ -105,7 +106,7 @@ const ClientForm = ({ handleClient }) => {
                             value={'41-60'}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="61-80"
                             name="age_group"
@@ -114,7 +115,7 @@ const ClientForm = ({ handleClient }) => {
                             value={'61-80'}
                         />
                         <Form.Check
-                            onChange={handleForm}
+                            onClick={handleForm}
                             inline
                             label="Mayor"
                             name="age_group"
@@ -126,7 +127,7 @@ const ClientForm = ({ handleClient }) => {
                 ))}
                 <Button type="submit">Continuar</Button>
             </Form>
-
+            {/*<img src={logo} alt='logo de El DOKO' className='footer' />*/}
         </div>
     )
 }
