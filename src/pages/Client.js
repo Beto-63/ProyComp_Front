@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ClientForm from '../components/clientes/ClientForm'
+import ClientContext from '../context/ClientContext';
 
 const Client = () => {
+    //Uso del contexto
+    const {handleRegister} = useContext(ClientContext)
     //estado que va a almacenar en un arreglo los datos del ClientForm 
     const [client, setClient] = useState([]);
     //Manejador para el cliente
     const handleClient = (objClient)=>{
-        //enviar los datos capturados a la base de datos
-        fetch('https://dokotestback.herokuapp.com/client',{
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            //enviamos los datos por body y se debe convertir el objeto en JSON
-            body: JSON.stringify(objClient)
-        }).then(async resp=>{
+        //Utilizar funcion del contexto
+        handleRegister(objClient).then(async resp=>{
             if(resp.status===201){
+                let json = await resp.json();
                 //almacenar los objetos recibidos del ClientForm en un array
-                let array = [...client, objClient]
+                let array = [...client, json] //si ponemos objClient en lugar de json se mostrará todo el objeto en el hook
                 //enviar el array al useState "client"
                 setClient(array)
             }
