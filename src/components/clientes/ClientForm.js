@@ -21,7 +21,6 @@ const ClientForm = ({ handleClient }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         handleClient(form); //estas son las props de Client
-        console.log("Enviar Formulario")
         setForm(objForm) //limpia los campos del formulario
         e.target.reset() //limpia la selección de los botones
         navigate('/productSelect')
