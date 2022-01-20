@@ -15,13 +15,13 @@ const NavStock = () => {
             <Container>
                 <Row >
                     <Col>
-                        <BotonFondoOscuro label='Crear usuario' handleClick={enruteCrear} />
+                        <button className='btn-dark-bkg' onClick={enruteCrear} >Crear usuario</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Ajuste de Usuario' />
+                        <button className='btn-dark-bkg' >Ajuste de Usuario</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Gestión de Roles' />
+                        <button className='btn-dark-bkg' >Gestión de Roles</button>
                     </Col>
                 </Row>
             </Container>
