@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 import { server } from './Api'
 const StockContext = createContext();
 
@@ -47,17 +47,8 @@ const StockProvider = ({ children }) => {
         });
         return resp;
     }
-
-    return (
-        <StockContext.Provider
-            value={
-                GetUbicaciones,
-                NewStockItem,
-                AddToStockItem,
-                GetStockItemByNameAndLocation
-            }>
-            {children}
-        </StockContext.Provider>)
+    const data = {}
+    return <StockContext.Provider value={data}>{children}</StockContext.Provider>
 };
 
 export { StockProvider };
