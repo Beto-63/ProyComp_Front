@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 
 /**********************Importacion de Componentes**************************/
-
+import { GetUbicaciones, AddQuantityToStock, ubicaciones } from '../../context/FecthIntructions'
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -16,28 +16,26 @@ import '../generic/Light-bkg.css'
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
     name: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
-    quantity: yup.number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
+    qty: yup.number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
     channel: yup.string().required('Este campo es requerido')
 }).required();
 
 const AddQuantity = () => {
-    // Se declaro este arreglo para probar el select con dos valores
-    const ubicaciones = ['Arsenal', 'Bodega']
+
     useEffect(() => {
-        console.log("activo useEffect");
-        // Reemplazar el console por la consulta a la base de datos para llenar el select
+        GetUbicaciones();
     }, [])
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
     const onSubmit = (data) => {
-        console.log("data", data);      //aqui va la creacion del item con un fetch al back
+        console.log(data)
+        AddQuantityToStock(data);      //Falta el mensaje de confirmacion
         reset();
     };
 
     return (
-
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Agregar cantidad al sotock</p>
             <Link to="/" className='salir' >Salir</Link>
@@ -53,35 +51,34 @@ const AddQuantity = () => {
                             placeholder="escoja el Item --Temporal"
                         >
                             <option value=''>Elemento a adicionar</option>
-                            {/*La consulta va en un SueEffect y aca un  map para desplegar 
-                            los items del stock */}
-                            <option value='temp uno'>Temp uno</option>
+                            {/* Aca deb ir una lista de articulos seleccionado porcategoria */}
+                            <option value='Alberto'>Alberto</option>
                             <option value='Temp dos'>Temp dos</option>
                         </select>
-                        <p className='error'>{errors.quantity?.name}</p>
+                        <p className='error'>{errors.qty?.name}</p>
                     </Row>
                     <Row>
                         <label htmlFor='Channel' className='label'>Ubicación</label>
                         <select {...register("channel")}
                             className="campo_entrada"
-                            placeholder="Ubicación (Bodega/Arsenal) --temporal"
+                            placeholder="Ubicación Física"
                         >
                             <option value=''>Ingrese Ubicacion</option>
                             {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
-                            {ubicaciones.map((element, index) => {
+                            {ubicaciones.map((e, index) => {
                                 return (
-                                    <option key={index} value={element} >{element}</option>
+                                    <option key={index} value={e.name} >{e.name}</option>
                                 )
                             })}
                         </select>
                         <p className='error'>{errors.channel?.message}</p>
                     </Row>
                     <Row>
-                        <input {...register("quantity")}
+                        <input {...register("qty")}
                             className="campo_entrada"
                             placeholder="Cantidad (gr/unidades)"
                         />
-                        <p className='error'>{errors.quantity?.message}</p>
+                        <p className='error'>{errors.qty?.message}</p>
                     </Row>
                     <button className='btn-light-bkg' type="submit" >Agregar</button>
                 </form>

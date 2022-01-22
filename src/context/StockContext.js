@@ -47,7 +47,7 @@ const StockProvider = ({ children }) => {
         });
         return resp;
     }
-    const data = {}
+    const data = { GetUbicaciones, ubicaciones }
     return <StockContext.Provider value={data}>{children}</StockContext.Provider>
 };
 

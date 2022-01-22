@@ -1,15 +1,14 @@
 /**********************Importacion de Librerias****************************/
 
 import React, { useEffect } from "react";
+import { Link } from 'react-router-dom';
+import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { Row, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
-import { NewStockItem } from '../../context/FecthIntructions'
-//import StockContext from '../../context/StockContext'
+import { GetUbicaciones, NewStockItem, ubicaciones } from '../../context/FecthIntructions'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
@@ -23,13 +22,8 @@ const schema = yup.object({
 
 const CreateStockItem = () => {
 
-    // Se declaro este arreglo para probar el select con dos valores
-    const ubicaciones = ['Arsenal', 'Bodega']
-    //const [ubicaciones, setUbicaciones] = useState([{}]);
-    //const { } = useContext(StockContext);
     useEffect(() => {
-        console.log("activo useEffect");
-        // Reemplazar el console por la consulta a la base de datos para llenar el select
+        GetUbicaciones()
     }, [])
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -38,7 +32,7 @@ const CreateStockItem = () => {
     const onSubmit = (data) => {
 
         NewStockItem(data)
-        console.log("data", data);      //aqui va la creacion del item con un fetch al back
+        //aqui va la creacion del item con un fetch al back
         reset();
     };
 
@@ -66,13 +60,13 @@ const CreateStockItem = () => {
                     <Row>
                         <select {...register("channel")}
                             className="campo_entrada"
-                            placeholder="Ubicación (Bodega/Arsenal) --temporal"
+                            placeholder="Ubicación Física"
                         >
+                            {/* aqui se usa la variable Ubicaciones */}
                             <option value=''>Ingrese Ubicacion</option>
-                            {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
-                            {ubicaciones.map((element, index) => {
+                            {ubicaciones.map((e, index) => {
                                 return (
-                                    <option key={index} value={element} >{element}</option>
+                                    <option key={index} value={e.name} >{e.name}</option>
                                 )
                             })}
                         </select>
