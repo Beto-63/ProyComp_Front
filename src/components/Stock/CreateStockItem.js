@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -8,8 +8,8 @@ import { Row, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
-
-
+import { NewStockItem } from '../../context/FecthIntructions'
+//import StockContext from '../../context/StockContext'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
@@ -22,8 +22,11 @@ const schema = yup.object({
 }).required();
 
 const CreateStockItem = () => {
+
     // Se declaro este arreglo para probar el select con dos valores
     const ubicaciones = ['Arsenal', 'Bodega']
+    //const [ubicaciones, setUbicaciones] = useState([{}]);
+    //const { } = useContext(StockContext);
     useEffect(() => {
         console.log("activo useEffect");
         // Reemplazar el console por la consulta a la base de datos para llenar el select
@@ -33,6 +36,8 @@ const CreateStockItem = () => {
         resolver: yupResolver(schema)
     });
     const onSubmit = (data) => {
+
+        NewStockItem(data)
         console.log("data", data);      //aqui va la creacion del item con un fetch al back
         reset();
     };

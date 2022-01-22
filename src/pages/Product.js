@@ -7,8 +7,8 @@ function Product() {
 
 
         <div>
-            <NavProduct />
-
+            <CreateProduct />
+            <AdjustProduct />
         </div>
     )
 }
