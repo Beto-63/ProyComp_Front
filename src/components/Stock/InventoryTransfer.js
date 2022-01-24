@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 
 /**********************Importacion de Componentes**************************/
-import { StockTransfer } from '../../context/FecthIntructions'
+
 import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
@@ -14,18 +14,20 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
-    qty: yup.number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
-    source: yup.string().required('Este campo es requerido'),
-    destination: yup.string().required('Este campo es requerido'),
-    cat_name: yup.string().required()
+    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    qty: yup.number().typeError('Cantidad a trasladar').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
+    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
+    source: yup.string().required('Lugar de donde sale la cantidad'),
+    destination: yup.string().required('Lugar a donde se manda la cantidad'),
+
     //    cat: yup.string().required()
-}).required();
+});
 
 const InventoryTransfer = () => {
     const [selectedNames, setSelectedNames] = useState([{}]);
     const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
     const [ubicaciones, setUbicaciones] = useState([{}]);
+    const [response, setResponse] = useState({});
 
     useEffect(() => {
         fetch(`${server}/stock/channels`)
@@ -44,7 +46,17 @@ const InventoryTransfer = () => {
     });
     const onSubmit = (data) => {
         console.log('desde boton', data)
-        StockTransfer(data)
+        fetch(`${server}/stock/transfer`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            //enviamos los datos por body y se debe convertir el objeto en JSON
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(json => setResponse(json));
+        console.log(response)
         reset();
     };
 
@@ -89,9 +101,10 @@ const InventoryTransfer = () => {
                     </Row>
                     <Row>
                         <label htmlFor='source' className='label'>Ubicación Origen</label>
-                        <select {...register("source")} onChange={handleCatChange}
+                        <select {...register("source")}
                             className="campo_entrada"
                             placeholder="Ubicación Física"
+                            id='source' onChange={handleCatChange}
                         >
                             <option value=''>Ingrese Ubicacion</option>
                             {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}

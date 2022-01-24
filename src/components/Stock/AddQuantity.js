@@ -9,24 +9,24 @@ import * as yup from 'yup'
 
 /**********************Importacion de Componentes**************************/
 
-import { AddQuantityToStock } from '../../context/FecthIntructions'
 import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
-    qty: yup.number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
-    channel: yup.string().required('Este campo es requerido'),
-    cat_name: yup.string().required()
-    //    cat: yup.string().required()
+    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    qty: yup.number().typeError('Ingresa la cantida a adicionar').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
+    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
 }).required();
 
 const AddQuantity = () => {
     const [selectedNames, setSelectedNames] = useState([{}]);
     const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
     const [ubicaciones, setUbicaciones] = useState([{}]);
+    const [response, setResponse] = useState([{}]);
+
     useEffect(() => {
         fetch(`${server}/stock/channels`)
             .then(response => response.json())
@@ -47,7 +47,16 @@ const AddQuantity = () => {
         let obj = { name: data.name, channel: data.channel, qty: data.qty }
         console.log('desde boton', data)
         console.log("obj", obj)
-        AddQuantityToStock(obj);      //Falta el mensaje de confirmacion
+        fetch(`${server}/stock/addQty`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        })
+            .then(response => response.json())
+            .then(json => setResponse(json));
+        console.log(response);
         reset();
     };
 
@@ -73,25 +82,6 @@ const AddQuantity = () => {
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
-                    {/* <Row>
-                        Ingreso de categoria de producto
-                        <label htmlFor='Channel' className='label'>Seleccione la categoria del Elemento</label>
-                        <div className='row'>
-                            {categories.map((c, index) => (
-
-                                <div key={index} className="col" >
-                                    <label className='center' htmlFor="html">{c.name}
-                                        <br />
-                                        <input type="radio"  {...register("cat")}
-                                            id={c.name}
-                                            className='center'
-                                            name="category"
-                                            value={c.name} /></label>
-                                </div>
-
-                            ))}
-                        </div>
-                    </Row> */}
                     <Row>
                         <label htmlFor='cat_name' className='label'>Categoria del elemento</label>
                         <select {...register("cat_name")}
@@ -109,7 +99,7 @@ const AddQuantity = () => {
                         <p className='error'>{errors.cat_name?.message}</p>
                     </Row>
                     <Row>
-                        <label htmlFor='Channel' className='label'>Ubicación</label>
+                        <label htmlFor='channel' className='label'>Ubicación</label>
                         <select {...register("channel")} onChange={handleCatChange}
                             className="campo_entrada"
                             placeholder="Ubicación Física"
@@ -130,14 +120,14 @@ const AddQuantity = () => {
                             className="campo_entrada container"
                             placeholder="Escoja el Item"
                         >
-                            <option value=''>Elemento a adicionar</option>
+                            <option >Elemento a adicionar</option>
                             {selectedNames.map((e, index) => {
                                 return (
                                     <option key={index} value={e.name} >{e.name}</option>
                                 )
                             })}
                         </select>
-                        <p className='error'>{errors.qty?.name}</p>
+                        <p className='error'>{errors.name?.name}</p>
                     </Row>
 
                     <Row>

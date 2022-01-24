@@ -9,7 +9,7 @@ import * as yup from 'yup'
 
 /**********************Importacion de Componentes**************************/
 
-import { } from '../../context/FecthIntructions'
+
 import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -17,20 +17,21 @@ import '../generic/Light-bkg.css'
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
     name: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
-    nameEdit: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
+    nameEdit: yup.string(),
     qty: yup.number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
     channel: yup.string().required('Este campo es requerido'),
-    channelEdit: yup.string().required('Este campo es requerido'),
+    channelEdit: yup.string(),
     cat_name: yup.string().required(),
-    cat_nameEdit: yup.string().required(),
+    cat_nameEdit: yup.string()
     //    cat: yup.string().required()
-}).required();
+});
 
 const AdjustElement = () => {
 
     const [selectedNames, setSelectedNames] = useState([{}]);
     const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
     const [ubicaciones, setUbicaciones] = useState([{}]);
+    const [response, setResponse] = useState([{}]);
 
 
     useEffect(() => {
@@ -54,6 +55,17 @@ const AdjustElement = () => {
         let obj = { name: data.nameEdit, channel: data.channelEdit, cat_name: data.qty }
         console.log('desde boton', data)
         console.log("obj", obj)
+        fetch(`${server}/stock/adjust`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            //enviamos los datos por body y se debe convertir el objeto en JSON
+            body: JSON.stringify(obj)
+        })
+            .then(response => response.json())
+            .then(json => setResponse(json));
+        console.log(response);
         reset();
     };
 
@@ -113,7 +125,7 @@ const AdjustElement = () => {
                         <p className='error'>{errors.channel?.message}</p>
                     </Row>
                     <Row>
-                        <label htmlFor='name' className='label'>Nombre del elemento</label>
+                        <label htmlFor='name' className='label'>Nombre del elemento que requiere modificación</label>
                         <select {...register("name")} on
                             className="campo_entrada container"
                             placeholder="Escoja el Item"
@@ -130,51 +142,51 @@ const AdjustElement = () => {
                     </Row>
                     <br /><br />
 
-                    <div>
-                        <p className="titulo_oscuro">Ingresa la nueva información </p>
-                        <Row>
-                            <input {...register("nameEdit")}
-                                className="campo_entrada"
-                                placeholder="Nombre corregido"
-                            />
-                            <p className='error'>{errors.nameEdit?.message}</p>
-                        </Row>
-                        <Row>
-                            <label htmlFor='ChannelEdit' className='label'>Ubicación corregida</label>
-                            <select {...register("channelEdit")} onChange={handleCatChange}
-                                className="campo_entrada"
-                                placeholder="Ubicación Corregida"
-                                id='channeledit'
-                            >
-                                <option value=''>Ingrese Ubicacion</option>
-                                {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
-                                {ubicaciones.map((e, index) => {
-                                    return (
-                                        <option key={index} value={e.name} >{e.name}</option>
-                                    )
-                                })}
-                            </select>
-                            <p className='error'>{errors.channelEdit?.message}</p>
-                        </Row>
-                        <Row>
-                            <label htmlFor='cat_nameEdit' className='label'>Categoria corregida</label>
-                            <select {...register("cat_nameEdit")}
-                                className="campo_entrada"
-                                placeholder="Categoria corregida"
-                                id="cat_nameEdit"
-                            >
-                                <option value=''>Seleccione la categoría del Elemento</option>
-                                {categories.map((e, index) => {
-                                    return (
-                                        <option key={index} value={e.name} >{e.name}</option>
-                                    )
-                                })}
-                            </select>
-                            <p className='error'>{errors.cat_nameEdit?.message}</p>
-                        </Row>
-                        <button className='btn-light-bkg' type="submit" >Corregir</button>
 
-                    </div>
+                    <p className="titulo_oscuro">Ingresa la nueva información </p>
+                    <Row>
+                        <input {...register("nameEdit")}
+                            className="campo_entrada"
+                            placeholder="Nombre corregido"
+                        />
+                        <p className='error'>{errors.nameEdit?.message}</p>
+                    </Row>
+                    <Row>
+                        <label htmlFor='ChannelEdit' className='label'>Ubicación corregida</label>
+                        <select {...register("channelEdit")}
+                            className="campo_entrada"
+                            placeholder="Ubicación Corregida"
+                            id='channeledit'
+                        >
+                            <option value=''>Ingrese Ubicacion</option>
+                            {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
+                            {ubicaciones.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        <p className='error'>{errors.channelEdit?.message}</p>
+                    </Row>
+                    <Row>
+                        <label htmlFor='cat_nameEdit' className='label'>Categoria corregida</label>
+                        <select {...register("cat_nameEdit")}
+                            className="campo_entrada"
+                            placeholder="Categoria corregida"
+                            id="cat_nameEdit"
+                        >
+                            <option value=''>Seleccione la categoría del Elemento</option>
+                            {categories.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        <p className='error'>{errors.cat_nameEdit?.message}</p>
+                    </Row>
+                    <button className='btn-light-bkg' type="submit" >Corregir</button>
+
+
 
                 </form>
             </Container>

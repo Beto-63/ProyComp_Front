@@ -1,8 +1,11 @@
 .canvas_claro{
     background-color:#F1F0E8 ;
-    
+    height:auto;
     color: #8EA7A9;
-    align-content: center;   
+    align-content: center;
+    border: solid    #8EA7A9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .container {
@@ -79,7 +82,7 @@ input, select {
     background-color: #8EA7A9 ;
     border: 2px solid #8EA7A9 ;
     color: #F1F0E8;
- 
+ margin-bottom: 3vh;
     width:130px;
     height: 35px;
     bottom:5vh;

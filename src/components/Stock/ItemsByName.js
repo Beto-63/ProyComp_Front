@@ -15,10 +15,10 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Este campo es requerido'),
-    quantity: yup.number('El valor debeser numerico').moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
-    channel: yup.string().required('Este campo es requerido'),
-    cat_name: yup.string().required()
+    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    quantity: yup.number().typeError('El valor debeser numerico').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
+    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
 }).required();
 
 const ItemsByName = () => {
@@ -41,7 +41,6 @@ const ItemsByName = () => {
         let obj = { name: data.name, channel: data.channel, qty: data.qty }
         console.log('desde boton', data)
         console.log("obj", obj)
-        //Falta el mensaje de confirmacion
         reset();
     };
 

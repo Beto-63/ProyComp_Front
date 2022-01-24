@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
 
-
+import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
@@ -27,6 +27,17 @@ const schema = yup.object({
 })
 
 const CreateProduct = () => {
+
+  const [categories, setCategories] = useState([{}]);
+  const [response, setResponse] = useState({});
+  const [selectedItems, setSelectedItems] = useState([{}]);
+
+  useEffect(() => {
+    fetch(`${server}/product/categories`)
+      .then(response => response.json())
+      .then(json => setCategories(json));
+  }, [])
+
   useEffect(() => {
     console.log("activo useEffect");
     // Reemplazar el console por la consulta a la base de datos para llenar el select
@@ -36,9 +47,36 @@ const CreateProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-    console.log("data", data);      //aqui va la creacion del item con un fetch al back
+    console.log("data", data);
+    fetch(`${server}/product`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(json => setResponse(json));
+    console.log("resulatdo de creacion", response);
+
     reset();
   };
+
+  const handleCatChange = () => {
+    let obj = { cat_name: document.getElementById('cat_name').value };
+    fetch(`${server}/stock/findByCatName`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(response => response.json())
+      .then(json => setSelectedItems(json));
+    console.log(response);
+
+  }
+
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Crear producto</p>
@@ -66,7 +104,6 @@ const CreateProduct = () => {
             <textarea {...register("description")}
               className="campo_entrada"
               placeholder="Descripción"
-
             >
             </textarea>
             <p className='error'>{errors.description?.message}</p>
@@ -81,18 +118,18 @@ const CreateProduct = () => {
           </Row>
           <Row>
             <label htmlFor='cat_name' className='label'>Categoría</label>
-            <select {...register("cat_name")}
+            <select {...register("cat_name")} onChange={handleCatChange}
               className="campo_entrada"
-              placeholder="Categoría de Producto --temporal"
+              placeholder="Categoría de Producto"
+              id='cat_name'
 
             >
-              <option value=''>Seleccion de Categoría</option>
-              <option value='té'>Té</option>
-              <option value='infusión'>Infusión</option>
-              <option value='paquete'>Paquete</option>
-              <option value='accesorios'>Accesirios</option>
-              <option value='combo'>Combo</option>
-              <option value='evento'>Evento</option>
+              <option value=''>Seleccione la categoría del producto</option>
+              {categories.map((e, index) => {
+                return (
+                  <option key={index} value={e.name} >{e.name}</option>
+                )
+              })}
             </select>
             <p className='error'>{errors.cat_name?.message}</p>
           </Row>
@@ -118,15 +155,19 @@ const CreateProduct = () => {
             <p className='error'>{errors.img_url?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='stock_name' className='label'>Elemento de descontar de Inventario</label>
+            <label htmlFor='stock_name' className='label'>Elemento a descontar del inventario</label>
             <select {...register("stock_name")}
               className="campo_entrada"
               placeholder="Nombre a descontar"
 
             >
               <option value=''>Selecciona X nombre</option>
-              <option value='temp 1'>Temp 1</option>
-              <option value='temp 2'>Temp 2</option>
+
+              {selectedItems.map((e, index) => {
+                return (
+                  <option key={index} value={e.name} >{e.name}</option>
+                )
+              })}
             </select>
             <p className='error'>{errors.stock_name?.message}</p>
           </Row>
@@ -138,6 +179,7 @@ const CreateProduct = () => {
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>
           <button className='btn-light-bkg' type="submit" >Crear</button>
+          <br /><br />
         </form>
       </Container>
     </div >
