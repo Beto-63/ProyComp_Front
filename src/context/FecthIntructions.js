@@ -1,12 +1,52 @@
 import { server } from './Api'
 
-var ubicaciones = [{}]
+var ubicaciones = [{}];
 const GetUbicaciones = async () => {
     const response = await fetch(`${server}/stock/channels`);
     const data = await response.json();
     ubicaciones = data;
     return (data);
 };
+
+var categories = [{}];
+const GetCategories = async () => {
+    const response = await fetch(`${server}/product/categories`);
+    const data = await response.json();
+    categories = data;
+
+    return (data);
+};
+
+var stockItemByCategory = [{}];
+const GetStockItemsByCategory = async (objCat) => {
+    const response = await fetch(`${server}/stock/findByCatName`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(objCat)
+    });
+    const data = await response.json();
+    console.log("prod by category", data)
+    stockItemByCategory = data;
+    return (data);
+};
+
+var prodByCategory = [{}];
+const GetProdByCategory = async (objCat) => {
+    const response = await fetch(`${server}/product/selectCat`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(objCat)
+    });
+    const data = await response.json();
+    console.log("prod by category", data)
+    prodByCategory = data;
+    return (data);
+};
+
 
 const NewStockItem = async (objStockItem) => {
     const resp = await fetch(`${server}/stock`, {
@@ -32,8 +72,8 @@ const AddQuantityToStock = async (objStockItem) => {
     return resp;
 }
 
-const AddToStockItem = async (objStockItem) => {
-    const resp = await fetch(`${server}/stock/addQty`, {
+const StockTransfer = async (objStockItem) => {
+    const resp = await fetch(`${server}/stock/transfer`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json'
@@ -43,6 +83,8 @@ const AddToStockItem = async (objStockItem) => {
     });
     return resp;
 }
+
+
 
 const GetStockItemByNameAndLocation = async (objStockItem) => {
     const resp = await fetch(`${server}/stock/findByNameChannel`, {
@@ -60,10 +102,17 @@ export {
     // General
     GetUbicaciones,
     ubicaciones,
+    GetCategories,
+    categories,
 
     //Stock
+    GetProdByCategory,
+    prodByCategory,
+    GetStockItemsByCategory,
+    stockItemByCategory,
     NewStockItem,
-    AddToStockItem,
+    StockTransfer,
+
     GetStockItemByNameAndLocation,
     AddQuantityToStock,
 
