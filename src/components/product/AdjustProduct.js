@@ -32,7 +32,7 @@ const schema = yup.object({
 const AdjustProduct = () => {
 
   const [categories, setCategories] = useState([{}]);
-  const [response, setResponse] = useState({});
+  //const [response, setResponse] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([{}]);
   const [prevData, setPrevData] = useState({
     "product_id": undefined,
@@ -51,7 +51,7 @@ const AdjustProduct = () => {
       .then(response => response.json())
       .then(json => setCategories(json))
       .then(console.log("categorias", categories));
-  }, [])
+  }, [categories])
 
   useEffect(() => {
     console.log("activo useEffect");
@@ -76,8 +76,8 @@ const AdjustProduct = () => {
       body: JSON.stringify(obj)
     })
       .then(response => response.json())
-      .then(json => setSelectedProducts(json)).
-      then(console.log("products", selectedProducts));
+      .then(json => setSelectedProducts(json))
+      .then(console.log("products", selectedProducts));
   }
 
   const handleEdit = () => {
