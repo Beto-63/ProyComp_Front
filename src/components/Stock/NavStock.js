@@ -16,6 +16,9 @@ const NavStock = () => {
     const goToItemByName = () => {
         navigate('/stock/getbyname');
     }
+    const goToItemByNameChanne = () => {
+        navigate('/stock/getbynameandchannel');
+    }
     const goToTransfer = () => {
         navigate('/stock/transfer');
     }
@@ -44,15 +47,16 @@ const NavStock = () => {
                         <button className='btn-dark-bkg' onClick={goToItemByName} >Consulta X nombre</button>
                     </Col>
                     <Col>
+                        <button className='btn-dark-bkg' onClick={goToItemByNameChanne} >X nombre -ubicación</button>
+                    </Col>
+                    <Col>
                         <button className='btn-dark-bkg' onClick={goToTransfer} >Traslado cantidad</button>
                     </Col>
                     <Col>
                         <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
                     </Col>
-                    <Col>
-                        <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste a elemento</button>
-                    </Col>
                 </Row>
+                <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste a elemento</button>
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>

@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -9,35 +9,24 @@ import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
 
-import { server } from '../../context/Api'
+
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
 
 const schema = yup.object({
-  product_id: yup.string('Solo se aceptan caracteres').required('Este campo es necesrio para sincronizar con Wix').trim('No dejar espacios antes o al final'),
-  name: yup.string().required('Ingresa el nombre del elemento inventariable'),
-  description: yup.string().max(128),
-  price: yup.number().typeError('Ingresa el precio de venta').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
-  cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
-  temperature: yup.string(),
+  product_id: yup.string('Solo se aceptan caracteres').required('Este campo es requerido').trim('No dejar espacios antes o al final'),
+  name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido').min(6),
+  description: yup.string('Solo se aceptan caracteres').max(128),
+  price: yup.number('Solo se aceptan números').required('Este campo es requerido'),
+  cat_name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido'),
+  temperature: yup.string('Solo se aceptan caracteres'),
   img_url: yup.string('Solo se aceptan caracteres'),
-  stock_name: yup.string(),
-  stock_qty: yup.number().typeError('Ingresa la cantidad inicial'),
+  stock_name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido'),
+  stock_qty: yup.number('Solo se aceptan números').required('Este campo es requerido'),
 })
 
 const CreateProduct = () => {
-
-  const [categories, setCategories] = useState([{}]);
-  const [response, setResponse] = useState({});
-  const [selectedItems, setSelectedItems] = useState([{}]);
-
-  useEffect(() => {
-    fetch(`${server}/product/categories`)
-      .then(response => response.json())
-      .then(json => setCategories(json));
-  }, [])
-
   useEffect(() => {
     console.log("activo useEffect");
     // Reemplazar el console por la consulta a la base de datos para llenar el select
@@ -47,36 +36,9 @@ const CreateProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-    console.log("data", data);
-    fetch(`${server}/product`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(json => setResponse(json));
-    console.log("resulatdo de creacion", response);
-
+    console.log("data", data);      //aqui va la creacion del item con un fetch al back
     reset();
   };
-
-  const handleCatChange = () => {
-    let obj = { cat_name: document.getElementById('cat_name').value };
-    fetch(`${server}/stock/findByCatName`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(obj)
-    })
-      .then(response => response.json())
-      .then(json => setSelectedItems(json));
-    console.log(response);
-
-  }
-
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Crear producto</p>
@@ -104,6 +66,7 @@ const CreateProduct = () => {
             <textarea {...register("description")}
               className="campo_entrada"
               placeholder="Descripción"
+
             >
             </textarea>
             <p className='error'>{errors.description?.message}</p>
@@ -118,18 +81,18 @@ const CreateProduct = () => {
           </Row>
           <Row>
             <label htmlFor='cat_name' className='label'>Categoría</label>
-            <select {...register("cat_name")} onChange={handleCatChange}
+            <select {...register("cat_name")}
               className="campo_entrada"
-              placeholder="Categoría de Producto"
-              id='cat_name'
+              placeholder="Categoría de Producto --temporal"
 
             >
-              <option value=''>Seleccione la categoría del producto</option>
-              {categories.map((e, index) => {
-                return (
-                  <option key={index} value={e.name} >{e.name}</option>
-                )
-              })}
+              <option value=''>Seleccion de Categoría</option>
+              <option value='té'>Té</option>
+              <option value='infusión'>Infusión</option>
+              <option value='paquete'>Paquete</option>
+              <option value='accesorios'>Accesirios</option>
+              <option value='combo'>Combo</option>
+              <option value='evento'>Evento</option>
             </select>
             <p className='error'>{errors.cat_name?.message}</p>
           </Row>
@@ -155,19 +118,15 @@ const CreateProduct = () => {
             <p className='error'>{errors.img_url?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='stock_name' className='label'>Elemento a descontar del inventario</label>
+            <label htmlFor='stock_name' className='label'>Elemento de descontar de Inventario</label>
             <select {...register("stock_name")}
               className="campo_entrada"
               placeholder="Nombre a descontar"
 
             >
               <option value=''>Selecciona X nombre</option>
-
-              {selectedItems.map((e, index) => {
-                return (
-                  <option key={index} value={e.name} >{e.name}</option>
-                )
-              })}
+              <option value='temp 1'>Temp 1</option>
+              <option value='temp 2'>Temp 2</option>
             </select>
             <p className='error'>{errors.stock_name?.message}</p>
           </Row>
@@ -179,7 +138,6 @@ const CreateProduct = () => {
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>
           <button className='btn-light-bkg' type="submit" >Crear</button>
-          <br /><br />
         </form>
       </Container>
     </div >

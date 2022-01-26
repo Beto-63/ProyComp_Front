@@ -3,12 +3,12 @@ import { Routes, Route } from 'react-router-dom'
 
 //Importar paginas
 import Auth from '../pages/Auth';
-import NavCashRegister from '../components/cashRegister/NavCashRegister';
-import NavProduct from '../components/product/NavProduct';
+import CashRegister from '../pages/CashRegister';
+import Product from '../pages/Product';
 import ProductSelect from '../pages/ProductSelect';
 import Sell from '../pages/SellTicket';
-import NavStock from '../components/Stock/NavStock';
-import NavUsers from '../components/user/NavUsers';
+import Stock from '../pages/Stock';
+import User from '../pages/User';
 import CreateStockItem from '../components/Stock/CreateStockItem';
 import AddQuantity from '../components/Stock/AddQuantity';
 import CreateProduct from '../components/product/CreateProduct';
@@ -17,33 +17,33 @@ import OpenRegister from '../components/cashRegister/OpenRegister';
 import CheckInventory from '../components/cashRegister/ChckInventory';
 import BankDeposit from '../components/cashRegister/BankDeposit';
 import Expenses from '../components/cashRegister/Expenses';
-import CloseRegister from '../components/cashRegister/CloseRegister';
+import CloseRegister from '../components/cashRegister/ClosRegister';
 import ItemsByName from '../components/Stock/ItemsByName';
 import ItemByNameAndChannel from '../components/Stock/ItemByNameAndChannel';
 import InventoryTransfer from '../components/Stock/InventoryTransfer';
 import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
 
-export const AuthorizedRouter = () => {
+export const AppRouter = () => {
     return (
         <Routes>
             <Route path="/" element={<Auth />} />
 
-            <Route path="/cash" element={<NavCashRegister />} />
+            <Route path="/cash" element={<CashRegister />} />
             <Route path="/cash/open" element={<OpenRegister />} />
             <Route path="/cash/checkinventory" element={<CheckInventory />} />
             <Route path="/cash/deposit" element={<BankDeposit />} />
             <Route path="/cash/expenses" element={<Expenses />} />
             <Route path="/cash/close" element={<CloseRegister />} />
 
-            <Route path="/product" element={<NavProduct />} />
+            <Route path="/product" element={<Product />} />
             <Route path="/product/create" element={<CreateProduct />} />
             <Route path="/product/adjust" element={<AdjustProduct />} />
 
             <Route path="/sell" element={<Sell />} />
-            <Route path="/productSelect" element={<ProductSelect />} />
+            <Route path="/productSelect" element={<ProductSelect/>}/>
 
-            <Route path="/stock" element={<NavStock />} />
+            <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />
             <Route path="/stock/getbyname" element={<ItemsByName />} />
             <Route path="/stock/getbynameandchannel" element={<ItemByNameAndChannel />} />
@@ -53,7 +53,7 @@ export const AuthorizedRouter = () => {
             <Route path="/stock/adjustelement" element={<AdjustElement />} />
 
 
-            <Route path="/user" element={<NavUsers />} />
+            <Route path="/user" element={<User />} />
 
         </Routes>
     )

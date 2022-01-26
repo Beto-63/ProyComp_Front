@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -9,50 +9,25 @@ import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
 
-import { server } from '../../context/Api'
+
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css';
 
 
 const schema = yup.object({
-  old_cat_name: yup.string().required("Se requiere para agilizar la seleccion"),
-  old_name: yup.string().required("Con el nombre se despliega la Inofrmacion almacenada "),
-  product_id: yup.string(),
-  name: yup.string(),
-  description: yup.string().max(128),
-  price: yup.number(),
-  cat_name: yup.string(),
-  temperature: yup.string(),
-  img_url: yup.string(),
-  stock_name: yup.string(),
-  stock_qty: yup.number(),
+  product_id: yup.string('Solo se aceptan caracteres').required('Este campo es requerido').trim('No dejar espacios antes o al final'),
+  name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido').min(6),
+  description: yup.string('Solo se aceptan caracteres').max(128),
+  price: yup.number('Solo se aceptan números').required('Este campo es requerido'),
+  cat_name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido'),
+  temperature: yup.string('Solo se aceptan caracteres'),
+  img_url: yup.string('Solo se aceptan caracteres'),
+  stock_name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido'),
+  stock_qty: yup.number('Solo se aceptan números').required('Este campo es requerido'),
 })
 
 
 const AdjustProduct = () => {
-
-  const [categories, setCategories] = useState([{}]);
-  //const [response, setResponse] = useState({});
-  const [selectedProducts, setSelectedProducts] = useState([{}]);
-  const [prevData, setPrevData] = useState({
-    "product_id": undefined,
-    "name": undefined,
-    "description": undefined,
-    "price": undefined,
-    "cat_name": undefined,
-    "temperature": undefined,
-    "img_url": undefined,
-    "stock_name": undefined,
-    "stock_qty": undefined,
-  });
-
-  useEffect(() => {
-    fetch(`${server}/product/categories`)
-      .then(response => response.json())
-      .then(json => setCategories(json))
-      .then(console.log("categorias", categories));
-  }, [])
-
   useEffect(() => {
     console.log("activo useEffect");
     // Reemplazar el console por la consulta a la base de datos para llenar el select
@@ -66,42 +41,6 @@ const AdjustProduct = () => {
     reset();
   };
 
-  const handleCatChange = () => {
-    let obj = { cat_name: document.getElementById('old_cat_name').value };
-    console.log("obj cat", obj)
-    fetch(`${server}/stock/findByCatName`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(obj)
-    })
-      .then(response => response.json())
-      .then(json => setSelectedProducts(json));
-    console.log("products", selectedProducts);
-  }
-
-  const handleEdit = () => {
-    let obj = { name: document.getElementById('old_name').value };
-    console.log("old Name", obj)
-    fetch(`${server}/product/info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(obj)
-    })
-      .then(response => response.json())
-      .then(json => setPrevData(json));
-    console.log("prev data", prevData)
-  }
-
-  useEffect(() => {
-
-  }, [prevData]);
-
-
-
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Ajuste Datos de Producto</p>
@@ -110,43 +49,26 @@ const AdjustProduct = () => {
       <Container >
         <form className='container' onSubmit={handleSubmit(onSubmit)}>
           <Row>
-            <select {...register("old_cat_name")} onChange={handleCatChange}
+            <label htmlFor='name' className='label'>Producto a corregir</label>
+            <select
               className="campo_entrada"
-              placeholder="Categoría de Producto"
-              id='old_cat_name'
+              placeholder="Nombre del Producto"
+              name="name"
             >
-              <option value=''>Seleccione la categoría del producto</option>
-              {categories.map((e, index) => {
-                return (
-                  <option key={index} value={e.name} >{e.name}</option>
-                )
-              })}
+              <option defaultValue=''>Selecciona X nombre</option>
+              {/* Aqui deberi ir una busqueda a la base de datos de productos incluso de elemento 
+                    de informacion del producto y asi hacer una pantalla mas eficiente refactor de la venta 
+                     */}
+              <option defaultValue='temp 1'>Temp 1</option>
+              <option defaultValue='temp 2'>Temp 2</option>
             </select>
-            <p className='error'>{errors.old_cat_name?.message}</p>
           </Row>
-          <Row>
-            <label htmlFor='old_name' className='label'>Elemento que deseas corregir</label>
-            <select {...register("old_name")} onChange={handleEdit}
-              className="campo_entrada"
-              placeholder="Nombre a descontar"
-              id='old_name'
-            >
-              <option value=''>Selecciona X nombre</option>
-
-              {selectedProducts.map((e, index) => {
-                return (
-                  <option key={index} value={e.name} >{e.name}</option>
-                )
-              })}
-            </select>
-            <p className='error'>{errors.old_name?.message}</p>
-          </Row>
-
+          <button className='btn-light-bkg-mid-page'>Buscar </button>
           <h6>Datos para corrección</h6>
           <Row>
             <input  {...register("name")}
               className="campo_entrada"
-              placeholder={prevData.name}
+              placeholder="Nombre del Producto"
               name="name"
               type="text"
             />
@@ -155,38 +77,47 @@ const AdjustProduct = () => {
           <Row>
             <input  {...register("product_id")}
               className="campo_entrada"
-              placeholder={prevData.product_id}
+              placeholder="Codigo interno del Producto"
             />
             <p className='error'>{errors.product_id?.message}</p>
           </Row>
           <Row>
             <textarea  {...register("description")}
               className="campo_entrada"
-              placeholder={prevData.description}
+              placeholder="Descripción"
             />
             <p className='error'>{errors.cat_description?.message}</p>
           </Row>
           <Row>
             <input  {...register("price")}
               className="campo_entrada"
-              placeholder={prevData.price}
+              placeholder="Precio"
             />
             <p className='error'>{errors.cat_price?.message}</p>
           </Row>
           <Row>
             <label htmlFor='cat_name' className='label'>Categoría</label>
-            <input  {...register("cat_name")}
+            <select  {...register("cat_name")}
               className="campo_entrada"
-              placeholder={prevData.cat_name}
-            />
+              placeholder="Categoría de Producto --temporal"
+            >
+              <option value=''>Seleccion de Categoría</option>
+              <option value='té'>Té</option>
+              <option value='infusión'>Infusión</option>
+              <option value='paquete'>Paquete</option>
+              <option value='accesorios'>Accesirios</option>
+              <option value='combo'>Combo</option>
+              <option value='evento'>Evento</option>
+            </select>
             <p className='error'>{errors.cat_name?.message}</p>
           </Row>
           <Row>
             <label htmlFor='temperature' className='label'>Temperatura</label>
             <select  {...register("temperature")}
               className="campo_entrada"
-              placeholder={prevData.temperature}
+              placeholder="Temperatura - Se requiere en Té e Infusión"
             >
+              <option value=''>Selecciona la Temperatura</option>
               <option value='caliente'>Caliente</option>
               <option value='frio'>Frio</option>
             </select>
@@ -195,7 +126,7 @@ const AdjustProduct = () => {
           <Row>
             <input {...register("img_url")}
               className="campo_entrada"
-              placeholder={prevData.img_url}
+              placeholder="URL de foto - Opcional"
             />
             <p className='error'>{errors.img_url?.message}</p>
           </Row>
@@ -203,7 +134,7 @@ const AdjustProduct = () => {
             <label htmlFor='stock_name' className='label'>Elemento de descontar de Inventario</label>
             <select  {...register("stock_name")}
               className="campo_entrada"
-              placeholder={prevData.stock_name}
+              placeholder="Nombre a descontar"
             >
               <option value=''>Selecciona X nombre</option>
               <option value='temp 1'>Temp 1</option>
@@ -214,7 +145,7 @@ const AdjustProduct = () => {
           <Row>
             <input  {...register("stock_qty")}
               className="campo_entrada"
-              placeholder={prevData.stock_qty}
+              placeholder="Cantidad a descontar (gr - unidades)"
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>

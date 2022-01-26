@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
+import BotonFondoOscuro from '../generic/BotonFondoOscuro';
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
@@ -32,20 +33,20 @@ const NavStock = () => {
             <Container>
                 <Row >
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToOpen} >Apertura de caja</button>
+                        <BotonFondoOscuro label='Apertura de caja' handleClick={goToOpen} />
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToCheckInventory} >Revisión de inventario</button>
+                        <BotonFondoOscuro label='Revisión de inventario' handleClick={goToCheckInventory} />
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToDeposit} >Consignación</button>
+                        <BotonFondoOscuro label='Cónsignacion' handleClick={goToDeposit} />
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToExpenses} >Gastos menores</button>
+                        <BotonFondoOscuro label='Gastos menores' handleClick={goToExpenses} />
                     </Col>
 
                 </Row>
-                <button className='btn-dark-bkg' onClick={goToClose} >Cierre de caja</button>
+                <BotonFondoOscuro label='Cierre de caja' handleClick={goToClose} />
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>
