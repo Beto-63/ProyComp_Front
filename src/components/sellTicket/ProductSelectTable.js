@@ -47,6 +47,7 @@ const ProductSelectTable = () => {
             </select>
             </div>
             <br/>
+            <br/>
             <Button type="submit">Vender</Button>
         </div>
     );
