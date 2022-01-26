@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Dropdown, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 const ProductSelectTable = () => {
     return (
@@ -39,19 +39,16 @@ const ProductSelectTable = () => {
             </div>
             <div>
             <p>Medio de Pago</p>
-            <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                    Elija Medio de Pago
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item name='nombre' href="#/action-1">Tarjeta de Crédito</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Tarjeta Débito</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Efectivo</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <select>
+                <option value=''>Elija Medio de Pago</option>
+                <option value='Crédito'>Tarjeta de Crédito</option>
+                <option value='Débito'>Tarjeta Débito</option>
+                <option value='Efectivo'>Efectivo</option>
+            </select>
             </div>
-            <Button type="submit">Vender</Button>
+            <br/>
+            <br/>
+            <Button type="submit">Venderdores</Button>
         </div>
     );
 };
