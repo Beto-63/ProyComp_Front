@@ -1,8 +1,8 @@
 //Importar Assets
 import './App.css';
 
-import { AppRouter } from './routers/AppRouter';
-
+import { AuthorizedRouter } from './routers/AuthorizedRouter';
+//import { UnauthorizedRouter } from './routers/UnauthorizedRouter';
 
 
 
@@ -10,8 +10,8 @@ function App() {
   return (
 
     <div className='App'>
-      <AppRouter />
-
+      <AuthorizedRouter />
+      {/* <UnauthorizedRouter /> */}
     </div >
   );
 }

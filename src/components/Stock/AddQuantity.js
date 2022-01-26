@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Container, Row } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -9,35 +9,73 @@ import * as yup from 'yup'
 
 /**********************Importacion de Componentes**************************/
 
-
+import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
-    quantity: yup.number().moreThan(0, 'El valor debe ser positivo').required('Este campo es requerido'),
-    channel: yup.string().required('Este campo es requerido')
+    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    qty: yup.number().typeError('Ingresa la cantida a adicionar').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
+    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
 }).required();
 
 const AddQuantity = () => {
-    // Se declaro este arreglo para probar el select con dos valores
-    const ubicaciones = ['Arsenal', 'Bodega']
+    const [selectedNames, setSelectedNames] = useState([{}]);
+    const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
+    const [ubicaciones, setUbicaciones] = useState([{}]);
+    const [response, setResponse] = useState([{}]);
+
     useEffect(() => {
-        console.log("activo useEffect");
-        // Reemplazar el console por la consulta a la base de datos para llenar el select
+        fetch(`${server}/stock/channels`)
+            .then(response => response.json())
+            .then(json => setUbicaciones(json));
     }, [])
+
+    useEffect(() => {
+        fetch(`${server}/product/categories`)
+            .then(response => response.json())
+            .then(json => setCategories(json));
+    }, [])
+
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
     const onSubmit = (data) => {
-        console.log("data", data);      //aqui va la creacion del item con un fetch al back
+        let obj = { name: data.name, channel: data.channel, qty: data.qty }
+        console.log('desde boton', data)
+        console.log("obj", obj)
+        fetch(`${server}/stock/addQty`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        })
+            .then(response => response.json())
+            .then(json => setResponse(json));
+        console.log(response);
         reset();
     };
 
-    return (
+    const handleCatChange = () => {
+        let obj = { cat_name: document.getElementById('cat_name').value };
+        console.log(obj)
+        fetch(`${server}/stock/findByCatName`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        })
+            .then(response => response.json())
+            .then(json => setSelectedNames(json));
 
+    }
+
+    return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Agregar cantidad al sotock</p>
             <Link to="/" className='salir' >Salir</Link>
@@ -45,43 +83,59 @@ const AddQuantity = () => {
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
                     <Row>
-                        <label htmlFor='Channel' className='label'>Nombre del elemento</label>
-                        {/* la busqueda de este Item debera complementarse con lo que hagamos para 
-                        selecccionar el item en ventas */}
-                        <select {...register("name")}
-                            className="campo_entrada container"
-                            placeholder="escoja el Item --Temporal"
+                        <label htmlFor='cat_name' className='label'>Categoria del elemento</label>
+                        <select {...register("cat_name")}
+                            className="campo_entrada"
+                            placeholder="Categoria del Elemento"
+                            id="cat_name"
                         >
-                            <option value=''>Elemento a adicionar</option>
-                            {/*La consulta va en un SueEffect y aca un  map para desplegar 
-                            los items del stock */}
-                            <option value='temp uno'>Temp uno</option>
-                            <option value='Temp dos'>Temp dos</option>
+                            <option value=''>Seleccione la categoría del Elemento</option>
+                            {categories.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
                         </select>
-                        <p className='error'>{errors.quantity?.name}</p>
+                        <p className='error'>{errors.cat_name?.message}</p>
                     </Row>
                     <Row>
-                        <label htmlFor='Channel' className='label'>Ubicación</label>
-                        <select {...register("channel")}
+                        <label htmlFor='channel' className='label'>Ubicación</label>
+                        <select {...register("channel")} onChange={handleCatChange}
                             className="campo_entrada"
-                            placeholder="Ubicación (Bodega/Arsenal) --temporal"
+                            placeholder="Ubicación Física"
                         >
                             <option value=''>Ingrese Ubicacion</option>
                             {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
-                            {ubicaciones.map((element, index) => {
+                            {ubicaciones.map((e, index) => {
                                 return (
-                                    <option key={index} value={element} >{element}</option>
+                                    <option key={index} value={e.name} >{e.name}</option>
                                 )
                             })}
                         </select>
                         <p className='error'>{errors.channel?.message}</p>
                     </Row>
                     <Row>
-                        <input {...register("quantity")}
+                        <label htmlFor='name' className='label'>Nombre del elemento</label>
+                        <select {...register("name")}
+                            className="campo_entrada container"
+                            placeholder="Escoja el Item"
+                        >
+                            <option >Elemento a adicionar</option>
+                            {selectedNames.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        <p className='error'>{errors.name?.message}</p>
+                    </Row>
+
+                    <Row>
+                        <input {...register("qty")}
                             className="campo_entrada"
                             placeholder="Cantidad (gr/unidades)"
                         />
-                        <p className='error'>{errors.quantity?.message}</p>
+                        <p className='error'>{errors.qty?.message}</p>
                     </Row>
                     <button className='btn-light-bkg' type="submit" >Agregar</button>
                 </form>

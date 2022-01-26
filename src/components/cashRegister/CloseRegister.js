@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ClosRegister = () => {
+const CloseRegister = () => {
     return (
         <div>
             <h1> Close Register</h1>
@@ -8,4 +8,4 @@ const ClosRegister = () => {
     )
 }
 
-export default ClosRegister
+export default CloseRegister
