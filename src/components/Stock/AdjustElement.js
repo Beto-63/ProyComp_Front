@@ -18,9 +18,9 @@ const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
     name: yup.string().required('Este campo es requerido').min(6, 'Debe tener por lo menos 6 caracteres'),
     nameEdit: yup.string(),
-    channel: yup.string().required('Este campo es requerido'),
+    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
     channelEdit: yup.string(),
-    cat_name: yup.string().required(),
+    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
     cat_nameEdit: yup.string()
     //    cat: yup.string().required()
 });
@@ -126,7 +126,7 @@ const AdjustElement = () => {
                         </Row>
                         <Row>
                             <label htmlFor='name' className='label'>Nombre del elemento que requiere modificación</label>
-                            <select {...register("name")} on
+                            <select {...register("name")}
                                 className="campo_entrada container"
                                 placeholder="Escoja el Item"
                                 id='name'

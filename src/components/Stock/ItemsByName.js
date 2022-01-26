@@ -77,7 +77,7 @@ const ItemsByName = () => {
 
     return (
         <div className='canvas_claro' >
-            <p className="titulo_oscuro">Agregar cantidad al sotock</p>
+            <p className="titulo_oscuro">Consulta por nombre</p>
             <Link to="/" className='salir' >Salir</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >

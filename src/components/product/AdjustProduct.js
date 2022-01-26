@@ -51,7 +51,7 @@ const AdjustProduct = () => {
       .then(response => response.json())
       .then(json => setCategories(json))
       .then(console.log("categorias", categories));
-  }, [categories])
+  }, [])
 
   useEffect(() => {
     console.log("activo useEffect");
@@ -68,6 +68,7 @@ const AdjustProduct = () => {
 
   const handleCatChange = () => {
     let obj = { cat_name: document.getElementById('old_cat_name').value };
+    console.log("obj cat", obj)
     fetch(`${server}/stock/findByCatName`, {
       method: 'POST',
       headers: {
@@ -76,12 +77,13 @@ const AdjustProduct = () => {
       body: JSON.stringify(obj)
     })
       .then(response => response.json())
-      .then(json => setSelectedProducts(json))
-      .then(console.log("products", selectedProducts));
+      .then(json => setSelectedProducts(json));
+    console.log("products", selectedProducts);
   }
 
   const handleEdit = () => {
     let obj = { name: document.getElementById('old_name').value };
+    console.log("old Name", obj)
     fetch(`${server}/product/info`, {
       method: 'POST',
       headers: {
@@ -90,8 +92,8 @@ const AdjustProduct = () => {
       body: JSON.stringify(obj)
     })
       .then(response => response.json())
-      .then(json => setPrevData(json))
-      .then(console.log(prevData));
+      .then(json => setPrevData(json));
+    console.log("prev data", prevData)
   }
 
   useEffect(() => {
@@ -123,7 +125,7 @@ const AdjustProduct = () => {
             <p className='error'>{errors.old_cat_name?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='old_name' className='label'>Elemento a descontar del inventario</label>
+            <label htmlFor='old_name' className='label'>Elemento que deseas corregir</label>
             <select {...register("old_name")} onChange={handleEdit}
               className="campo_entrada"
               placeholder="Nombre a descontar"

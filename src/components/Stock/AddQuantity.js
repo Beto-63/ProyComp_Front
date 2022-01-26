@@ -116,7 +116,7 @@ const AddQuantity = () => {
                     </Row>
                     <Row>
                         <label htmlFor='name' className='label'>Nombre del elemento</label>
-                        <select {...register("name")} on
+                        <select {...register("name")}
                             className="campo_entrada container"
                             placeholder="Escoja el Item"
                         >
@@ -127,7 +127,7 @@ const AddQuantity = () => {
                                 )
                             })}
                         </select>
-                        <p className='error'>{errors.name?.name}</p>
+                        <p className='error'>{errors.name?.message}</p>
                     </Row>
 
                     <Row>

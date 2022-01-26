@@ -88,7 +88,7 @@ const InventoryTransfer = () => {
                         <select {...register("cat_name")}
                             className="campo_entrada"
                             placeholder="Categoria del Elemento"
-                            id="cat_name"
+                            id="cat_name" onChange={handleCatChange}
                         >
                             <option value=''>Seleccione la categoría del Elemento</option>
                             {categories.map((e, index) => {
@@ -104,7 +104,7 @@ const InventoryTransfer = () => {
                         <select {...register("source")}
                             className="campo_entrada"
                             placeholder="Ubicación Física"
-                            id='source' onChange={handleCatChange}
+                            id='source'
                         >
                             <option value=''>Ingrese Ubicacion</option>
                             {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
@@ -118,14 +118,16 @@ const InventoryTransfer = () => {
                     </Row>
                     <Row>
                         <label htmlFor='name' className='label'>Nombre del elemento a trasladar</label>
-                        <select {...register("name")} on
+                        <select {...register("name")}
                             className="campo_entrada container"
                             placeholder="Escoja el Item"
                         >
                             <option value=''>Elemento a adicionar</option>
                             {selectedNames.map((e, index) => {
                                 return (
-                                    <option key={index} value={e.name} >{`De :${e.name}, se tiene disponibles ${e.quantity}`}</option>
+                                    <option key={index} value={e.name} >
+                                        {`El inventario de ${e.name} es ${e.quantity} en ${e.channel}`}
+                                    </option>
                                 )
                             })}
                         </select>

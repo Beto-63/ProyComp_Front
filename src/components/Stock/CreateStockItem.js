@@ -20,7 +20,7 @@ const schema = yup.object({
     quantity: yup.number().typeError('Ingresa la cantidad inicial').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
     channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
     cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
-}).required();
+});
 
 const CreateStockItem = () => {
 

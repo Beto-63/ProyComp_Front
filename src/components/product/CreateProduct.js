@@ -15,15 +15,15 @@ import '../generic/Light-bkg.css'
 
 
 const schema = yup.object({
-  product_id: yup.string('Solo se aceptan caracteres').required('Este campo es requerido').trim('No dejar espacios antes o al final'),
-  name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido').min(6),
-  description: yup.string('Solo se aceptan caracteres').max(128),
-  price: yup.number('Solo se aceptan números').required('Este campo es requerido'),
-  cat_name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido'),
-  temperature: yup.string('Solo se aceptan caracteres'),
+  product_id: yup.string('Solo se aceptan caracteres').required('Este campo es necesrio para sincronizar con Wix').trim('No dejar espacios antes o al final'),
+  name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+  description: yup.string().max(128),
+  price: yup.number().typeError('Ingresa el precio de venta').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
+  cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
+  temperature: yup.string(),
   img_url: yup.string('Solo se aceptan caracteres'),
-  stock_name: yup.string('Solo se aceptan caracteres').required('Este campo es requerido'),
-  stock_qty: yup.number('Solo se aceptan números').required('Este campo es requerido'),
+  stock_name: yup.string(),
+  stock_qty: yup.number().typeError('Ingresa la cantidad inicial'),
 })
 
 const CreateProduct = () => {
