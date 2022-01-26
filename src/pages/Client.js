@@ -14,7 +14,7 @@ const Client = () => {
             if(resp.status===201){
                 let json = await resp.json();
                 //almacenar los objetos recibidos del ClientForm en un array
-                let array = [...client, json] //si ponemos objClient en lugar de json se mostrará todo el objeto en el hook
+                let array = [...client, objClient] //si ponemos objClient en lugar de json se mostrará todo el objeto en el hook
                 //enviar el array al useState "client"
                 setClient(array)
             }

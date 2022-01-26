@@ -14,11 +14,7 @@ const ClientForm = ({ handleClient }) => {
     const [form, setForm] = useState(objForm);
 
     const handleForm = (e) => {
-
-       
-
         let obj = { ...form, [e.target.name]: e.target.value}
-
         setForm(obj)
     }
 
