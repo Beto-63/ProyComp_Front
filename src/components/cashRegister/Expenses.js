@@ -22,7 +22,7 @@ const schema = yup.object({
 
 const Expenses = () => {
 
-    const [expenseOjb, setExpenseObj] = useState({});
+
     //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
     const [response, setResponse] = useState({});
     //const [lastOpen, setLastOpen] = useState({});

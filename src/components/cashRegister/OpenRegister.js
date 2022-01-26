@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
-import { server } from '../../context/Api'
+//import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -24,8 +24,8 @@ const schema = yup.object({
 const OpenRegister = () => {
 
 
-    const [canOpen, setCanOpen] = useState(false);
-    const [lastOpen, setLastOpen] = useState({});
+    // const [canOpen, setCanOpen] = useState(false);
+    //const [lastOpen, setLastOpen] = useState({});
 
 
 
