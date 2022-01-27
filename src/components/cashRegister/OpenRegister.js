@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
-import { server } from '../../context/Api'
+//import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -18,14 +18,14 @@ const schema = yup.object({
     //name: yup.string().required('Ingresa el nombre del elemento inventariable'),
     change_amount: yup.number().typeError('Aqui va lo que reservas para vueltos').moreThan(2000, 'Menos de 20 es poco!').required(),
     //channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
-    //cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
+
 });
 
 const OpenRegister = () => {
 
 
-    const [canOpen, setCanOpen] = useState(false);
-    const [lastOpen, setLastOpen] = useState({});
+    // const [canOpen, setCanOpen] = useState(false);
+    //const [lastOpen, setLastOpen] = useState({});
 
 
 

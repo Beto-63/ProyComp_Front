@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import '../generic/CanvasOscuro.css'
+import '../generic/Nav.css'
 
 const ClientForm = ({ handleClient }) => {
     const objForm = {
@@ -15,9 +15,9 @@ const ClientForm = ({ handleClient }) => {
 
     const handleForm = (e) => {
 
-       
 
-        let obj = { ...form, [e.target.name]: e.target.value}
+
+        let obj = { ...form, [e.target.name]: e.target.value }
 
         setForm(obj)
     }
