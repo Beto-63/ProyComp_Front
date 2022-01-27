@@ -18,7 +18,7 @@ const schema = yup.object({
     //name: yup.string().required('Ingresa el nombre del elemento inventariable'),
     change_amount: yup.number().typeError('Aqui va lo que reservas para vueltos').moreThan(2000, 'Menos de 20 es poco!').required(),
     //channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
-    //cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
+
 });
 
 const OpenRegister = () => {
