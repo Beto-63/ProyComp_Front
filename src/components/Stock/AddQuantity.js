@@ -15,11 +15,11 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
     qty: yup.number().typeError('Ingresa la cantida a adicionar').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
-    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
-    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
-}).required();
+    channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
+    cat_name: yup.string().trim().required('La categoria sirve para hacer mas cortas las selecciones')
+});
 
 const AddQuantity = () => {
     const [selectedNames, setSelectedNames] = useState([{}]);
@@ -45,8 +45,6 @@ const AddQuantity = () => {
     });
     const onSubmit = (data) => {
         let obj = { name: data.name, channel: data.channel, qty: data.qty }
-        console.log('desde boton', data)
-        console.log("obj", obj)
         fetch(`${server}/stock/addQty`, {
             method: 'PUT',
             headers: {
@@ -56,13 +54,11 @@ const AddQuantity = () => {
         })
             .then(response => response.json())
             .then(json => setResponse(json));
-        console.log(response);
         reset();
     };
 
     const handleCatChange = () => {
         let obj = { cat_name: document.getElementById('cat_name').value };
-        console.log(obj)
         fetch(`${server}/stock/findByCatName`, {
             method: 'POST',
             headers: {
@@ -78,7 +74,7 @@ const AddQuantity = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Agregar cantidad al sotock</p>
-            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -120,7 +116,7 @@ const AddQuantity = () => {
                             className="campo_entrada container"
                             placeholder="Escoja el Item"
                         >
-                            <option >Elemento a adicionar</option>
+                            <option value="">Elemento a adicionar</option>
                             {selectedNames.map((e, index) => {
                                 return (
                                     <option key={index} value={e.name} >{e.name}</option>

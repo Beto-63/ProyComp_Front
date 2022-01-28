@@ -15,8 +15,8 @@ import '../generic/Light-bkg.css';
 
 
 const schema = yup.object({
-  old_cat_name: yup.string().required("Se requiere para agilizar la seleccion"),
-  old_name: yup.string().required("Con el nombre se despliega la Inofrmacion almacenada "),
+  old_cat_name: yup.string().trim().required("Se requiere para agilizar la seleccion"),
+  old_name: yup.string().trim().required("Con el nombre se despliega la Inofrmacion almacenada "),
   product_id: yup.string(),
   name: yup.string(),
   description: yup.string().max(128),
@@ -69,7 +69,7 @@ const AdjustProduct = () => {
   const handleCatChange = () => {
     let obj = { cat_name: document.getElementById('old_cat_name').value };
     console.log("obj cat", obj)
-    fetch(`${server}/stock/findByCatName`, {
+    fetch(`${server}/product/findByCatName`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ const AdjustProduct = () => {
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Ajuste Datos de Producto</p>
-      <Link to="/" className='salir'>Salir</Link>
+      <Link to="/" className='inicio'>Inicio</Link>
       <Link to="/product" className='volver'>Volver</Link>
       <Container >
         <form className='container' onSubmit={handleSubmit(onSubmit)}>

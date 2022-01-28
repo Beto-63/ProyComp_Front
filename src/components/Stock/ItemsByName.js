@@ -15,10 +15,10 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
     quantity: yup.number().typeError('El valor debeser numerico').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
-    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
-    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
+    channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
+    cat_name: yup.string().trim().required('La categoria sirve para hacer mas cortas las selecciones')
 }).required();
 
 const ItemsByName = () => {
@@ -39,14 +39,11 @@ const ItemsByName = () => {
     });
     const onSubmit = (data) => {
         let obj = { name: data.name, channel: data.channel, qty: data.qty }
-        console.log('desde boton', data)
-        console.log("obj", obj)
         reset();
     };
 
     const handleCatChange = () => {
         let obj = { cat_name: document.getElementById('cat_name').value };
-        console.log('busqueda por cat_name', obj)
         fetch(`${server}/stock/findByCatName`, {
             method: 'POST',
             headers: {
@@ -61,8 +58,6 @@ const ItemsByName = () => {
 
     const handleNameChange = () => {
         let obj = { name: document.getElementById('name').value };
-        console.log(obj)
-        console.log('buqueda por nombre', obj)
         fetch(`${server}/stock/findByName`, {
             method: 'POST',
             headers: {
@@ -78,7 +73,7 @@ const ItemsByName = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Consulta por nombre</p>
-            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -108,7 +103,7 @@ const ItemsByName = () => {
                             <option value=''>Elemento a adicionar</option>
                             {selectedNames.map((e, index) => {
                                 return (
-                                    <option key={index} value={e.name} >{e.name}|-----|{e.channel}</option>
+                                    <option key={index} value={e.name} >{`El producto ${e.name}, estápresente en ${e.channel}`}</option>
                                 )
                             })}
                         </select>
