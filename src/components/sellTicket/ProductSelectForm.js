@@ -2,6 +2,14 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 const ProductSelectForm = () => {
+    const objForm = {
+        bebida: '',
+        tipo: ''
+    }
+
+    const handleForm = (e)=>{
+
+    }
     return (
         <div>
             <Form >
@@ -14,6 +22,7 @@ const ProductSelectForm = () => {
                             name="bebida"
                             type={type}
                             id={`inline-${type}-1`}
+                            value={'Té'}
                         />
                         <Form.Check
                             inline
@@ -21,6 +30,7 @@ const ProductSelectForm = () => {
                             name="bebida"
                             type={type}
                             id={`inline-${type}-2`}
+                            value={'Infusión'}
                         />
                     </div>
                 ))}
@@ -32,6 +42,7 @@ const ProductSelectForm = () => {
                             name="tipo"
                             type={type}
                             id={`inline-${type}-1`}
+                            value={'Paquete'}
                         />
                         <Form.Check
                             inline
@@ -39,6 +50,7 @@ const ProductSelectForm = () => {
                             name="tipo"
                             type={type}
                             id={`inline-${type}-2`}
+                            value={'Accesorio'}
                         />
                         <Form.Check
                             inline
@@ -46,10 +58,11 @@ const ProductSelectForm = () => {
                             name="tipo"
                             type={type}
                             id={`inline-${type}-3`}
+                            value={'Combo'}
                         />
                     </div>
                 ))}
-                <Button type="submit">Escoge el Producto</Button>
+                <Button variant='secondary' href='/productChoice'>Escoge el Producto</Button>
             </Form>
         </div>
     );
