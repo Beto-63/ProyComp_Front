@@ -39,7 +39,7 @@ const CreateProduct = () => {
   }, [])
 
   useEffect(() => {
-    console.log("activo useEffect");
+
     // Reemplazar el console por la consulta a la base de datos para llenar el select
   }, [])
 
@@ -47,7 +47,7 @@ const CreateProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-    console.log("data", data);
+
     fetch(`${server}/product`, {
       method: 'POST',
       headers: {
@@ -57,7 +57,7 @@ const CreateProduct = () => {
     })
       .then(response => response.json())
       .then(json => setResponse(json));
-    console.log("resulatdo de creacion", response);
+
 
     reset();
   };
@@ -73,7 +73,7 @@ const CreateProduct = () => {
     })
       .then(response => response.json())
       .then(json => setSelectedItems(json));
-    console.log(response);
+
 
   }
 
@@ -117,7 +117,7 @@ const CreateProduct = () => {
             <p className='error'>{errors.price?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='cat_name' className='label'>Categoría</label>
+
             <select {...register("cat_name")} onChange={handleCatChange}
               className="campo_entrada"
               placeholder="Categoría de Producto"
@@ -134,7 +134,7 @@ const CreateProduct = () => {
             <p className='error'>{errors.cat_name?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='temperature' className='label'>Temperatura</label>
+
             <select {...register("temperature")}
               className="campo_entrada"
               placeholder="Temperatura - Se requiere en Té e Infusión"
@@ -172,9 +172,11 @@ const CreateProduct = () => {
             <p className='error'>{errors.stock_name?.message}</p>
           </Row>
           <Row>
+            <label htmlFor='stock_name' className='label'>Cantidad a descontar del inventario (si aplica)</label>
             <input {...register("stock_qty")}
               className="campo_entrada"
               placeholder="Cantidad a descontar (gr - unidades)"
+              value='0'
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>

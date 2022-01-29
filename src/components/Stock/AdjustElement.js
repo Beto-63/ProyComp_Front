@@ -22,23 +22,25 @@ const schema = yup.object({
     channelEdit: yup.string(),
     cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
     cat_nameEdit: yup.string(),
-    statusEdit: yup.number()
+    statusEdit: yup.number().typeError('Se requiere definir el Estado').required()
 });
 
 const AdjustElement = () => {
 
-    const [selectedNames, setSelectedNames] = useState([{}]);
-    const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
-    const [ubicaciones, setUbicaciones] = useState([{}]);
-    const [response, setResponse] = useState([{}]);
-    const [toEdit, setToEdit] = useState({
+    const objElement = {
 
         id: '',
         name: '',
         channel: '',
         cat_name: '',
         status: null
-    });
+    }
+
+    const [selectedNames, setSelectedNames] = useState([{}]);
+    const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
+    const [ubicaciones, setUbicaciones] = useState([{}]);
+    const [response, setResponse] = useState([{}]);
+    const [toEdit, setToEdit] = useState(objElement);
 
 
     useEffect(() => {
@@ -61,21 +63,20 @@ const AdjustElement = () => {
         //Falta el mensaje de confirmacion
         // Aqui armo el objeto que actualiza la informacion en la BD dependiendo de que cambio...
         let newObj = { id: toEdit._id, status: data.statusEdit }
-        console.log("nuevo dato antes", newObj)
         if (data.nameEdit != '') {
             newObj = { ...newObj, name: data.nameEdit }
         } else {
-            newObj = { ...newObj, name: data.name }
+            newObj = { ...newObj, name: toEdit.name }
         }
         if (data.channelEdit != '') {
             newObj = { ...newObj, channel: data.channelEdit.trim() }
         } else {
-            newObj = { ...newObj, channel: data.channel.trim() }
+            newObj = { ...newObj, channel: toEdit.channel.trim() }
         }
         if (data.cat_nameEdit != '') {
             newObj = { ...newObj, cat_name: data.cat_nameEdit }
         } else {
-            newObj = { ...newObj, cat_name: data.cat_name }
+            newObj = { ...newObj, cat_name: toEdit.cat_name }
         }
 
         fetch(`${server}/stock/adjust`, {
@@ -89,6 +90,7 @@ const AdjustElement = () => {
             .then(response => response.json())
             .then(json => setResponse(json));
         reset();
+        setToEdit(objElement);
     };
 
     const handleCatChange = () => {
@@ -96,7 +98,6 @@ const AdjustElement = () => {
             cat_name: document.getElementById('cat_name').value,
             channel: (document.getElementById('channel').value).trim(),
         };
-        console.log(obj)
         fetch(`${server}/stock/findByCatNameChannel`, {
             method: 'POST',
             headers: {
@@ -113,7 +114,6 @@ const AdjustElement = () => {
             name: (document.getElementById('name').value).trim(),
             channel: (document.getElementById('channel').value).trim(),
         }
-        console.log(obj)
         fetch(`${server}/stock/findByNameChannel`, {
             method: 'POST',
             headers: {
@@ -232,13 +232,13 @@ const AdjustElement = () => {
                             <p className='error'>{errors.cat_nameEdit?.message}</p>
                         </Row>
                         <Row>
-                            <label htmlFor='statusEdit' className='label'>¿Requiere cambiar el estado?</label>
+                            <label htmlFor='statusEdit' className='label'>Defina el estado</label>
                             <select {...register("statusEdit")}
                                 className="campo_entrada"
                                 placeholder={toEdit.status}
                                 id="statusEdit"
                             >
-                                <option value='1'>¿Lo va a cambiar?</option>
+                                <option value=''>{""}</option>
                                 <option value='0'>Descontinuar</option>
                                 <option value='1'>Activar</option>
                             </select>
