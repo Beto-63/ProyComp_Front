@@ -69,7 +69,7 @@ const AdjustProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-    console.log("data", data);
+
     let newObj = { id: toEdit._id, status: data.statusEdit }
     if (data.product_idEdit != '') {
       newObj = { ...newObj, product_id: data.product_idEdit }
@@ -156,7 +156,7 @@ const AdjustProduct = () => {
     let obj = {
       name: (document.getElementById('name').value).trim(),
     }
-    console.log('producto nombre', obj)
+
     fetch(`${server}/product/info`, {
       method: 'POST',
       headers: {

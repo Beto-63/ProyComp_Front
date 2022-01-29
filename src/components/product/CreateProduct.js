@@ -39,7 +39,7 @@ const CreateProduct = () => {
   }, [])
 
   useEffect(() => {
-    console.log("activo useEffect");
+
     // Reemplazar el console por la consulta a la base de datos para llenar el select
   }, [])
 
@@ -47,7 +47,7 @@ const CreateProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-    console.log("data", data);
+
     fetch(`${server}/product`, {
       method: 'POST',
       headers: {
@@ -57,7 +57,7 @@ const CreateProduct = () => {
     })
       .then(response => response.json())
       .then(json => setResponse(json));
-    console.log("resulatdo de creacion", response);
+
 
     reset();
   };
@@ -73,7 +73,7 @@ const CreateProduct = () => {
     })
       .then(response => response.json())
       .then(json => setSelectedItems(json));
-    console.log(response);
+
 
   }
 
