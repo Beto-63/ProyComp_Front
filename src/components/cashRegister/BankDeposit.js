@@ -16,7 +16,7 @@ import '../generic/Light-bkg.css'
 const schema = yup.object({
 
     amount: yup.number().typeError('Aqui va la cantidad gastada').required(),
-    //channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
 });
 
 
@@ -49,7 +49,7 @@ const BankDeposit = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Registra aquí cada consignación</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
 

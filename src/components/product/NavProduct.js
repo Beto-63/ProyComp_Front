@@ -14,7 +14,7 @@ const NavStock = () => {
     }
     return (
         <div className='canvas_oscuro'>
-            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestión de Productos</p>

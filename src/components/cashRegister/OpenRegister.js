@@ -15,9 +15,9 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    //name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    //name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
     change_amount: yup.number().typeError('Aqui va lo que reservas para vueltos').moreThan(2000, 'Menos de 20 es poco!').required(),
-    //channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
 
 });
 
@@ -55,7 +55,7 @@ const OpenRegister = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Abre tu caja</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

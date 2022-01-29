@@ -14,9 +14,9 @@ import { server } from '../../context/Api'
 import '../generic/Light-bkg.css'
 
 const schema = yup.object({
-    description: yup.string().required('Ingresa en que se gastó el dinero'),
+    description: yup.string().trim().required('Ingresa en que se gastó el dinero'),
     expense_amount: yup.number().typeError('Aqui va la cantidad gastada').required(),
-    //channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
 });
 
 
@@ -52,7 +52,7 @@ const Expenses = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Registra gastos menores</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

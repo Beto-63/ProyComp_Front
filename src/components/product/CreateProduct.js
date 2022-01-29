@@ -16,10 +16,10 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
   product_id: yup.string('Solo se aceptan caracteres').required('Este campo es necesrio para sincronizar con Wix').trim('No dejar espacios antes o al final'),
-  name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+  name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
   description: yup.string().max(128),
   price: yup.number().typeError('Ingresa el precio de venta').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
-  cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
+  cat_name: yup.string().trim().required('La categoria sirve para hacer mas cortas las selecciones'),
   temperature: yup.string(),
   img_url: yup.string('Solo se aceptan caracteres'),
   stock_name: yup.string(),
@@ -80,7 +80,7 @@ const CreateProduct = () => {
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Crear producto</p>
-      <Link to="/" className='salir'>Salir</Link>
+      <Link to="/" className='inicio'>Inicio</Link>
       <Link to="/product" className='volver'>Volver</Link>
       <Container >
         <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -141,8 +141,8 @@ const CreateProduct = () => {
 
             >
               <option value=''>Selecciona la Temperatura</option>
-              <option value='caliente'>Caliente</option>
-              <option value='frio'>Frio</option>
+              <option value='C'>Caliente</option>
+              <option value='Frio'>Frio</option>
             </select>
             <p className='error'>{errors.temperature?.message}</p>
           </Row>
