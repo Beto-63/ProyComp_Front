@@ -49,6 +49,10 @@ input, select {
     color: #8EA7A9; 
 }
 
+.result {
+text-align:left;
+color: #F58787;
+}
 .label {
     text-align:left;
     
