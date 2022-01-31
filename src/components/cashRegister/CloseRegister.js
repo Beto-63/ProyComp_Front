@@ -22,21 +22,29 @@ const schema = yup.object({
 
 const CloseRegister = () => {
 
-    const [lastOpen, setLastOpen] = useState({});
+    const transaction = {
+        operation: "",
+        cash_on_hand: 0,
+        change_amount: 0,
+        channel: "",
+        status: null,
+        amount_to_deposit: 0,
+    }
+
+    const [lastOpen, setLastOpen] = useState([{ transaction }]);
     const [canClose, setCanClose] = useState(false);
-    const [lastClose, setLastClose] = useState({});
+    const [lastClose, setLastClose] = useState([{ transaction }]);
     const [sellTickets, setSellTickets] = useState([{}]);
     const [deposits, setDeposits] = useState([{}]);
+    const [totalDeposits, setTotalDeposits] = useState(0)
     const [expenses, setExpenses] = useState([{}]);
+    const [totalExpenses, setTotalExpenses] = useState(0)
     const [newAmountToDeposit, setNewAmountToDeposit] = useState(0);
     const [totalSales, setTotalSales] = useState(0);
-    const [totalExpenses, setTotalExpenses] = useState(0)
+    const [cashSales, setCashSales] = useState(0)
     const [nonCashSales, setNonCashSales] = useState(0)
-    const [CashSales, setCashSales] = useState(0)
-    const [totalDeposits, setTotalDeposits] = useState(0)
     const [expectedCashOnHand, setExpectedCashOnHand] = useState(0)
-
-
+    const [countedCash, setCountedCash] = useState(0)
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
@@ -77,9 +85,9 @@ const CloseRegister = () => {
         console.log("deposits", deposits)
         console.log("expenses", expenses)
         console.log("sellTickets", sellTickets)
-        console.log("Estado de aperturas anteriores", lastOpen.status)
-        console.log("Estado de cierres anteriores", lastClose.status)
-        if (lastOpen.status == 1 && lastClose.status == 0) { setCanClose(true) }
+        console.log("Registros con aperturas anteriores ", lastOpen.length)
+        console.log("Registros con cierres anteriores", lastClose.length)
+        if (lastOpen.length === 1 && lastClose.length === 0) { setCanClose(true) }
         console.log(canClose)
         temp = 0
         deposits.forEach(element => { temp = temp + element.amount });
@@ -92,9 +100,10 @@ const CloseRegister = () => {
         let tempCash = 0
         let tempNonCash = 0
         let tempTotal = 0
+        console.log("Ventas", sellTickets)
         sellTickets.forEach(element => {
             tempTotal = tempTotal + element.amount_sold;
-            if (element.payment_method = 'Cash') {
+            if (element.payment_method === 'Cash') {
                 tempCash = tempCash + element.amount_sold
             } else {
                 tempNonCash = tempNonCash + element.amount_sold
@@ -107,24 +116,34 @@ const CloseRegister = () => {
         setTotalSales(tempTotal)
         setNonCashSales(tempNonCash)
         setCashSales(tempCash)
-        setExpectedCashOnHand(
-            lastOpen.change_amount +
-            lastOpen.amount_to_deposit +
-            CashSales -
-            totalDeposits -
-            totalExpenses
-        )
-
-
-        tempCash = 0
-        tempNonCash = 0
-        tempTotal = 0
-
 
     }, [deposits, expenses, sellTickets, lastClose, lastOpen, canClose]);
 
-    const onSubmit = (data) => {
+    const handleNewChangeAmount = () => {
+        setNewAmountToDeposit(
+            lastOpen[0].change_amount +
+            lastOpen[0].amount_to_deposit +
+            cashSales -
+            totalDeposits -
+            totalExpenses - document.getElementById('change_amount')
 
+        )
+    }
+
+    const handleCash = () => {
+        setCountedCash(document.getElementById('cash_on_hand'))
+        setExpectedCashOnHand(
+            lastOpen[0].change_amount +
+            lastOpen[0].amount_to_deposit +
+            cashSales -
+            totalDeposits -
+            totalExpenses
+        )
+        console.log("Campo de entrada", countedCash)
+    }
+
+    const onSubmit = (data) => {
+        reset()
     }
 
     return (
@@ -135,20 +154,49 @@ const CloseRegister = () => {
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
+                    <p className="label">{`La ultima apertura se hizo con una base  _______$${lastOpen[0].change_amount}`}</p>
+                    <p className="label">{`y tenias por consignar _________________________$${lastOpen[0].amount_to_deposit},`}</p>
                     <Row>
                         <Col>
-                            <label htmlFor='change_on_hand' className='label'>Cuenta el efectivo que tienes en caja</label>
+                            <label htmlFor='cash_on_hand' className='label'>Cuenta e ingresa el efectivo que tienes en caja</label>
                         </Col>
                         <Col>
                             <input {...register("cash_on_hand")}
                                 className="campo_entrada"
-                                placeholder="Base de caja para vueltos"
-                                id='cash_on_hand'
+                                placeholder="Efectivo en caja Ahora"
+                                id='cash_on_hand' onChange={handleCash}
+
+                            />
+                            <p className='error'>{errors.cash_on_hand?.message}</p>
+                        </Col>
+                    </Row>
+                    <p className="label">{`Las ventas en efectivo del dia HOY_______$${cashSales}`}</p>
+                    <p className="label">{`Desde el ultimo cierre consigné__________$${totalDeposits},`}</p>
+                    <p className="label">{`Desde el ultimo cierre tuve gastos por___$${totalExpenses}`}</p>
+                    <hr />
+                    <p className="label">{`Se espera tener en efectivo a mano_______$${expectedCashOnHand},`}</p>
+                    <hr />
+                    <p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
+                    <Row>
+                        <Col>
+                            <label htmlFor='amount_to_deposit' className='label'>Cual sera la base de cambio manana?</label>
+                        </Col>
+                        <Col>
+                            <input {...register("amount_to_deposit")}
+                                className="campo_entrada"
+                                placeholder="Efectivo para cambio Manana"
+                                id='amount_to_deposit' onChange={handleNewChangeAmount}
                             // onChange={handleOpen}
                             />
                             <p className='error'>{errors.cash_on_hand?.message}</p>
                         </Col>
                     </Row>
+                    <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
+                    <p className="label">{`Las Ventas totales han sido de___________$${totalSales},`}</p>
+                    <p className="label">{`Por tanto debo consignar_________________$${newAmountToDeposit}`}</p>
+
+
+
                     <br />
                     <br />
                 </form>

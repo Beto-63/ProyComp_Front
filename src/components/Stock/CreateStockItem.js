@@ -26,7 +26,7 @@ const CreateStockItem = () => {
 
     const [categories, setCategories] = useState([{}]);
     const [ubicaciones, setUbicaciones] = useState([{}]);
-    const [response, setResponse] = useState([{}]);
+
 
     // Se usa para obtener las ubicaciones validas y evitar entrada erronea de datos
     useEffect(() => {
@@ -53,6 +53,7 @@ const CreateStockItem = () => {
     // es poner en la cabecera de la forma es: "onSubmit={handleSubmit(onSubmit)"
     // pues usa el "handleSubmit" importado de 'react-hook-form'
     const onSubmit = (data) => {
+        let output = {}
         fetch(`${server}/stock`, {
             method: 'POST',
             headers: {
@@ -62,7 +63,7 @@ const CreateStockItem = () => {
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(json => setResponse(json));
+            .then(json => output(json));
 
         reset();
     };
