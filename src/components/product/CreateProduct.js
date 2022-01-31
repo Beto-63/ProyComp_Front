@@ -29,7 +29,7 @@ const schema = yup.object({
 const CreateProduct = () => {
 
   const [categories, setCategories] = useState([{}]);
-  const [response, setResponse] = useState({});
+
   const [selectedItems, setSelectedItems] = useState([{}]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const CreateProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-
+    let output = {}
     fetch(`${server}/product`, {
       method: 'POST',
       headers: {
@@ -56,7 +56,7 @@ const CreateProduct = () => {
       body: JSON.stringify(data)
     })
       .then(response => response.json())
-      .then(json => setResponse(json));
+      .then(json => output(json));
 
 
     reset();

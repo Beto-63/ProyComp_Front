@@ -25,7 +25,7 @@ const InventoryTransfer = () => {
     const [selectedNames, setSelectedNames] = useState([{}]);
     const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
     const [ubicaciones, setUbicaciones] = useState([{}]);
-    const [response, setResponse] = useState({});
+
 
     useEffect(() => {
         fetch(`${server}/stock/channels`)
@@ -43,6 +43,7 @@ const InventoryTransfer = () => {
         resolver: yupResolver(schema)
     });
     const onSubmit = (data) => {
+        let output = {}
         let obj = {
             destination: data.destination,
             name: data.name,
@@ -58,7 +59,7 @@ const InventoryTransfer = () => {
             body: JSON.stringify(obj)
         })
             .then(response => response.json())
-            .then(json => setResponse(json));
+            .then(json => output(json));
         reset();
     };
 
@@ -104,23 +105,6 @@ const InventoryTransfer = () => {
                         <p className='error'>{errors.cat_name?.message}</p>
                     </Row>
                     <Row>
-                        <label htmlFor='source' className='label'>Ubicación Origen</label>
-                        <select {...register("source")}
-                            className="campo_entrada"
-                            placeholder="Ubicación Física"
-                            id='source' onChange={handleCatChange}
-                        >
-                            <option value=''>Ingrese Ubicacion</option>
-                            {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
-                            {ubicaciones.map((e, index) => {
-                                return (
-                                    <option key={index} value={e.name} >{e.name}</option>
-                                )
-                            })}
-                        </select>
-                        <p className='error'>{errors.source?.message}</p>
-                    </Row>
-                    <Row>
                         <label htmlFor='name' className='label'>Nombre del elemento a trasladar</label>
                         <select {...register("name")}
                             className="campo_entrada container"
@@ -136,6 +120,23 @@ const InventoryTransfer = () => {
                             })}
                         </select>
                         <p className='error'>{errors.name?.message}</p>
+                    </Row>
+                    <Row>
+                        <label htmlFor='source' className='label'>Ubicación Origen</label>
+                        <select {...register("source")}
+                            className="campo_entrada"
+                            placeholder="Ubicación Física"
+                            id='source' onChange={handleCatChange}
+                        >
+                            <option value=''>Ingrese Ubicacion</option>
+                            {/* Asi se customizan las listas de seleccion directamente desde la base de datos */}
+                            {ubicaciones.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        <p className='error'>{errors.source?.message}</p>
                     </Row>
                     <Row>
                         <label htmlFor='destination' className='label'>Ubicación Destino</label>

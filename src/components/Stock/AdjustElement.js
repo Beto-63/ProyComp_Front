@@ -39,7 +39,6 @@ const AdjustElement = () => {
     const [selectedNames, setSelectedNames] = useState([{}]);
     const [categories, setCategories] = useState([{}]); //Esto puede pasar au una contexto
     const [ubicaciones, setUbicaciones] = useState([{}]);
-    const [response, setResponse] = useState([{}]);
     const [toEdit, setToEdit] = useState(objElement);
 
 
@@ -63,22 +62,22 @@ const AdjustElement = () => {
         //Falta el mensaje de confirmacion
         // Aqui armo el objeto que actualiza la informacion en la BD dependiendo de que cambio...
         let newObj = { id: toEdit._id, status: data.statusEdit }
-        if (data.nameEdit != '') {
+        if (data.nameEdit !== '') {
             newObj = { ...newObj, name: data.nameEdit }
         } else {
             newObj = { ...newObj, name: toEdit.name }
         }
-        if (data.channelEdit != '') {
+        if (data.channelEdit !== '') {
             newObj = { ...newObj, channel: data.channelEdit.trim() }
         } else {
             newObj = { ...newObj, channel: toEdit.channel.trim() }
         }
-        if (data.cat_nameEdit != '') {
+        if (data.cat_nameEdit !== '') {
             newObj = { ...newObj, cat_name: data.cat_nameEdit }
         } else {
             newObj = { ...newObj, cat_name: toEdit.cat_name }
         }
-
+        let output = {}
         fetch(`${server}/stock/adjust`, {
             method: 'PUT',
             headers: {
@@ -88,7 +87,7 @@ const AdjustElement = () => {
             body: JSON.stringify(newObj)
         })
             .then(response => response.json())
-            .then(json => setResponse(json));
+            .then(json => output(json));
         reset();
         setToEdit(objElement);
     };

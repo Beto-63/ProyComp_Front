@@ -53,7 +53,7 @@ const AdjustProduct = () => {
   }
 
   const [categories, setCategories] = useState([{}]);
-  const [response, setResponse] = useState({});
+
   const [selectedNames, setSelectedNames] = useState([{}]);
   const [toEdit, setToEdit] = useState(objProduct);
 
@@ -71,57 +71,57 @@ const AdjustProduct = () => {
   const onSubmit = (data) => {
 
     let newObj = { id: toEdit._id, status: data.statusEdit }
-    if (data.product_idEdit != '') {
+    if (data.product_idEdit !== '') {
       newObj = { ...newObj, product_id: data.product_idEdit }
     } else {
       newObj = { ...newObj, product_id: toEdit.product_id }
     }
-    if (data.nameEdit != '') {
+    if (data.nameEdit !== '') {
       newObj = { ...newObj, name: data.nameEdit }
     } else {
       newObj = { ...newObj, name: toEdit.name }
     }
-    if (data.descriptionEdit != '') {
+    if (data.descriptionEdit !== '') {
       newObj = { ...newObj, description: data.descriptionEdit }
     } else {
       newObj = { ...newObj, description: toEdit.description }
     }
-    if (data.priceEdit != '') {
+    if (data.priceEdit !== '') {
       newObj = { ...newObj, price: data.priceEdit }
     } else {
       newObj = { ...newObj, price: toEdit.price }
     }
-    if (data.cat_nameEdit != '') {
+    if (data.cat_nameEdit !== '') {
       newObj = { ...newObj, cat_name: data.cat_nameEdit }
     } else {
       newObj = { ...newObj, cat_name: toEdit.cat_name }
     }
-    if (data.temperatureEdit != '') {
+    if (data.temperatureEdit !== '') {
       newObj = { ...newObj, temperature: data.temperatureEdit.trim() }
     } else {
       newObj = { ...newObj, temperature: toEdit.temperature.trim() }
     }
-    if (data.img_urlEdit != '') {
+    if (data.img_urlEdit !== '') {
       newObj = { ...newObj, img_url: data.img_urlEdit.trim() }
     } else {
       newObj = { ...newObj, img_url: toEdit.img_url.trim() }
     }
-    if (data.stock_nameEdit != '') {
+    if (data.stock_nameEdit !== '') {
       newObj = { ...newObj, stock_name: data.stock_nameEdit.trim() }
     } else {
       newObj = { ...newObj, stock_name: toEdit.stock_name.trim() }
     }
-    if (data.stock_qtyEdit != '') {
+    if (data.stock_qtyEdit !== '') {
       newObj = { ...newObj, stock_qty: data.stock_qtyEdit }
     } else {
       newObj = { ...newObj, stock_qty: toEdit.stock_qty }
     }
-    if (data.statusEdit != '') {
+    if (data.statusEdit !== '') {
       newObj = { ...newObj, status: data.statusEdit }
     } else {
       newObj = { ...newObj, status: toEdit.status }
     }
-
+    let output = {}
     fetch(`${server}/product`, {
       method: 'PUT',
       headers: {
@@ -131,7 +131,7 @@ const AdjustProduct = () => {
       body: JSON.stringify(newObj)
     })
       .then(response => response.json())
-      .then(json => setResponse(json));
+      .then(json => output(json));
     reset();
     setToEdit(objProduct);
   };
@@ -205,7 +205,7 @@ const AdjustProduct = () => {
               {selectedNames.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{
-                    e.temperature != "" ? ` ${e.name}  /   ${e.temperature}` : ` ${e.name}`}</option>
+                    e.temperature !== "" ? ` ${e.name}  /   ${e.temperature}` : ` ${e.name}`}</option>
                 )
               })}
             </select>

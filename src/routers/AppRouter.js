@@ -17,7 +17,7 @@ import OpenRegister from '../components/cashRegister/OpenRegister';
 import CheckInventory from '../components/cashRegister/ChckInventory';
 import BankDeposit from '../components/cashRegister/BankDeposit';
 import Expenses from '../components/cashRegister/Expenses';
-import CloseRegister from '../components/cashRegister/ClosRegister';
+import CloseRegister from '../components/cashRegister/CloseRegister';
 import ItemsByName from '../components/Stock/ItemsByName';
 import ItemByNameAndChannel from '../components/Stock/ItemByNameAndChannel';
 import InventoryTransfer from '../components/Stock/InventoryTransfer';
@@ -42,8 +42,10 @@ export const AppRouter = () => {
             <Route path="/product/adjust" element={<AdjustProduct />} />
 
             <Route path="/sell" element={<Sell />} />
+
             <Route path="/productSelect" element={<ProductSelect/>}/>
             <Route path='/productChoice' element={<ProductSelectChoice/>}/>
+
 
             <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />
