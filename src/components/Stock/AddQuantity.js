@@ -45,7 +45,6 @@ const AddQuantity = () => {
     });
     const onSubmit = (data) => {
         let obj = { name: data.name, channel: data.channel, qty: data.qty }
-        let output = {}
         fetch(`${server}/stock/addQty`, {
             method: 'PUT',
             headers: {
@@ -54,7 +53,7 @@ const AddQuantity = () => {
             body: JSON.stringify(obj)
         })
             .then(response => response.json())
-            .then(json => output(json));
+            .then(json => window.alert(JSON.stringify(json)))
         reset();
     };
 

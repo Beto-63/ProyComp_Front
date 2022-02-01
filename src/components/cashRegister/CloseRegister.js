@@ -117,6 +117,7 @@ const CloseRegister = () => {
         setNonCashSales(tempNonCash)
         setCashSales(tempCash)
 
+
     }, [deposits, expenses, sellTickets, lastClose, lastOpen, canClose]);
 
     const handleNewChangeAmount = () => {
@@ -125,13 +126,15 @@ const CloseRegister = () => {
             lastOpen[0].amount_to_deposit +
             cashSales -
             totalDeposits -
-            totalExpenses - document.getElementById('change_amount')
+            totalExpenses - document.getElementById('change_amount').value
 
         )
     }
 
-    const handleCash = () => {
-        setCountedCash(document.getElementById('cash_on_hand'))
+    const handleCountedCash = () => {
+        //let temp = (document.getElementById('cash_on_hand').value)
+        setCountedCash(document.getElementById('cash_on_hand').value)
+
         setExpectedCashOnHand(
             lastOpen[0].change_amount +
             lastOpen[0].amount_to_deposit +
@@ -139,11 +142,17 @@ const CloseRegister = () => {
             totalDeposits -
             totalExpenses
         )
-        console.log("Campo de entrada", countedCash)
+        //console.log("**********EFECTIVO EN CAJA**************", temp)
+
     }
 
     const onSubmit = (data) => {
-        reset()
+        const answer = window.confirm(`Estas a pundo de hacer el cierre...\n¿Segur@?`);
+        if (answer) {
+            reset()
+        } else {
+            // Do nothing!
+        }
     }
 
     return (
@@ -164,7 +173,7 @@ const CloseRegister = () => {
                             <input {...register("cash_on_hand")}
                                 className="campo_entrada"
                                 placeholder="Efectivo en caja Ahora"
-                                id='cash_on_hand' onChange={handleCash}
+                                id='cash_on_hand' onChange={handleCountedCash}
 
                             />
                             <p className='error'>{errors.cash_on_hand?.message}</p>
@@ -176,16 +185,19 @@ const CloseRegister = () => {
                     <hr />
                     <p className="label">{`Se espera tener en efectivo a mano_______$${expectedCashOnHand},`}</p>
                     <hr />
-                    <p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
+
+                    <p p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
+                    <p className={(expectedCashOnHand - countedCash === 0) ? "perfect" : "result"}>{(expectedCashOnHand - countedCash === 0) ? `Puede cerrar` : (expectedCashOnHand - countedCash > 0) ? `Hay un faltante` : `Hay un excedente`}</p>
+
                     <Row>
                         <Col>
-                            <label htmlFor='amount_to_deposit' className='label'>Cual sera la base de cambio manana?</label>
+                            <label htmlFor='change_amount' className='label'>Cual sera la base de cambio manana?</label>
                         </Col>
                         <Col>
-                            <input {...register("amount_to_deposit")}
+                            <input {...register("change_amount")}
                                 className="campo_entrada"
-                                placeholder="Efectivo para cambio Manana"
-                                id='amount_to_deposit' onChange={handleNewChangeAmount}
+                                placeholder="Cambio para Manana"
+                                id='change_amount' onBlur={handleNewChangeAmount}
                             // onChange={handleOpen}
                             />
                             <p className='error'>{errors.cash_on_hand?.message}</p>
@@ -201,7 +213,7 @@ const CloseRegister = () => {
                     <br />
                 </form>
             </Container>
-        </div>
+        </div >
     )
 }
 

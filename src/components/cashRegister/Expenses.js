@@ -35,17 +35,25 @@ const Expenses = () => {
 
 
     const onSubmit = (data) => {
-        fetch(`${server}/cash/expense`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(json => setResponse(json));
-        console.log(response);
-        reset();
+
+
+        const answer = window.confirm(`Estas registrando un gasto\npor: ${data.expense_amount} \n¿Estas segur@?`);
+        if (answer) {
+            // Save it!
+            fetch(`${server}/cash/expense`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(json => setResponse(json));
+            console.log(response);
+            reset();
+        } else {
+            // Do nothing!
+        }
     };
 
     return (

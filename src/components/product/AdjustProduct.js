@@ -31,8 +31,8 @@ const schema = yup.object({
   img_urlEdit: yup.string(),
   stock_name: yup.string(),
   stock_nameEdit: yup.string(),
-  stock_qty: yup.number(),
-  stock_qtyEdit: yup.number(),
+  stock_qty: yup.number().typeError('Dejar en Ingresa el precio de venta'),
+  stock_qtyEdit: yup.number().typeError('Dejar en Ingresa el precio de venta'),
   statusEdit: yup.number().typeError('Se requiere definir el Estado').required()
 })
 
@@ -53,10 +53,9 @@ const AdjustProduct = () => {
   }
 
   const [categories, setCategories] = useState([{}]);
-
   const [selectedNames, setSelectedNames] = useState([{}]);
   const [toEdit, setToEdit] = useState(objProduct);
-
+  const [selectedNamesEdit, setSelectedNamesEdit] = useState([{}]);
 
 
   useEffect(() => {
@@ -121,7 +120,7 @@ const AdjustProduct = () => {
     } else {
       newObj = { ...newObj, status: toEdit.status }
     }
-    let output = {}
+
     fetch(`${server}/product`, {
       method: 'PUT',
       headers: {
@@ -131,7 +130,7 @@ const AdjustProduct = () => {
       body: JSON.stringify(newObj)
     })
       .then(response => response.json())
-      .then(json => output(json));
+      .then(json => window.alert(JSON.stringify(json)))
     reset();
     setToEdit(objProduct);
   };
@@ -150,6 +149,22 @@ const AdjustProduct = () => {
     })
       .then(response => response.json())
       .then(json => setSelectedNames(json));
+  }
+
+  const handleCatEdit = () => {
+    let obj = {
+      cat_name: document.getElementById('cat_nameEdit').value,
+    };
+
+    fetch(`${server}/product/findByCatName`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(response => response.json())
+      .then(json => setSelectedNamesEdit(json));
   }
 
   const handleEdit = () => {
@@ -171,6 +186,8 @@ const AdjustProduct = () => {
 
 
 
+
+
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Ajuste Datos de Producto</p>
@@ -182,10 +199,10 @@ const AdjustProduct = () => {
             <label htmlFor='cat_name' className='label'>Categoria del elemento</label>
             <select {...register("cat_name")}
               className="campo_entrada"
-              placeholder="Categoria del Elemento"
+              placeholder="Categoria del elemento"
               id="cat_name" onChange={handleCatChange}
             >
-              <option value=''>Seleccione la categoría del Elemento</option>
+              <option value=''>Seleccione la categoría del elemento</option>
               {categories.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -250,17 +267,25 @@ const AdjustProduct = () => {
               className="campo_entrada"
               placeholder={toEdit.price}
               id='priceEdit'
+              defaultValue={toEdit.price}
             />
             <p className='error'>{errors.cat_priceEdit?.message}</p>
           </Row>
           <Row>
 
-            <label htmlFor='cat_name' className='label'>Categoría</label>
-            <input  {...register("cat_nameEdit")}
+            <label htmlFor='cat_nameEdit' className='label'>Categoría</label>
+            <select  {...register("cat_nameEdit")}
               className="campo_entrada"
               placeholder={toEdit.cat_name}
-              id='cat_nameEdit'
-            />
+              id='cat_nameEdit' onChange={handleCatEdit}
+            >
+              <option value=''>Seleccione la categoría del Elemento</option>
+              {categories.map((e, index) => {
+                return (
+                  <option key={index} value={e.name} >{e.name}</option>
+                )
+              })}
+            </select>
             <p className='error'>{errors.cat_nameEdit?.message}</p>
           </Row>
           <Row>
@@ -270,6 +295,7 @@ const AdjustProduct = () => {
               placeholder={toEdit.temperature}
               id='temperatureEdit'
             >
+              <option value={toEdit.temeprature}>{toEdit.temeprature}</option>
               <option value='caliente'>Caliente</option>
               <option value='frio'>Frio</option>
             </select>
@@ -291,9 +317,12 @@ const AdjustProduct = () => {
               placeholder={toEdit.stock_name}
               id='stock_nameEdit'
             >
-              <option value=''>Selecciona X nombre</option>
-              <option value='temp 1'>Temp 1</option>
-              <option value='temp 2'>Temp 2</option>
+              <option value=''>Para ver opciones selecciona nuevamente la categoria</option>
+              {selectedNamesEdit.map((e, index) => {
+                return (
+                  <option key={index} value={e.name} >{e.name}</option>
+                )
+              })}
             </select>
             <p className='error'>{errors.stock_name?.message}</p>
           </Row>
@@ -303,6 +332,7 @@ const AdjustProduct = () => {
               className="campo_entrada"
               placeholder={toEdit.stock_qty}
               id='stock_qtyEdit'
+              defaultValue={toEdit.stock_qty}
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>

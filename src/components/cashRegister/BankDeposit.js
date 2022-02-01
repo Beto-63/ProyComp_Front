@@ -32,17 +32,23 @@ const BankDeposit = () => {
 
 
     const onSubmit = (data) => {
-        fetch(`${server}/cash/deposit`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(json => setResponse(json));
-        console.log(response);
-        reset();
+        const answer = window.confirm(`Estas registrando una consignacion\npor: ${data.amount} \n¿Estas segur@?`);
+        if (answer) {
+            // Save it!
+            fetch(`${server}/cash/deposit`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(json => setResponse(json));
+            console.log(response);
+            reset();
+        } else {
+            // Do nothing!
+        }
     };
 
     return (

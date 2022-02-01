@@ -69,46 +69,52 @@ const OpenRegister = () => {
     };
 
     const onSubmit = (data) => {
-        let obj = {
-            operation: 'open',
-            amount_to_deposit: newAmountToDeposit,
-            cash_on_hand: data.change_amount + newAmountToDeposit,
-            change_amount: data.change_amount,
-            channel: 'Arsenal', //del token
-            status: 1
-        }
-        console.log("vanOpen antes del fetch", canOpen)
-        // fetch de apertura
-        if (canOpen) {
-            fetch(`${server}/cash/last/transaction`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
-            })
-                .then(response => response.json())
-                .then(json => console.log('salida fetch de registro', json));
+        const answer = window.confirm(`Revisa el valorer que tienes disponible por consignar\n¿Abrimos?`);
+        if (answer) {
+            let obj = {
+                operation: 'open',
+                amount_to_deposit: newAmountToDeposit,
+                cash_on_hand: data.change_amount + newAmountToDeposit,
+                change_amount: data.change_amount,
+                channel: 'Arsenal', //del token
+                status: 1
+            }
+            console.log("vanOpen antes del fetch", canOpen)
+            // fetch de apertura
+            if (canOpen) {
+                fetch(`${server}/cash/last/transaction`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+                    .then(response => response.json())
+                    .then(json => console.log('salida fetch de registro', json));
 
-            // fetch de cambio de estado al ultimo cierre NO FUNCIONA
-            fetch(`${server}/cash/lastClose/account`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: lastClose[0]._id })
-            })
-                .then(response => response.json())
-                .then(json => console.log("salida fetch de cierre", json));
+                // fetch de cambio de estado al ultimo cierre NO FUNCIONA
+                fetch(`${server}/cash/lastClose/account`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: lastClose[0]._id })
+                })
+                    .then(response => response.json())
+                    .then(json => console.log("salida fetch de cierre", json));
+            } else {
+                console.log("no se puede hacer apertura")
+            }
+
+            console.log("Data", data)
+            console.log("Obj", obj)
+            reset();
+
         } else {
-            console.log("no se puede hacer apertura")
+            // Do nothing!
         }
 
-        console.log("Data", data)
-        console.log("Obj", obj)
-        reset();
     };
-
 
     return (
         <div className='canvas_claro' >

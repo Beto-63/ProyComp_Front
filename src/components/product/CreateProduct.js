@@ -16,14 +16,14 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
   product_id: yup.string('Solo se aceptan caracteres').required('Este campo es necesrio para sincronizar con Wix').trim('No dejar espacios antes o al final'),
-  name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
+  name: yup.string().trim().required('Ingresa el nombre comercial del producto'),
   description: yup.string().max(128),
-  price: yup.number().typeError('Ingresa el precio de venta').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
+  price: yup.number().typeError('Ingresa el precio de venta').moreThan(0, 'El valor debe ser positivo').required(),
   cat_name: yup.string().trim().required('La categoria sirve para hacer mas cortas las selecciones'),
   temperature: yup.string(),
   img_url: yup.string('Solo se aceptan caracteres'),
   stock_name: yup.string(),
-  stock_qty: yup.number().typeError('Ingresa la cantidad inicial'),
+  stock_qty: yup.number().typeError('Dejar en 0 | Cambiar para deecontar del inventario')
 })
 
 const CreateProduct = () => {
@@ -47,7 +47,6 @@ const CreateProduct = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
-    let output = {}
     fetch(`${server}/product`, {
       method: 'POST',
       headers: {
@@ -56,7 +55,7 @@ const CreateProduct = () => {
       body: JSON.stringify(data)
     })
       .then(response => response.json())
-      .then(json => output(json));
+      .then(json => window.alert(JSON.stringify(json)))
 
 
     reset();
@@ -172,11 +171,11 @@ const CreateProduct = () => {
             <p className='error'>{errors.stock_name?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='stock_name' className='label'>Cantidad a descontar del inventario (si aplica)</label>
+            <label htmlFor='stock_qty' className='label'>Cantidad a descontar del inventario (si aplica)</label>
             <input {...register("stock_qty")}
               className="campo_entrada"
               placeholder="Cantidad a descontar (gr - unidades)"
-              value='0'
+              defaultValue={0}
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>
@@ -189,4 +188,3 @@ const CreateProduct = () => {
 };
 
 export default CreateProduct;
-
