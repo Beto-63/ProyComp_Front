@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+
+import CashContext from "../../context/CashContext";
 
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
-const NavStock = () => {
+const NavCashRegister = () => {
+
+    const { lastClose, lastOpen, setConfirmacion, confirmacion } = useContext(CashContext)
+
+
     let navigate = useNavigate();
     const goToOpen = () => {
         navigate('/cash/open');
@@ -23,16 +29,41 @@ const NavStock = () => {
         navigate('/cash/close');
     }
 
+    const handleOpen = () => {
+        if (lastOpen.length === 0 && lastClose.length === 1) {
+            goToOpen()
+        } else {
+            if (lastOpen.length === 1 && lastClose.length === 0) {
+                setConfirmacion("Tienes un cierre pendiente")
+            } else {
+                setConfirmacion("Error en la base de datos")
+            }
+        }
+    }
+
+    const handleClose = () => {
+        if (lastOpen.length === 1 && lastClose.length === 0) {
+            goToClose()
+        } else {
+            if (lastOpen.length === 0 && lastClose.length === 1) {
+                setConfirmacion("Tienes una apertura pendiente")
+            } else {
+                setConfirmacion("Error en la base de datos")
+            }
+        }
+    }
+
     return (
         <div className='canvas_oscuro'>
             <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestiona tu caja</p>
+            {/* <h4>{confirmacion}</h4> */}
             <Container>
                 <Row >
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToOpen} >Apertura de caja</button>
+                        <button className='btn-dark-bkg' onClick={handleOpen} >Apertura de caja</button>
                     </Col>
                     <Col>
                         <button className='btn-dark-bkg' onClick={goToCheckInventory} >Revisión de inventario</button>
@@ -45,11 +76,12 @@ const NavStock = () => {
                     </Col>
 
                 </Row>
-                <button className='btn-dark-bkg' onClick={goToClose} >Cierre de caja</button>
+                <button className='btn-dark-bkg' onClick={handleClose} >Cierre de caja</button>
+                <h3 className='openclose'>{confirmacion}</h3>
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>
     )
 }
 
-export default NavStock
+export default NavCashRegister

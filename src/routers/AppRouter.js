@@ -24,6 +24,7 @@ import InventoryTransfer from '../components/Stock/InventoryTransfer';
 import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
 import ProductSelectChoice from '../components/sellTicket/ProductSelectChoice';
+import NotFound from '../components/auth/NotFound'
 
 export const AppRouter = () => {
     return (
@@ -43,8 +44,8 @@ export const AppRouter = () => {
 
             <Route path="/sell" element={<Sell />} />
 
-            <Route path="/productSelect" element={<ProductSelect/>}/>
-            <Route path='/productChoice' element={<ProductSelectChoice/>}/>
+            <Route path="/productSelect" element={<ProductSelect />} />
+            <Route path='/productChoice' element={<ProductSelectChoice />} />
 
 
             <Route path="/stock" element={<Stock />} />
@@ -58,6 +59,8 @@ export const AppRouter = () => {
 
 
             <Route path="/user" element={<User />} />
+            <Route path="*" element={<NotFound />} />
+
 
         </Routes>
     )

@@ -53,6 +53,16 @@ input, select {
 text-align:left;
 color: #F58787;
 }
+
+
+.openclose {
+    color: pink;
+     }
+
+.perfect {
+    text-align:left;
+    color: rgb(60, 158, 119)
+    }
 .label {
     text-align:left;
     

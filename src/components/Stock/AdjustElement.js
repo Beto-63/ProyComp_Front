@@ -77,7 +77,7 @@ const AdjustElement = () => {
         } else {
             newObj = { ...newObj, cat_name: toEdit.cat_name }
         }
-        let output = {}
+
         fetch(`${server}/stock/adjust`, {
             method: 'PUT',
             headers: {
@@ -87,7 +87,7 @@ const AdjustElement = () => {
             body: JSON.stringify(newObj)
         })
             .then(response => response.json())
-            .then(json => output(json));
+            .then(json => window.alert(JSON.stringify(json)))
         reset();
         setToEdit(objElement);
     };

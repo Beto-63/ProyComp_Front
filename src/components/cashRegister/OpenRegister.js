@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api'
+import CashContext from "../../context/CashContext";
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -20,6 +21,12 @@ const schema = yup.object({
 });
 
 const OpenRegister = () => {
+
+    const { setConfirmacion } = useContext(CashContext)
+
+    useEffect(() => {
+        setConfirmacion('')
+    }, [setConfirmacion]);
 
     const transaction = {
         operation: "",
@@ -53,62 +60,55 @@ const OpenRegister = () => {
     }, [])
 
     useEffect(() => {
-        // console.log("last Open status", lastOpen[0].status)
-        // console.log("last Close status", lastClose[0].status)
         if (lastOpen.length === 0 && lastClose.length === 1) { setCanOpen(true) }
-
-
     }, [lastClose, lastOpen])
-
-    useEffect(() => {
-        console.log("canOpen", canOpen)
-    }, [canOpen])
 
     const handleOpen = () => {
         setNewAmountToDeposit(lastClose[0].change_amount + lastClose[0].amount_to_deposit - document.getElementById('change_amount').value)
     };
 
     const onSubmit = (data) => {
-        let obj = {
-            operation: 'open',
-            amount_to_deposit: newAmountToDeposit,
-            cash_on_hand: data.change_amount + newAmountToDeposit,
-            change_amount: data.change_amount,
-            channel: 'Arsenal', //del token
-            status: 1
-        }
-        console.log("vanOpen antes del fetch", canOpen)
-        // fetch de apertura
-        if (canOpen) {
-            fetch(`${server}/cash/last/transaction`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(obj)
-            })
-                .then(response => response.json())
-                .then(json => console.log('salida fetch de registro', json));
+        const answer = window.confirm(`Revisa el valorer que tienes disponible por consignar\n¿Abrimos?`);
+        if (answer) {
+            let obj = {
+                operation: 'open',
+                amount_to_deposit: newAmountToDeposit,
+                cash_on_hand: data.change_amount + newAmountToDeposit,
+                change_amount: data.change_amount,
+                channel: 'Arsenal', //del token
+                status: 1
+            }
+            // fetch de apertura
+            if (canOpen) {
+                fetch(`${server}/cash/last/transaction`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+                    .then(response => response.json())
+                    .then(json => window.alert(JSON.stringify(json)))
 
-            // fetch de cambio de estado al ultimo cierre NO FUNCIONA
-            fetch(`${server}/cash/lastClose/account`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: lastClose[0]._id })
-            })
-                .then(response => response.json())
-                .then(json => console.log("salida fetch de cierre", json));
+                // fetch de cambio de estado al ultimo cierre NO FUNCIONA
+                fetch(`${server}/cash/lastClose/account`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: lastClose[0]._id })
+                })
+                    .then(response => response.json())
+                    .then(json => window.alert(JSON.stringify(json)))
+            } else {
+                //do nothing
+            }
+            reset();
         } else {
-            console.log("no se puede hacer apertura")
+            // Do nothing!
         }
 
-        console.log("Data", data)
-        console.log("Obj", obj)
-        reset();
     };
-
 
     return (
         <div className='canvas_claro' >

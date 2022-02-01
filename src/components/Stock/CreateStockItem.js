@@ -53,7 +53,7 @@ const CreateStockItem = () => {
     // es poner en la cabecera de la forma es: "onSubmit={handleSubmit(onSubmit)"
     // pues usa el "handleSubmit" importado de 'react-hook-form'
     const onSubmit = (data) => {
-        let output = {}
+
         fetch(`${server}/stock`, {
             method: 'POST',
             headers: {
@@ -63,7 +63,7 @@ const CreateStockItem = () => {
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(json => output(json));
+            .then(json => window.alert(JSON.stringify(json)))
 
         reset();
     };

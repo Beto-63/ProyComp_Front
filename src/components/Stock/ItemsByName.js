@@ -53,7 +53,8 @@ const ItemsByName = () => {
             body: JSON.stringify(obj)
         })
             .then(response => response.json())
-            .then(json => setSelectedNames(json));
+            .then(json => setSelectedNames(json))
+            .catch(console.error);
 
     }
 
@@ -104,7 +105,7 @@ const ItemsByName = () => {
                             <option value=''>Elemento a adicionar</option>
                             {selectedNames.map((e, index) => {
                                 return (
-                                    <option key={index} value={e.name} >{`El producto ${e.name}, estápresente en ${e.channel}`}</option>
+                                    <option key={index} value={e.name} >{`El producto ${e.name} / ${e.channel}`}</option>
                                 )
                             })}
                         </select>
