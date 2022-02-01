@@ -2,7 +2,8 @@
 import './App.css';
 
 import { AppRouter } from './routers/AppRouter';
-
+import CashRegister from './pages/CashRegister';
+import { CashProvider } from './context/CashContext';
 
 
 
@@ -10,7 +11,11 @@ function App() {
   return (
 
     <div className='App'>
-      <AppRouter />
+
+      <CashProvider>
+        <AppRouter />
+      </CashProvider>
+
 
     </div >
   );

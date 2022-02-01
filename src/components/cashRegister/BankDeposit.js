@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
+import CashContext from "../../context/CashContext";
 
 const schema = yup.object({
 
@@ -21,6 +22,8 @@ const schema = yup.object({
 
 
 const BankDeposit = () => {
+
+    const { confirmacion } = useContext(CashContext)
 
     //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
     const [response, setResponse] = useState({});
@@ -73,6 +76,7 @@ const BankDeposit = () => {
 
                     <button className='btn-light-bkg' type="submit">Registrar</button>
                 </form>
+                <h1>`hmm: {confirmacion}`</h1>
             </Container>
         </div>
     )

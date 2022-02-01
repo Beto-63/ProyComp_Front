@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 
-export const ThemeContext = React.createContext();
+const CashContext = createContext();
 
-const CashContext = (props) => {
+const CashProvider = ({ children }) => {
 
     const [canOpen, setCanOpen] = useState(false)
     const [canClose, setCanClose] = useState(false)
-    const confirmacion = 'Se ve la info desde el contexto'
+    const [confirmacion, setConfirmacion] = useState('Se ve la info desde el contexto')
+
+    const handleRegister = (objCash) => {
+        console.log(objCash)
+    }
+
+    const data = {
+        canOpen, setCanOpen,
+        canClose, setCanClose,
+        confirmacion, setConfirmacion, handleRegister
+    }
     return (
-        <ThemeContext.Provider value={{
-            canOpen, setCanOpen,
-            canClose, setCanClose,
-            confirmacion
-        }}>
-            {props.children}
-        </ThemeContext.Provider>
+        <CashContext.Provider value={data}>
+            {children}
+        </CashContext.Provider>
     );
 };
-
+export { CashProvider };
 export default CashContext;
