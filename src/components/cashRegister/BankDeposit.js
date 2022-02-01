@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -31,7 +31,7 @@ const BankDeposit = () => {
 
 
     //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
-    const [response, setResponse] = useState({});
+
 
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -51,8 +51,8 @@ const BankDeposit = () => {
                 body: JSON.stringify(data)
             })
                 .then(response => response.json())
-                .then(json => setResponse(json));
-            console.log(response);
+                .then(json => window.alert(JSON.stringify(json)))
+
             reset();
         } else {
             // Do nothing!

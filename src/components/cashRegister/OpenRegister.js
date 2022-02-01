@@ -60,16 +60,8 @@ const OpenRegister = () => {
     }, [])
 
     useEffect(() => {
-        // console.log("last Open status", lastOpen[0].status)
-        // console.log("last Close status", lastClose[0].status)
         if (lastOpen.length === 0 && lastClose.length === 1) { setCanOpen(true) }
-
-
     }, [lastClose, lastOpen])
-
-    useEffect(() => {
-        console.log("canOpen", canOpen)
-    }, [canOpen])
 
     const handleOpen = () => {
         setNewAmountToDeposit(lastClose[0].change_amount + lastClose[0].amount_to_deposit - document.getElementById('change_amount').value)
@@ -86,7 +78,6 @@ const OpenRegister = () => {
                 channel: 'Arsenal', //del token
                 status: 1
             }
-            console.log("vanOpen antes del fetch", canOpen)
             // fetch de apertura
             if (canOpen) {
                 fetch(`${server}/cash/last/transaction`, {
@@ -97,7 +88,7 @@ const OpenRegister = () => {
                     body: JSON.stringify(obj)
                 })
                     .then(response => response.json())
-                    .then(json => console.log('salida fetch de registro', json));
+                    .then(json => window.alert(JSON.stringify(json)))
 
                 // fetch de cambio de estado al ultimo cierre NO FUNCIONA
                 fetch(`${server}/cash/lastClose/account`, {
@@ -108,15 +99,11 @@ const OpenRegister = () => {
                     body: JSON.stringify({ id: lastClose[0]._id })
                 })
                     .then(response => response.json())
-                    .then(json => console.log("salida fetch de cierre", json));
+                    .then(json => window.alert(JSON.stringify(json)))
             } else {
-                console.log("no se puede hacer apertura")
+                //do nothing
             }
-
-            console.log("Data", data)
-            console.log("Obj", obj)
             reset();
-
         } else {
             // Do nothing!
         }

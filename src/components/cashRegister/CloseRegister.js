@@ -89,25 +89,14 @@ const CloseRegister = () => {
 
     useEffect(() => {
         let temp = 0
-        console.log("deposits", deposits)
-        console.log("expenses", expenses)
-        console.log("sellTickets", sellTickets)
-        console.log("Registros con aperturas anteriores ", lastOpen.length)
-        console.log("Registros con cierres anteriores", lastClose.length)
-        if (lastOpen.length === 1 && lastClose.length === 0) { setCanClose(true) }
-        console.log(canClose)
-        temp = 0
         deposits.forEach(element => { temp = temp + element.amount });
-        console.log("deposits", temp)
         setTotalDeposits(temp)
         temp = 0
         expenses.forEach(element => { temp = temp + element.expense_amount });
-        console.log("expenses", temp)
         setTotalExpenses(temp)
         let tempCash = 0
         let tempNonCash = 0
         let tempTotal = 0
-        console.log("Ventas", sellTickets)
         sellTickets.forEach(element => {
             tempTotal = tempTotal + element.amount_sold;
             if (element.payment_method === 'Cash') {
@@ -116,15 +105,9 @@ const CloseRegister = () => {
                 tempNonCash = tempNonCash + element.amount_sold
             }
         });
-        console.log("Ventas totales", tempTotal)
-        console.log("Ventas Cash", tempCash)
-        console.log("Ventas No Cash", tempNonCash)
-
         setTotalSales(tempTotal)
         setNonCashSales(tempNonCash)
         setCashSales(tempCash)
-
-
     }, [deposits, expenses, sellTickets, lastClose, lastOpen, canClose]);
 
     const handleNewChangeAmount = () => {
@@ -149,12 +132,11 @@ const CloseRegister = () => {
             totalDeposits -
             totalExpenses
         )
-        //console.log("**********EFECTIVO EN CAJA**************", temp)
-
     }
 
     const onSubmit = (data) => {
         const answer = window.confirm(`Estas a pundo de hacer el cierre...\n¿Segur@?`);
+        // .then(json => window.alert(JSON.stringify(json)))
         if (answer) {
             reset()
         } else {
