@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 
 //Importar paginas
 import Auth from '../pages/Auth';
-import NavCashRegister from '../components/cashRegister/NavCashRegister';
+import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
 import ProductSelect from '../pages/ProductSelect';
 import Sell from '../pages/SellTicket';
@@ -31,7 +31,7 @@ export const AppRouter = () => {
         <Routes>
             <Route path="/" element={<Auth />} />
 
-            <Route path="/cash" element={<NavCashRegister />} />
+            <Route path="/cash" element={<CashRegister />} />
             <Route path="/cash/open" element={<OpenRegister />} />
             <Route path="/cash/checkinventory" element={<CheckInventory />} />
             <Route path="/cash/deposit" element={<BankDeposit />} />

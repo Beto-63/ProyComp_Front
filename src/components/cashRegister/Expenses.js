@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api'
+import CashContext from '../../context/CashContext';
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -22,6 +23,11 @@ const schema = yup.object({
 
 const Expenses = () => {
 
+    const { setConfirmacion } = useContext(CashContext)
+
+    useEffect(() => {
+        setConfirmacion('')
+    }, [setConfirmacion]);
 
     //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
     const [response, setResponse] = useState({});

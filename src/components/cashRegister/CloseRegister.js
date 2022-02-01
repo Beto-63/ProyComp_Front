@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api'
+import CashContext from "../../context/CashContext";
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
@@ -21,6 +22,12 @@ const schema = yup.object({
 });
 
 const CloseRegister = () => {
+
+    const { setConfirmacion } = useContext(CashContext)
+
+    useEffect(() => {
+        setConfirmacion('')
+    }, [setConfirmacion]);
 
     const transaction = {
         operation: "",
