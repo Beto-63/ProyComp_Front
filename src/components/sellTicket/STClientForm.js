@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import '../generic/CanvasOscuro.css'
 
-const ClientForm = ({ handleClient }) => {
+const STClientForm = ({ handleClient }) => {
     const objForm = {
         name: '',
         email: '',
         gender: '',
         age_group: ''
     }
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const [form, setForm] = useState(objForm);
 
     const handleForm = (e) => {
-
-       
 
         let obj = { ...form, [e.target.name]: e.target.value}
 
@@ -27,7 +25,7 @@ const ClientForm = ({ handleClient }) => {
         handleClient(form); //estas son las props de Client
         setForm(objForm) //limpia los campos del formulario
         e.target.reset() //limpia la selección de los botones
-        navigate('/productSelect')
+        //navigate('/productSelect')
     }
     return (
         <div className='canvas_oscuro'>
@@ -138,4 +136,4 @@ const ClientForm = ({ handleClient }) => {
     )
 }
 
-export default ClientForm
+export default STClientForm
