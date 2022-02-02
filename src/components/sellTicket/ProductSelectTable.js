@@ -41,13 +41,13 @@ const ProductSelectTable = () => {
                 </Table>
             </div>
             <div>
-            <p>Medio de Pago</p>
-            <select>
-                <option value=''>Elija Medio de Pago</option>
-                <option value='Crédito'>Tarjeta de Crédito</option>
-                <option value='Débito'>Tarjeta Débito</option>
-                <option value='Efectivo'>Efectivo</option>
-            </select>
+                <p>Medio de Pago</p>
+                <select>
+                    <option value=''>Elija Medio de Pago</option>
+                    <option value='Crédito'>Tarjeta de Crédito</option>
+                    <option value='Débito'>Tarjeta Débito</option>
+                    <option value='Efectivo'>Efectivo</option>
+                </select>
             </div>
             <Button type="submit">Vender</Button>
         </div>

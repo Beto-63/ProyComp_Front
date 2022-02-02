@@ -5,7 +5,6 @@ import { Routes, Route } from 'react-router-dom'
 import Auth from '../pages/Auth';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
-import ProductSelect from '../components/sellTicket/STProductSelect';
 import Sell from '../pages/SellTicket';
 import Stock from '../pages/Stock';
 import User from '../pages/User';
@@ -17,7 +16,7 @@ import OpenRegister from '../components/cashRegister/OpenRegister';
 import CheckInventory from '../components/cashRegister/ChckInventory';
 import BankDeposit from '../components/cashRegister/BankDeposit';
 import Expenses from '../components/cashRegister/Expenses';
-import CloseRegister from '../components/cashRegister/ClosRegister';
+import CloseRegister from '../components/cashRegister/CloseRegister';
 import ItemsByName from '../components/Stock/ItemsByName';
 import ItemByNameAndChannel from '../components/Stock/ItemByNameAndChannel';
 import InventoryTransfer from '../components/Stock/InventoryTransfer';
@@ -53,6 +52,8 @@ export const AppRouter = () => {
 
 
             <Route path="/user" element={<User />} />
+            <Route path="*" element={<NotFound />} />
+
 
         </Routes>
     )

@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -9,23 +9,28 @@ import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api'
+import CashContext from '../../context/CashContext';
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
 const schema = yup.object({
-    description: yup.string().required('Ingresa en que se gastó el dinero'),
+    description: yup.string().trim().required('Ingresa en que se gastó el dinero'),
     expense_amount: yup.number().typeError('Aqui va la cantidad gastada').required(),
-    //channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
+    //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
 });
 
 
 const Expenses = () => {
 
-    const [expenseOjb, setExpenseObj] = useState({});
+    const { setConfirmacion } = useContext(CashContext)
+
+    useEffect(() => {
+        setConfirmacion('')
+    }, [setConfirmacion]);
+
     //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
-    const [response, setResponse] = useState({});
-    //const [lastOpen, setLastOpen] = useState({});
+
 
 
 
@@ -35,24 +40,31 @@ const Expenses = () => {
 
 
     const onSubmit = (data) => {
-        fetch(`${server}/cash/expense`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(json => setResponse(json));
-        console.log(response);
-        reset();
+
+
+        const answer = window.confirm(`Estas registrando un gasto\npor: ${data.expense_amount} \n¿Estas segur@?`);
+        if (answer) {
+            // Save it!
+            fetch(`${server}/cash/expense`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(json => window.alert(JSON.stringify(json)))
+            reset();
+        } else {
+            // Do nothing!
+        }
     };
 
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Registra gastos menores</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

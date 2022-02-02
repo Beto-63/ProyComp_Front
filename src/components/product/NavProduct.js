@@ -14,17 +14,17 @@ const NavStock = () => {
     }
     return (
         <div className='canvas_oscuro'>
-            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestión de Productos</p>
             <Container>
                 <Row >
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToCreate} >Creación de Producto</button>
+                        <button className='btn-dark-bkg' onClick={goToCreate} >Creación Producto</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste de Producto</button>
+                        <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste a Producto</button>
                     </Col>
                 </Row>
             </Container>

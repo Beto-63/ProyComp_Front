@@ -1,0 +1,97 @@
+[
+    {
+        "client_id": "temp",
+        "products_sold": [
+            [
+                "61c1de596b187ddc665fffed",
+                5,
+                6000
+            ],
+            [
+                "61d205a1756e875e840f7814",
+                20,
+                5000
+            ]
+        ],
+        "channel_id": "619967a5ab9144aedc8dec5b",
+        "amount_sold": 130000,
+        "status": 1,
+        "payment_method": "Trans_nequi"
+    },
+    {
+        "client_id": "temp",
+        "products_sold": [
+            [
+                "61c1de596b187ddc665fffed",
+                5,
+                6000
+            ],
+            [
+                "61d205a1756e875e840f7814",
+                10,
+                5000
+            ]
+        ],
+        "channel_id": "619967a5ab9144aedc8dec5b",
+        "amount_sold": 80000,
+        "status": 1,
+        "payment_method": "Trans_bancolombia"
+    },
+    {
+        "client_id": "temp",
+        "products_sold": [
+            [
+                "61c1de596b187ddc665fffed",
+                3,
+                6000
+            ],
+            [
+                "61d205a1756e875e840f7814",
+                10,
+                5000
+            ]
+        ],
+        "channel_id": "619967a5ab9144aedc8dec5b",
+        "amount_sold": 68000,
+        "status": 1,
+        "payment_method": "Cash"
+    },
+    {
+        "client_id": "temp",
+        "products_sold": [
+            [
+                "61c1de596b187ddc665fffed",
+                10,
+                6000
+            ],
+            [
+                "61d205a1756e875e840f7814",
+                6,
+                5000
+            ]
+        ],
+        "channel_id": "619967a5ab9144aedc8dec5b",
+        "amount_sold": 90000,
+        "status": 1,
+        "payment_method": "Cash"
+    },
+    {
+        "client_id": "temp",
+        "products_sold": [
+            [
+                "61c1de596b187ddc665fffed",
+                10,
+                6000
+            ],
+            [
+                "61d205a1756e875e840f7814",
+                10,
+                5000
+            ]
+        ],
+        "channel_id": "619967a5ab9144aedc8dec5b",
+        "amount_sold": 110000,
+        "status": 1,
+        "payment_method": "Cash"
+    }
+]

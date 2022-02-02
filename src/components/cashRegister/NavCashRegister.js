@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-import BotonFondoOscuro from '../generic/BotonFondoOscuro';
+import CashContext from "../../context/CashContext";
+
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
-const NavStock = () => {
+const NavCashRegister = () => {
+
+    const { lastClose, lastOpen, setConfirmacion, confirmacion } = useContext(CashContext)
+
+
     let navigate = useNavigate();
     const goToOpen = () => {
         navigate('/cash/open');
@@ -24,33 +29,59 @@ const NavStock = () => {
         navigate('/cash/close');
     }
 
+    const handleOpen = () => {
+        if (lastOpen.length === 0 && lastClose.length === 1) {
+            goToOpen()
+        } else {
+            if (lastOpen.length === 1 && lastClose.length === 0) {
+                setConfirmacion("Tienes un cierre pendiente")
+            } else {
+                setConfirmacion("Error en la base de datos")
+            }
+        }
+    }
+
+    const handleClose = () => {
+        if (lastOpen.length === 1 && lastClose.length === 0) {
+            goToClose()
+        } else {
+            if (lastOpen.length === 0 && lastClose.length === 1) {
+                setConfirmacion("Tienes una apertura pendiente")
+            } else {
+                setConfirmacion("Error en la base de datos")
+            }
+        }
+    }
+
     return (
         <div className='canvas_oscuro'>
-            <Link to="/" className='salir' >Salir</Link>
+            <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestiona tu caja</p>
+            {/* <h4>{confirmacion}</h4> */}
             <Container>
                 <Row >
                     <Col>
-                        <BotonFondoOscuro label='Apertura de caja' handleClick={goToOpen} />
+                        <button className='btn-dark-bkg' onClick={handleOpen} >Apertura de caja</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Revisión de inventario' handleClick={goToCheckInventory} />
+                        <button className='btn-dark-bkg' onClick={goToCheckInventory} >Revisión de inventario</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Cónsignacion' handleClick={goToDeposit} />
+                        <button className='btn-dark-bkg' onClick={goToDeposit} >Consignación</button>
                     </Col>
                     <Col>
-                        <BotonFondoOscuro label='Gastos menores' handleClick={goToExpenses} />
+                        <button className='btn-dark-bkg' onClick={goToExpenses} >Gastos menores</button>
                     </Col>
 
                 </Row>
-                <BotonFondoOscuro label='Cierre de caja' handleClick={goToClose} />
+                <button className='btn-dark-bkg' onClick={handleClose} >Cierre de caja</button>
+                <h3 className='openclose'>{confirmacion}</h3>
             </Container>
             <img src={logo} alt='logo de El DOKO' className='footer' />
         </div>
     )
 }
 
-export default NavStock
+export default NavCashRegister

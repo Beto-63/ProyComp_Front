@@ -16,17 +16,17 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().required('Ingresa el nombre del elemento inventariable'),
+    name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
     quantity: yup.number().typeError('Ingresa la cantidad inicial').moreThan(0, 'El valor debe ser positivo').required('Se requiere ingresar cantidad'),
-    channel: yup.string().required('Por ser inventariable debe asignarsele un lugar físico'),
-    cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones')
+    channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
+    cat_name: yup.string().trim().required('La categoria sirve para hacer mas cortas las selecciones')
 });
 
 const CreateStockItem = () => {
 
     const [categories, setCategories] = useState([{}]);
     const [ubicaciones, setUbicaciones] = useState([{}]);
-    const [response, setResponse] = useState([{}]);
+
 
     // Se usa para obtener las ubicaciones validas y evitar entrada erronea de datos
     useEffect(() => {
@@ -53,6 +53,7 @@ const CreateStockItem = () => {
     // es poner en la cabecera de la forma es: "onSubmit={handleSubmit(onSubmit)"
     // pues usa el "handleSubmit" importado de 'react-hook-form'
     const onSubmit = (data) => {
+
         fetch(`${server}/stock`, {
             method: 'POST',
             headers: {
@@ -62,8 +63,8 @@ const CreateStockItem = () => {
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(json => setResponse(json));
-        console.log(response);
+            .then(json => window.alert(JSON.stringify(json)))
+
         reset();
     };
 
@@ -71,7 +72,7 @@ const CreateStockItem = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Crear elemento</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='salir'>Salir</Link>
+            <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
