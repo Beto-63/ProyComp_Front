@@ -1,16 +1,19 @@
 import React from 'react'
-import Client from './Client'
+import STClient from '../components/sellTicket/STClient'
 import GeneralNav from '../components/generic/GeneralNav'
-import { ClientProvider } from '../context/ClientContext'
+import { SellTicketProvider } from '../context/SellTicketContext'
+import ProductContext from '../context/ProductContext'
 
 function Sell() {
     return (
         <div>
             <GeneralNav />
             VENTAS
-            <ClientProvider>
-                <Client />
-            </ClientProvider>
+            <ProductContext>
+            <SellTicketProvider>
+                <STClient />
+            </SellTicketProvider>
+            </ProductContext>
         </div>
     )
 }

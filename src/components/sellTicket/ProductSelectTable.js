@@ -8,6 +8,7 @@ const ProductSelectTable = () => {
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Producto</th>
                             <th>Qty</th>
                             <th colSpan={2}>Precio</th>
@@ -15,12 +16,14 @@ const ProductSelectTable = () => {
                     </thead>
                     <tbody>
                         <tr>
+                            <th>1</th>
                             <td>Café en leche</td>
                             <td>10</td>
                             <td>5.000</td>
                             <td>Eliminar</td>
                         </tr>
                         <tr>
+                            <th>2</th>
                             <td>Tinto Negro</td>
                             <td>4</td>
                             <td>4.000</td>

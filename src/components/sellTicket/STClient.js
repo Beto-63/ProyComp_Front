@@ -1,16 +1,17 @@
 import React, { useContext, useState } from 'react'
-import ClientForm from '../components/clientes/ClientForm'
-import ClientContext from '../context/ClientContext';
+import STClientForm from './STClientForm';
+import SellTicketContext from '../../context/SellTicketContext';
+import STProductSelect from './STProductSelect';
 
-const Client = () => {
+const STClient = () => {
     //Uso del contexto
-    const {handleRegister} = useContext(ClientContext)
+    const {handleClientRegister} = useContext(SellTicketContext)
     //estado que va a almacenar en un arreglo los datos del ClientForm 
     const [client, setClient] = useState([]);
     //Manejador para el cliente
     const handleClient = (objClient)=>{
         //Utilizar funcion del contexto
-        handleRegister(objClient).then(async resp=>{
+        handleClientRegister(objClient).then(async resp=>{
             if(resp.status===201){
                 let json = await resp.json();
                 //almacenar los objetos recibidos del ClientForm en un array
@@ -27,10 +28,11 @@ const Client = () => {
         <div>
             <h2>Cliente</h2>
             {/*Se envía el handleClient como prop al formulario*/}
-            <ClientForm handleClient={handleClient}/>
+            <STClientForm handleClient={handleClient}/>
+            <STProductSelect/>
         </div>
         
     )
 }
 
-export default Client
+export default STClient

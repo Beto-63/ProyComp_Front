@@ -1,13 +1,13 @@
 import { createContext } from "react";
 
 //se crea el contexto
-const ClientContext = createContext();
+const SellTicketContext = createContext();
 
 //se crea el proveedor de contexto (es el que agrupa el arbol de elementos)
-const ClientProvider = ({children})=>{
+const SellTicketProvider = ({children})=>{
 
     //Función para enviar petición al servidor
-    const handleRegister = async (objClient)=>{
+    const handleClientRegister = async (objClient)=>{
         //enviar los datos capturados a la base de datos
         const resp = await fetch('https://dokotestback.herokuapp.com/client',{
             method: 'POST',
@@ -19,11 +19,12 @@ const ClientProvider = ({children})=>{
         })
         return resp;    
     }
-    
-    const data = {handleRegister};
+    //aqui voy a crear el GET - hay que envolver toda la app con un Contexto global y empezar a hacer los contextos unitarios.
+    const data = {handleClientRegister};
 
-    return <ClientContext.Provider value={data}>{children}</ClientContext.Provider>
+    return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>
 }
+
 //se exportan el context y el provider
-export {ClientProvider};
-export default ClientContext;
+export {SellTicketProvider};
+export default SellTicketContext;
