@@ -194,6 +194,15 @@ const CloseRegister = () => {
                         .then(response => response.json())
                         .then(json => console.log(JSON.stringify(json)))
                 });
+                fetch(`${server}/cash/lastOpen/account`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: lastOpen[0]._id })
+                })
+                    .then(response => response.json())
+                    .then(json => window.alert(JSON.stringify(json)))
                 reset()
             } else {
                 // Do nothing!
@@ -248,7 +257,7 @@ const CloseRegister = () => {
                             <input {...register("change_amount")}
                                 className="campo_entrada"
                                 placeholder="Cambio para Manana"
-                                id='change_amount' onBlur={handleNewChangeAmount}
+                                id='change_amount' onChange={handleNewChangeAmount}
                             // onChange={handleOpen}
                             />
                             <p className='error'>{errors.cash_on_hand?.message}</p>
