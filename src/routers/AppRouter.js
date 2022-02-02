@@ -22,6 +22,7 @@ import ItemByNameAndChannel from '../components/Stock/ItemByNameAndChannel';
 import InventoryTransfer from '../components/Stock/InventoryTransfer';
 import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
+import NotFound from '../components/auth/NotFound'
 
 export const AppRouter = () => {
     return (
