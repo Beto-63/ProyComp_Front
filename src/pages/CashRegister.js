@@ -33,3 +33,5 @@ function CashRegister() {
 }
 
 export default CashRegister
+
+

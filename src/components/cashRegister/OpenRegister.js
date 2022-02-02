@@ -22,53 +22,24 @@ const schema = yup.object({
 
 const OpenRegister = () => {
 
-    const { setConfirmacion } = useContext(CashContext)
+    const { setConfirmacion, lastClose } = useContext(CashContext)
 
     useEffect(() => {
         setConfirmacion('')
     }, [setConfirmacion]);
 
-    const transaction = {
-        operation: "",
-        cash_on_hand: 0,
-        change_amount: 0,
-        channel: "",
-        status: null,
-        amount_to_deposit: 0,
-    }
-
-
-    const [lastOpen, setLastOpen] = useState([{ transaction }]);
-    const [lastClose, setLastClose] = useState([{ transaction }]);
     const [newAmountToDeposit, setNewAmountToDeposit] = useState(0);
-    const [canOpen, setCanOpen] = useState(false);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
-
-    useEffect(() => {
-        fetch(`${server}/cash/lastOpen`)
-            .then(response => response.json())
-            .then(json => setLastOpen(json));
-    }, [])
-
-    useEffect(() => {
-        fetch(`${server}/cash/lastClose`)
-            .then(response => response.json())
-            .then(json => setLastClose(json));
-    }, [])
-
-    useEffect(() => {
-        if (lastOpen.length === 0 && lastClose.length === 1) { setCanOpen(true) }
-    }, [lastClose, lastOpen])
 
     const handleOpen = () => {
         setNewAmountToDeposit(lastClose[0].change_amount + lastClose[0].amount_to_deposit - document.getElementById('change_amount').value)
     };
 
     const onSubmit = (data) => {
-        const answer = window.confirm(`Revisa el valorer que tienes disponible por consignar\n¿Abrimos?`);
+        const answer = window.confirm(`Revisa el valore que tienes disponible por consignar\n¿Abrimos?`);
         if (answer) {
             let obj = {
                 operation: 'open',
@@ -79,30 +50,28 @@ const OpenRegister = () => {
                 status: 1
             }
             // fetch de apertura
-            if (canOpen) {
-                fetch(`${server}/cash/last/transaction`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(obj)
-                })
-                    .then(response => response.json())
-                    .then(json => window.alert(JSON.stringify(json)))
 
-                // fetch de cambio de estado al ultimo cierre NO FUNCIONA
-                fetch(`${server}/cash/lastClose/account`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: lastClose[0]._id })
-                })
-                    .then(response => response.json())
-                    .then(json => window.alert(JSON.stringify(json)))
-            } else {
-                //do nothing
-            }
+            fetch(`${server}/cash/last/transaction`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(response => response.json())
+                .then(json => window.alert(JSON.stringify(json)))
+
+            // fetch de cambio de estado al ultimo cierre NO FUNCIONA
+            fetch(`${server}/cash/lastClose/account`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: lastClose[0]._id })
+            })
+                .then(response => response.json())
+                .then(json => window.alert(JSON.stringify(json)))
+
             reset();
         } else {
             // Do nothing!
@@ -132,10 +101,7 @@ const OpenRegister = () => {
                     </Row>
                     <br />
                     <p className="result">{`El Nuevo Valor a consignar es ahora   $${newAmountToDeposit}`}</p>
-
-
-
-                    <button className='btn-light-bkg' type="submit">Abrir Caja(alerta)</button>
+                    <button className='btn-light-bkg' type="submit">Abrir</button>
                 </form>
             </Container>
         </div>

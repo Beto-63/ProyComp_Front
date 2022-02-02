@@ -30,6 +30,9 @@ const NavCashRegister = () => {
     }
 
     const handleOpen = () => {
+        console.log("Apertura", lastOpen.length)
+        console.log("Cierre", lastClose.length)
+
         if (lastOpen.length === 0 && lastClose.length === 1) {
             goToOpen()
         } else {
@@ -40,8 +43,13 @@ const NavCashRegister = () => {
             }
         }
     }
+    console.log("objApertura", lastOpen)
+    console.log("ObjCierre", lastClose)
 
     const handleClose = () => {
+        console.log("Apertura", lastOpen.length)
+        console.log("Cierre", lastClose.length)
+
         if (lastOpen.length === 1 && lastClose.length === 0) {
             goToClose()
         } else {
