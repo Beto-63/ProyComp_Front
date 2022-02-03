@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap'
 import { useContext } from 'react';
+import SellTicketContext from '../../context/SellTicketContext';
 
 const STProductChoiceTable = () => {
-    const { getProductByCatName } = useContext(AppContext)
+    const { getProductByCatName } = useContext(SellTicketContext)
     const [product, setProduct] = useState([]);
 
     useEffect(() => {
