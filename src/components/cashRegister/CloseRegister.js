@@ -29,18 +29,6 @@ const CloseRegister = () => {
         setConfirmacion('')
     }, [setConfirmacion]);
 
-    const transaction = {
-        operation: "",
-        cash_on_hand: 0,
-        change_amount: 0,
-        channel: "",
-        status: null,
-        amount_to_deposit: 0,
-    }
-
-    //const [lastOpen, setLastOpen] = useState([{ transaction }]);
-    //const [lastClose, setLastClose] = useState([{ transaction }]);
-    //const [canClose, setCanClose] = useState(false);
     const [sellTickets, setSellTickets] = useState([{}]);
     const [totalSales, setTotalSales] = useState(0);
     const [deposits, setDeposits] = useState([{}]);
@@ -52,22 +40,17 @@ const CloseRegister = () => {
     const [nonCashSales, setNonCashSales] = useState(0)
     const [countedCash, setCountedCash] = useState(0)
     const [expectedCashOnHand, setExpectedCashOnHand] = useState(0)
+    const [paymentMethods, setPaymentMethods] = useState([{}])
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
-    // useEffect(() => {
-    //     fetch(`${server}/cash/lastOpen`)
-    //         .then(response => response.json())
-    //         .then(json => setLastOpen(json));
-    // }, [])
-
-    // useEffect(() => {
-    //     fetch(`${server}/cash/lastClose`)
-    //         .then(response => response.json())
-    //         .then(json => setLastClose(json));
-    // }, [])
+    useEffect(() => {
+        fetch(`${server}/paymentMethods`)
+            .then(response => response.json())
+            .then(json => setPaymentMethods(json));
+    }, [])
 
     useEffect(() => {
         fetch(`${server}/cash/expense/unaccounted`)
@@ -116,8 +99,7 @@ const CloseRegister = () => {
         } else {
             setCanClose(false)
         }
-        console.log(`"Validacion":\n lo que se espera: ${expectedCashOnHand},\n 
-                    lo queHabia en caja:  ${countedCash},\n Resultado: ${canClose}`)
+        console.log("medios de pago", paymentMethods)
         setNewAmountToDeposit(
             lastOpen[0].change_amount +
             lastOpen[0].amount_to_deposit +
@@ -142,10 +124,9 @@ const CloseRegister = () => {
 
     const onSubmit = (data) => {
         const answer = window.confirm(`Estas a pundo de hacer el cierre...\n¿Segur@?`);
-        // .then(json => window.alert(JSON.stringify(json)))
         if (canClose) {
             if (answer) {
-                let obj = {
+                let objClose = {
                     operation: 'close',
                     amount_to_deposit: newAmountToDeposit,
                     cash_on_hand: data.change_amount + newAmountToDeposit,
@@ -153,17 +134,35 @@ const CloseRegister = () => {
                     channel: 'Arsenal', //del token
                     status: 1
                 }
-
                 // fetch de cierre
                 fetch(`${server}/cash/last/transaction`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(obj)
+                    body: JSON.stringify(objClose)
                 })
                     .then(response => response.json())
                     .then(json => window.alert(JSON.stringify(json)))
+
+                let objSalesToday = {
+                    sell_tickets: sellTickets,
+                    payment_method: paymentMethods,
+                    channel: 'Arsenal', //del token
+
+                }
+                // fetch de registro permanente de ventas al cierre
+                fetch(`${server}/sales/byMethod`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(objSalesToday)
+                })
+                    .then(response => response.json())
+                    .then(json => window.alert(JSON.stringify(json)))
+
+
 
                 expenses.forEach(element => {
                     fetch(`${server}/cash/expense/account`, {
@@ -253,8 +252,6 @@ const CloseRegister = () => {
 
                     <p p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
                     <p className={(expectedCashOnHand - countedCash === 0) ? "perfect" : "result"}>{(expectedCashOnHand - countedCash === 0) ? `Puede cerrar` : (expectedCashOnHand - countedCash > 0) ? `Hay un faltante` : `Hay un excedente`}</p>
-                    {/* {((expectedCashOnHand - countedCash) === 0) ? setCanClose(true) : setCanClose(false)} */}
-
                     <Row>
                         <Col>
                             <label htmlFor='change_amount' className='label'>Cual sera la base de cambio manana?</label>
@@ -272,9 +269,7 @@ const CloseRegister = () => {
                     <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
                     <p className="label">{`Las Ventas totales han sido de___________$${totalSales},`}</p>
                     <p className="result">{`Por tanto debo consignar_________________$${newAmountToDeposit}`}</p>
-
                     <button className='btn-light-bkg' type="submit">Cerrar</button>
-
                     <br />
                     <br />
                 </form>
