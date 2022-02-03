@@ -23,7 +23,7 @@ const schema = yup.object({
 
 const CloseRegister = () => {
 
-    const { setConfirmacion, lastOpen, lastClose } = useContext(CashContext)
+    const { setConfirmacion, lastOpen, lastClose, canClose, setCanClose } = useContext(CashContext)
 
     useEffect(() => {
         setConfirmacion('')
@@ -40,7 +40,7 @@ const CloseRegister = () => {
 
     //const [lastOpen, setLastOpen] = useState([{ transaction }]);
     //const [lastClose, setLastClose] = useState([{ transaction }]);
-    const [canClose, setCanClose] = useState(false);
+    //const [canClose, setCanClose] = useState(false);
     const [sellTickets, setSellTickets] = useState([{}]);
     const [totalSales, setTotalSales] = useState(0);
     const [deposits, setDeposits] = useState([{}]);
@@ -111,6 +111,13 @@ const CloseRegister = () => {
     }, [deposits, expenses, sellTickets, lastClose, lastOpen]);
 
     const handleNewChangeAmount = () => {
+        if ((expectedCashOnHand - countedCash) === 0) {
+            setCanClose(true)
+        } else {
+            setCanClose(false)
+        }
+        console.log(`"Validacion":\n lo que se espera: ${expectedCashOnHand},\n 
+                    lo queHabia en caja:  ${countedCash},\n Resultado: ${canClose}`)
         setNewAmountToDeposit(
             lastOpen[0].change_amount +
             lastOpen[0].amount_to_deposit +
@@ -131,7 +138,6 @@ const CloseRegister = () => {
             totalDeposits -
             totalExpenses
         )
-        if ((expectedCashOnHand - countedCash) === 0) { setCanClose(true) }
     }
 
     const onSubmit = (data) => {
