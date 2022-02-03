@@ -25,7 +25,7 @@ const SellTicketProvider = ({children})=>{
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(objTemp)
+            body: JSON.stringify(objProduct)
         })
         return resp;
     }
