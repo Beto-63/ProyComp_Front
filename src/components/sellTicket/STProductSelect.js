@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import ProductSelectForm from './ProductSelectForm';
 import ProductSelectTable from './ProductSelectTable';
-import ProductContext from '../../context/ProductContext';
-import AppContext from '../../context/AppContext';
 
 
 const STProductSelect = () => {
@@ -14,7 +12,6 @@ const STProductSelect = () => {
   const handleProduct = (objProduct) => {
     //Utilizar funcion del contexto
     getProductByCatName(objProduct).then(async resp => {
-
       let json = await resp.json();
       //almacenar los objetos recibidos del ClientForm en un array
       let array = [...product, objProduct]
@@ -22,10 +19,10 @@ const STProductSelect = () => {
     });
   }
   return (
-    <ProductContext>
+    <div>
       <ProductSelectForm handleProduct={handleProduct} />
       <ProductSelectTable />
-    </ProductContext>
+    </div>
   );
 };
 

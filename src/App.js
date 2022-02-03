@@ -9,8 +9,6 @@ import { UnauthRouter } from './routers/UnauthRouter'
 import { CashProvider } from './context/CashContext';
 import AuthContext from './context/AuthContext';
 import { SellTicketProvider } from './context/SellTicketContext';
-import AppContext from './context/AppContext';
-import ProductContext from './context/ProductContext';
 
 
 function App() {
@@ -22,13 +20,11 @@ function App() {
 
     <div className='App'>
 
-      <ProductContext>
         <SellTicketProvider>
           <CashProvider>
             {auth ? <AppRouter /> : <UnauthRouter />}
           </CashProvider>
         </SellTicketProvider>
-      </ProductContext>
 
     </div >
   );

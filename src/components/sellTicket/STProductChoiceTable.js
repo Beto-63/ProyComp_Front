@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap'
 import { useContext } from 'react';
-import AppContext from '../../context/AppContext';
 
 const STProductChoiceTable = () => {
     const { getProductByCatName } = useContext(AppContext)
