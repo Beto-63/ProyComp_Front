@@ -23,6 +23,8 @@ import InventoryTransfer from '../components/Stock/InventoryTransfer';
 import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
 import NotFound from '../components/auth/NotFound'
+import STProductSelect from '../components/sellTicket/STProductSelect';
+import STProductChoiceTable from '../components/sellTicket/STProductChoiceTable';
 
 export const AppRouter = () => {
     return (
@@ -41,6 +43,8 @@ export const AppRouter = () => {
             <Route path="/product/adjust" element={<AdjustProduct />} />
 
             <Route path="/sell" element={<Sell />} />
+            <Route path="/sell/productSelect" element={<STProductSelect />} />
+            <Route path="/sell/productChoice" element={<STProductChoiceTable />} />
 
             <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />

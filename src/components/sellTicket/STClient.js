@@ -29,7 +29,6 @@ const STClient = () => {
             <h2>Cliente</h2>
             {/*Se envía el handleClient como prop al formulario*/}
             <STClientForm handleClient={handleClient}/>
-            <STProductSelect/>
         </div>
         
     )

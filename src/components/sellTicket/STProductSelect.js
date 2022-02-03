@@ -4,7 +4,6 @@ import ProductSelectForm from './ProductSelectForm';
 import ProductSelectTable from './ProductSelectTable';
 import ProductContext from '../../context/ProductContext';
 import AppContext from '../../context/AppContext';
-import ProductSelectChoiceTable from './ProductSelectChoiceTable';
 
 
 const STProductSelect = () => {
@@ -26,7 +25,6 @@ const STProductSelect = () => {
     <ProductContext>
       <ProductSelectForm handleProduct={handleProduct} />
       <ProductSelectTable />
-      <ProductSelectChoiceTable/>
     </ProductContext>
   );
 };
