@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useContext } from 'react';
 import AppContext from '../../context/AppContext';
 
-const ProductSelectChoiceTable = () => {
+const STProductChoiceTable = () => {
     const { getProductByCatName } = useContext(AppContext)
     const [product, setProduct] = useState([]);
 
@@ -44,4 +44,4 @@ const ProductSelectChoiceTable = () => {
     );
 };
 
-export default ProductSelectChoiceTable;
+export default STProductChoiceTable;

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ProductSelectForm = ({handleProduct}) => {
     const objForm = {
         cat_name: ''
     }
     
-    //const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [form, setForm] = useState(objForm)
 
@@ -21,7 +21,7 @@ const ProductSelectForm = ({handleProduct}) => {
         e.preventDefault();
         handleProduct(form)
         setForm(objForm)
-        //navigate('/productChoice');
+        navigate('/sell/productChoice');
     }
     return (
         <div>
