@@ -12,15 +12,29 @@ import '../components/generic/Light-bkg.css'
 function CashRegister() {
 
     const { setLastOpen, setLastClose } = useContext(CashContext)
+    const channel = "Arsenal" // Esto vendra del Token
 
     useEffect(() => {
-        fetch(`${server}/cash/lastOpen`)
+        fetch(`${server}/cash/lastOpen`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ channel: channel })
+            }
+        )
             .then(response => response.json())
             .then(json => setLastOpen(json));
     }, [setLastOpen])
 
     useEffect(() => {
-        fetch(`${server}/cash/lastClose`)
+        fetch(`${server}/cash/lastClose`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ channel: channel })
+            }
+        )
+
             .then(response => response.json())
             .then(json => setLastClose(json));
     }, [setLastClose])
@@ -33,3 +47,5 @@ function CashRegister() {
 }
 
 export default CashRegister
+
+
