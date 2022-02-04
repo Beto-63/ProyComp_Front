@@ -1,7 +1,7 @@
 /**********************Importacion de Librerias****************************/
 
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,7 +21,7 @@ const schema = yup.object({
 });
 
 const OpenRegister = () => {
-
+    let navigate = useNavigate();
     const { setConfirmacion, lastClose } = useContext(CashContext)
 
     useEffect(() => {
@@ -76,7 +76,7 @@ const OpenRegister = () => {
         } else {
             // Do nothing!
         }
-
+        navigate('/cash');
     };
 
     return (
