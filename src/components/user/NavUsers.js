@@ -1,26 +1,34 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
-const NavStock = () => {
-    const enruteCrear = () => {
-        console.log('llamo la funcion');
-        //quiero que se vaya a la pagina correspondiente
+const NavUsers = () => {
+    let navigate = useNavigate();
+    const goToRegisterUser = () => {
+        navigate('/user/createUser');
     }
+
+    const goToAdjustUser = () => {
+        navigate('/user/adjustUser');
+    }
+
     return (
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Usuarios</p>
             <Container>
                 <Row >
                     <Col>
-                        <button className='btn-dark-bkg' onClick={enruteCrear} >Crear usuario</button>
+                        <button className='btn-dark-bkg' onClick={goToRegisterUser} >Crear usuario</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' >Ajuste de Usuario</button>
+                        <button className='btn-dark-bkg' onClick={goToAdjustUser}>Ajuste de Usuario</button>
                     </Col>
                     <Col>
                         <button className='btn-dark-bkg' >Gestión de Roles</button>
+                        {/* esto va para version 2 */}
                     </Col>
                 </Row>
             </Container>
@@ -29,4 +37,4 @@ const NavStock = () => {
     )
 }
 
-export default NavStock
+export default NavUsers
