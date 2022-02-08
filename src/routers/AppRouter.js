@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-//Importar paginas
+//Importar componentes o paginas
 import Auth from '../pages/Auth';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
@@ -22,9 +22,12 @@ import ItemByNameAndChannel from '../components/Stock/ItemByNameAndChannel';
 import InventoryTransfer from '../components/Stock/InventoryTransfer';
 import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
-import NotFound from '../components/auth/NotFound'
+import CreateUser from '../components/user/CreateUser';
+import AdjustUser from '../components/user/AdjustUser';
+import NotFound from '../components/auth/NotFound';
 import STProductSelect from '../components/sellTicket/STProductSelect';
 import STProductChoiceTable from '../components/sellTicket/STProductChoiceTable';
+
 
 export const AppRouter = () => {
     return (
@@ -57,6 +60,8 @@ export const AppRouter = () => {
 
 
             <Route path="/user" element={<User />} />
+            <Route path="/user/createUser" element={<CreateUser />} />
+            <Route path="/user/adjustUser" element={<AdjustUser />} />
             <Route path="*" element={<NotFound />} />
 
 
