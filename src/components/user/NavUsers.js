@@ -18,6 +18,8 @@ const NavUsers = () => {
     return (
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Usuarios</p>
+            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/" className='volver'>Volver</Link>
             <Container>
                 <Row >
                     <Col>
