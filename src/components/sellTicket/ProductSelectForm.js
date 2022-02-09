@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import SellTicketContext from '../../context/SellTicketContext';
+
+
 
 const ProductSelectForm = ({handleProduct}) => {
     const objForm = {
         cat_name: ''
     }
-    
+    const {form, setForm} = useContext(SellTicketContext)
+
     const navigate = useNavigate()
 
-    const [form, setForm] = useState(objForm)
-
+    //uso de form y setForm que vienen desde el context
     const handleForm = (e)=>{
         let obj = { ...form, [e.target.name]: e.target.value}
         setForm(obj)
@@ -19,9 +22,12 @@ const ProductSelectForm = ({handleProduct}) => {
 
     const handleSubmit = (e)=>{
         e.preventDefault();
+        //Hacer la consulta HTML como parámetro el objeto form
         handleProduct(form)
-        setForm(objForm)
+        //Navegar a la página indicada una vez hecho el submit
         navigate('/sell/productChoice');
+        //dejar el objeto vacío una vez se hace el submit
+        setForm(objForm)
     }
     return (
         <div>
