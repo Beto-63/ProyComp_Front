@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import STClientForm from './STClientForm';
 import SellTicketContext from '../../context/SellTicketContext';
-import STProductSelect from './STProductSelect';
 
 const STClient = () => {
     //Uso del contexto

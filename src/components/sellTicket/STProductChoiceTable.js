@@ -1,18 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Form } from 'react-bootstrap'
 import { useContext } from 'react';
 import SellTicketContext from '../../context/SellTicketContext';
 
 const STProductChoiceTable = () => {
-    const { getProductByCatName } = useContext(SellTicketContext)
-    const [product, setProduct] = useState([]);
 
+    const objSelected = {
+        name: '',
+        stock_qty: '',
+        price: '',
+        temperature: ''
+    }
+    const { product, selected, setSelected } = useContext(SellTicketContext)
+
+    const handleSelect = (e) => {
+        let obj = { ...selected, name: e.name, stock_qty: e.stock_qty, price: e.price, temperature: e.temperature }
+        //de esta forma se llena selected con el objeto pero se sobreescribe cada vez que seleccionamos un elemento
+        /* setSelected(obj) */
+        //de esta forma se guarda el array y se va llenando cada vez que seleccionamos un elemento
+        let array = [...selected, obj]
+        setSelected(array)
+    }
+    console.log('Selected: ')
+    console.log(selected)
+
+
+    let indice = product.length - 1
+
+
+    //useEffect monitorea los cambios que se le hacen al dato que se pone dentro del corchete, si no se ponen datos monitorea toda la aplicación
     useEffect(() => {
-        getProductByCatName().then(async resp => {
-            let json = await resp.json();
-            setProduct(json)
-        })
-    }, []);
+    }, [product]);
 
     return (
         <div>
@@ -21,26 +39,78 @@ const STProductChoiceTable = () => {
                     <tr>
                         <th>#</th>
                         <th>Producto</th>
-                        <th>Qty</th>
-                        <th colSpan={2}>Precio</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th>Selección</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {product.map((element, i) => {
+                    {product[indice] && product[indice].map((element, i) => {
                         return (
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{element.name}</td>
-                                <td>Cantidad</td>
+                                <td>{element.stock_qty}</td>
                                 <td>{element.price}</td>
-                                <td>Seleccionar</td>
+                                <td>
+                                    <>
+                                        <div>
+                                            <Button variant="primary" size="sm" onClick={() => { handleSelect(element) }}>
+                                                Seleccionar
+                                            </Button>{' '}
+                                            {/* <Button variant="secondary" size="sm" >
+                                                Seleccionar
+                                            </Button> */}
+                                        </div>
+                                    </>
+                                </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </Table>
             <Button type="submit">Validar</Button>
+            <Table striped bordered hover size="sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {selected.map((ele, j) => {
+                        return (
+                            <tr key={j}>
+                                <td>{j + 1}</td>
+                                <td>{ele.name}</td>
+                                <td><Form>
+                                    <Form.Group className="mb-3" controlId="formBasicNumber">
+                                        <Form.Control type="number" placeholder="digite cantidad" name="cantidad" id="cantidad" />
+                                    </Form.Group>
+                                </Form></td>
+                                <td>{ele.price}</td>
+                                <td>
+                                    <>
+                                        <div>
+                                            <Button variant="danger" size="sm" >
+                                                Eliminar
+                                            </Button>{' '}
+                                            {/* <Button variant="secondary" size="sm" >
+                                                Seleccionar
+                                            </Button> */}
+                                        </div>
+                                    </>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </Table>
         </div>
+
     );
 };
 
