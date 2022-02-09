@@ -38,11 +38,6 @@ const CreateProduct = () => {
       .then(json => setCategories(json));
   }, [])
 
-  useEffect(() => {
-
-    // Reemplazar el console por la consulta a la base de datos para llenar el select
-  }, [])
-
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
