@@ -13,17 +13,17 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    name: yup.string().trim().required('Ingresa el nombre del elemento inventariable'),
-    email: yup.string().email().required(),
-    email2: yup.string().email().required(),
-    password: yup.string().trim().required(),
-    passwor2: yup.string().trim().required(),
-    personal_email: yup.string().email().required(),
-    phone_number: yup.string().trim().required(),
-    channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
-    user_cat: yup.string().trim().required(),
+    name: yup.string().trim().required('Ingresa el nombre del usuario'),
+    email: yup.string().email('Formato de correo invalido').required('El usuario se identifica en el sistema con su email'),
+    email2: yup.string().oneOf([yup.ref('email')], 'No coincide con el ingresado').required(),
+    password: yup.string().trim().min(6, 'Minimo 6 caracteres').required('Se requiere password'),
+    password2: yup.string().oneOf([yup.ref('password')], 'No coincide con el ingresado').required(),
+    personal_email: yup.string().email(),
+    phone_number: yup.string().trim(),
+    channel: yup.string().trim().required('Aqui debe ir el canal que atiende el usuario'),
+    user_cat: yup.string().trim().required('Aqui va el nombre del rol'),
     // status:va por defecto en 2
-    cat_name: yup.string().trim().required('La categoria sirve para hacer mas cortas las selecciones')
+
 });
 
 
@@ -50,6 +50,28 @@ const CreateUser = () => {
     });
 
     const onSubmit = (data) => {
+
+        const objUser = {
+            name: data.name,
+            email: data.email,
+            personal_email: data.personal_email,
+            phone_number: data.phone_number,
+            password: data.password,
+            channel: data.channel,
+            user_cat: data.user_cat,
+            status: 2
+        }
+        window.alert("No olovidar comunicar este password temporal al usuario: \n", JSON.stringify(data.password))
+        fetch(`${server}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objUser)
+        })
+            .then(response => response.json())
+            .then(json => window.alert(JSON.stringify(json)))
+        reset();
     }
 
     return (
@@ -154,7 +176,7 @@ const CreateUser = () => {
                                 )
                             })}
                         </select>
-                        <p className='error'>{errors.cat_name?.message}</p>
+                        <p className='error'>{errors.user_cat?.message}</p>
                     </Row>
                     <button className='btn-light-bkg' type="submit">Crear</button>
                 </form>
