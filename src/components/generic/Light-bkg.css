@@ -119,3 +119,8 @@ color: #F58787;
     display: inline-block;
     vertical-align: middle;
   }
+
+  .foto {
+     width :65%;
+     height: auto;
+  }

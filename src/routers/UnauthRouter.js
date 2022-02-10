@@ -16,7 +16,7 @@ export const UnauthRouter = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/rec1' element={<PasswordRecovery1 />} />
             <Route path='/rec2' element={<PasswordRecovery2 />} />
-            <Route path='*' element={<NotFound />} />
+            <Route path='*' element={<Login />} />
         </Routes>
     )
 };
