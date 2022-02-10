@@ -18,7 +18,7 @@ const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
     cash_on_hand: yup.number().typeError('Aqui va lo que tienes en efectivo').required(),
     amount_to_deposit: yup.number(),
-    change_amount: yup.number()
+    change_amount: yup.number().typeError('Este dato se usa para calcular lo que debes consignar').required(),
 });
 
 const CloseRegister = () => {
@@ -28,7 +28,7 @@ const CloseRegister = () => {
     useEffect(() => {
         setConfirmacion('')
     }, [setConfirmacion]);
-    const [willClose, setWillClose] = useState("compact")
+    const [willClose, setWillClose] = useState("none")
     const [sellTickets, setSellTickets] = useState([{}]);
     const [totalSales, setTotalSales] = useState(0);
     const [deposits, setDeposits] = useState([{}]);
@@ -48,7 +48,7 @@ const CloseRegister = () => {
 
     useEffect(() => {
 
-    }, [willClose, countedCash]);
+    }, [willClose]);
 
 
     useEffect(() => {
@@ -98,6 +98,31 @@ const CloseRegister = () => {
         setCashSales(tempCash)
     }, [deposits, expenses, sellTickets, lastClose, lastOpen]);
 
+    useEffect(() => {
+
+    }, [countedCash, expectedCashOnHand]);
+
+    const presentClose = () => {
+        if ((countedCash - expectedCashOnHand < 3000) || (expectedCashOnHand - countedCash < 3000))
+            setWillClose('block')
+    }
+
+    const handleCountedCash = () => {
+
+        setExpectedCashOnHand(
+            lastOpen[0].change_amount +
+            lastOpen[0].amount_to_deposit +
+            cashSales -
+            totalDeposits -
+            totalExpenses
+        )
+        setCountedCash(document.getElementById('cash_on_hand').value)
+        presentClose();
+        console.log("se puede cerrar", willClose)
+        console.log("expected", expectedCashOnHand)
+        console.log("counted", countedCash)
+    }
+
     const handleNewChangeAmount = () => {
         if ((expectedCashOnHand - countedCash) === 0) {
             setCanClose(true)
@@ -112,30 +137,6 @@ const CloseRegister = () => {
             totalDeposits -
             totalExpenses - document.getElementById('change_amount').value
         )
-    }
-
-    const continueClosing = () => {
-        if ((expectedCashOnHand - countedCash) === 0) {
-            setWillClose("compact")
-        } else {
-            setWillClose("none")
-        }
-    }
-
-    const handleCountedCash = () => {
-
-        setExpectedCashOnHand(
-            lastOpen[0].change_amount +
-            lastOpen[0].amount_to_deposit +
-            cashSales -
-            totalDeposits -
-            totalExpenses
-        )
-        setCountedCash(document.getElementById('cash_on_hand').value)
-        //continueClosing()
-        console.log("se puede cerrar", willClose)
-        console.log("expected", expectedCashOnHand)
-        console.log("counted", countedCash)
     }
 
     const onSubmit = (data) => {
@@ -281,7 +282,7 @@ const CloseRegister = () => {
                                     id='change_amount' onChange={handleNewChangeAmount}
                                 // onChange={handleOpen}
                                 />
-                                <p className='error'>{errors.cash_on_hand?.message}</p>
+                                <p className='error'>{errors.change_amount?.message}</p>
                             </Col>
                         </Row>
                         <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
