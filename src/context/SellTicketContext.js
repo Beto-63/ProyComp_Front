@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 //se crea el contexto
 const SellTicketContext = createContext();
@@ -38,9 +38,13 @@ const SellTicketProvider = ({children})=>{
     const [selected, setSelected] = useState([]);
     console.log('Selected desde el Context: ')
     console.log(selected)
+
+    const [amount, setAmount] = useState([])
+    console.log('Amount desde el Context: ')
+    console.log(amount)
       
     //aqui voy a crear el GET - hay que envolver toda la app con un Contexto global y empezar a hacer los contextos unitarios.
-    const data = {handleClientRegister, getProductByCatName, form, setForm, product, setProduct, selected, setSelected };
+    const data = {handleClientRegister, getProductByCatName, form, setForm, product, setProduct, selected, setSelected, amount, setAmount };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>
 }
