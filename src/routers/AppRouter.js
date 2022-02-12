@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 //Importar componentes o paginas
+import IndexTemp from '../components/Landing/IndexTemp'
 import Auth from '../pages/Auth';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
@@ -27,12 +28,14 @@ import AdjustUser from '../components/user/AdjustUser';
 import NotFound from '../components/auth/NotFound';
 import STProductSelect from '../components/sellTicket/STProductSelect';
 import STProductChoiceTable from '../components/sellTicket/STProductChoiceTable';
+import GeneralMenu from '../components/generic/GeneralMenu';
 
 
 export const AppRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={<Auth />} />
+            <Route path="/" element={<IndexTemp />} />
+            <Route path="/menu" element={<GeneralMenu />} />
 
             <Route path="/cash" element={<CashRegister />} />
             <Route path="/cash/open" element={<OpenRegister />} />
