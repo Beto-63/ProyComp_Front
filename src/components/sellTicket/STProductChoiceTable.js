@@ -3,6 +3,7 @@ import { Table, Button, Form } from 'react-bootstrap'
 import { useContext } from 'react';
 import SellTicketContext from '../../context/SellTicketContext';
 
+
 const STProductChoiceTable = () => {
 
     const objSelected = {
@@ -12,14 +13,15 @@ const STProductChoiceTable = () => {
         temperature: '',
         amount: ''
     }
+    
     const objAmount = {
         amount: ''
-    }
+    }    
 
-    const { product, setProduct, selected, setSelected, amount, setAmount } = useContext(SellTicketContext)
+    const { product, selected, setSelected, amount, setAmount } = useContext(SellTicketContext)
 
     const handleSelect = (e) => {
-        let obj = { ...selected, name: e.name, stock_qty: e.stock_qty, price: e.price, temperature: e.temperature }
+        let obj = { ...selected, name: e.name, stock_qty: e.stock_qty, price: e.price, temperature: e.temperature, amount: '' }
         //de esta forma se llena selected con el objeto pero se sobreescribe cada vez que seleccionamos un elemento
         /* setSelected(obj) */
         //de esta forma se guarda el array y se va llenando cada vez que seleccionamos un elemento
@@ -31,12 +33,18 @@ const STProductChoiceTable = () => {
 
     let indice = product.length - 1
 
-
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        handleAmount()
+        console.log('probando cosas locas')
+    }
 
     const handleAmount = (evt) => {
         let obj = { [evt.target.name]: evt.target.value }
-        setAmount(obj)
+        let array = [...selected, obj]
+        setAmount(array)
     }
+    
     //useEffect monitorea los cambios que se le hacen al dato que se pone dentro del corchete, si no se ponen datos monitorea toda la aplicación
     useEffect(() => {
 
@@ -77,48 +85,48 @@ const STProductChoiceTable = () => {
                     })}
                 </tbody>
             </Table>
-
-            <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {selected.map((ele, j) => {
-                        return (
-                            <tr key={j}>
-                                <td>{j + 1}</td>
-                                <td>{ele.name}</td>
-                                <td>cantidad</td>
-                                <td>{ele.price}</td>
-                                <td>
-                                    <>
-                                        <div>
-                                            <Button variant="danger" size="sm" >
-                                                Eliminar
-                                            </Button>{' '}
-                                            {/* <Button variant="secondary" size="sm" >
+            <Form onSubmit={handleSubmit}>
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {selected.map((ele, j) => {
+                            return (
+                                <tr key={j}>
+                                    <td>{j + 1}</td>
+                                    <td>{ele.name}</td>
+                                    <td>
+                                        <Form.Group className="mb-3">
+                                            <Form.Control defaultValue={1} onChange={handleAmount} type="number" placeholder="digite cantidad" name="amount" id="amount" />
+                                        </Form.Group>
+                                    </td>
+                                    <td>{ele.price}</td>
+                                    <td>
+                                        <>
+                                            <div>
+                                                <Button variant="danger" size="sm" >
+                                                    Eliminar
+                                                </Button>{' '}
+                                                {/* <Button variant="secondary" size="sm" >
                                                 Seleccionar
                                             </Button> */}
-                                        </div>
-                                    </>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
-            <Form>
-                <Form.Group className="mb-3">
-                    <Form.Control type="number" placeholder="digite cantidad" name="amount" id="amount" />
-                </Form.Group>
+                                            </div>
+                                        </>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+                <Button  type="submit">Validar</Button>
             </Form>
-            <Button type="submit">Validar</Button>
         </div>
 
     );

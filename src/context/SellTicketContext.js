@@ -39,8 +39,8 @@ const SellTicketProvider = ({children})=>{
     console.log('Selected desde el Context: ')
     console.log(selected)
 
-    const [amount, setAmount] = useState([])
-    console.log('Amount desde el Context: ')
+    const [amount, setAmount] = useState("")
+    console.log('amount desde el Context: ')
     console.log(amount)
       
     //aqui voy a crear el GET - hay que envolver toda la app con un Contexto global y empezar a hacer los contextos unitarios.
