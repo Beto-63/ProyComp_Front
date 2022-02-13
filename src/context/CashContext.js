@@ -19,10 +19,12 @@ const CashProvider = ({ children }) => {
     const [canOpen, setCanOpen] = useState(false)
     const [canClose, setCanClose] = useState(false)
     const [confirmacion, setConfirmacion] = useState('')
+    const [channel, setChannel] = useState("Arsenal") //tomarlo del Token
 
 
 
     const data = {
+        channel,
         canOpen, setCanOpen,
         canClose, setCanClose,
         confirmacion, setConfirmacion,
