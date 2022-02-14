@@ -2,53 +2,69 @@ import React, { useEffect } from 'react';
 import { Table, Button, Form } from 'react-bootstrap'
 import { useContext } from 'react';
 import SellTicketContext from '../../context/SellTicketContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const STProductChoiceTable = () => {
 
     const objSelected = {
         name: '',
-        stock_qty: '',
+        id: '',
         price: '',
         temperature: '',
-        amount: ''
+        amount: null
     }
     
     const objAmount = {
         amount: ''
     }    
 
-    const { product, selected, setSelected, amount, setAmount } = useContext(SellTicketContext)
+    const { product, selected, setSelected } = useContext(SellTicketContext)
 
     const handleSelect = (e) => {
-        let obj = { ...selected, name: e.name, stock_qty: e.stock_qty, price: e.price, temperature: e.temperature, amount: '' }
+        let obj = { ...selected, id: e._id, name: e.name, price: e.price, temperature: e.temperature, amount: '' }
         //de esta forma se llena selected con el objeto pero se sobreescribe cada vez que seleccionamos un elemento
         /* setSelected(obj) */
         //de esta forma se guarda el array y se va llenando cada vez que seleccionamos un elemento
         let array = [...selected, obj]
         setSelected(array)
     }
-    console.log('Selected: ')
-    console.log(selected)
 
     let indice = product.length - 1
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        handleAmount()
-        console.log('probando cosas locas')
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        navigate('/sell/productSelect')
     }
 
-    const handleAmount = (evt) => {
-        let obj = { [evt.target.name]: evt.target.value }
-        let array = [...selected, obj]
-        setAmount(array)
+    const handleEdit = (id) => {
+        const newSelected = selected.map((element)=>{
+            if (element.id === id){
+                return{
+                    ...element,
+                    amount: element.amount
+                }
+            }
+            return element
+        })
+        setSelected(newSelected)
+    }
+
+    const handleRemove = (id)=>{
+        const newSelected = selected.filter((select)=>select.id !== id)
+        setSelected(newSelected)
     }
     
     //useEffect monitorea los cambios que se le hacen al dato que se pone dentro del corchete, si no se ponen datos monitorea toda la aplicación
     useEffect(() => {
 
     }, [product]);
+
+    /* useEffect(()=>{
+        setAmount({id: selected._id, amount: selected.amount})
+    }, [selected]) */
+
+    const navigate = useNavigate()
 
     return (
         <div>
@@ -104,19 +120,16 @@ const STProductChoiceTable = () => {
                                     <td>{ele.name}</td>
                                     <td>
                                         <Form.Group className="mb-3">
-                                            <Form.Control defaultValue={1} onChange={handleAmount} type="number" placeholder="digite cantidad" name="amount" id="amount" />
+                                            <Form.Control onChange={(event)=>{handleEdit(ele.amount = parseInt(event.target.value))}} type="number" placeholder="digite cantidad" name="amount" id="amount" />
                                         </Form.Group>
                                     </td>
                                     <td>{ele.price}</td>
                                     <td>
                                         <>
                                             <div>
-                                                <Button variant="danger" size="sm" >
+                                                <Button onClick={()=>{handleRemove(ele.id)}} variant="danger" size="sm" >
                                                     Eliminar
-                                                </Button>{' '}
-                                                {/* <Button variant="secondary" size="sm" >
-                                                Seleccionar
-                                            </Button> */}
+                                                </Button>
                                             </div>
                                         </>
                                     </td>
