@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import { Row, Container, Table } from 'react-bootstrap';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import { Container, Table } from 'react-bootstrap';
 
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api'
@@ -11,12 +8,6 @@ import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 import CashContext from "../../context/CashContext";
-
-const schema = yup.object({
-
-    amount: yup.number().typeError('Aqui va la cantidad gastada').required(),
-    //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
-});
 
 
 const ChckInventory = () => {
@@ -35,7 +26,7 @@ const ChckInventory = () => {
         })
             .then(response => response.json())
             .then(json => setStockItems(json));
-    }, []);
+    }, [channel]);
 
     const createItemsCopy = () => {
         items = stockItems
@@ -43,8 +34,29 @@ const ChckInventory = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log('Lista Cambiada', items)
+        let termino = true
+        items.map((e) => {
+            let data = { ...e, ...{ id: e._id } }
+            console.log('data modificado', data)
+            fetch(`${server}/stock/adjust`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status !== 201) { termino = false };
+                    response.json()
+                })
+                .then(json => console.log(JSON.stringify(json)))
+
+        })
+        console.log("termino", termino)
     }
+
+
+
 
     return (
         <div className='canvas_claro' >
@@ -84,11 +96,10 @@ const ChckInventory = () => {
                             })}
                         </tbody>
                     </Table>
-                    <button className='btn-light-bkg' type="submit">Corregir cantidades</button>
+                    <button className='btn-light-bkg' type="submit">Aplicar</button>
                 </form>
             </Container>
         </div>
     )
 }
-
 export default ChckInventory

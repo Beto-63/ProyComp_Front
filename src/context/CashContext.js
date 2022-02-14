@@ -23,6 +23,8 @@ const CashProvider = ({ children }) => {
 
 
 
+
+
     const data = {
         channel,
         canOpen, setCanOpen,

@@ -1,7 +1,6 @@
 /**********************Importacion de Librerias****************************/
-
-import React, { useContext, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,23 +22,16 @@ const schema = yup.object({
 
 const BankDeposit = () => {
 
-    const { setConfirmacion } = useContext(CashContext)
+    let navigate = useNavigate();
 
-    useEffect(() => {
-        setConfirmacion('')
-    }, [setConfirmacion]);
-
-
-    //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
-
-
+    const { channel } = useContext(CashContext)    //la propiedad de channel debe venir del token por el cash context
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
-
     const onSubmit = (data) => {
+        let objDeposit = { ...data, ...{ channel: channel } }
         const answer = window.confirm(`Estas registrando una consignacion\npor: ${data.amount} \n¿Estas segur@?`);
         if (answer) {
             // Save it!
@@ -48,12 +40,12 @@ const BankDeposit = () => {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(objDeposit)
             })
                 .then(response => response.json())
                 .then(json => window.alert(JSON.stringify(json)))
-
             reset();
+            navigate('/cash')
         } else {
             // Do nothing!
         }
@@ -66,22 +58,17 @@ const BankDeposit = () => {
             <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
-
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
                     <Row>
                         <label htmlFor='amount' className='label'>Monto</label>
                         <input {...register("amount")}
                             className="campo_entrada"
                             placeholder="Monto consignado"
-
                         />
                         <p className='error'>{errors.amount?.message}</p>
                     </Row>
-
-
                     <button className='btn-light-bkg' type="submit">Registrar</button>
                 </form>
-
             </Container>
         </div>
     )

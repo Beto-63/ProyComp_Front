@@ -1,7 +1,6 @@
 /**********************Importacion de Librerias****************************/
-
 import React, { useEffect, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,28 +19,18 @@ const schema = yup.object({
     //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
 });
 
-
 const Expenses = () => {
 
-    const { setConfirmacion } = useContext(CashContext)
+    let navigate = useNavigate();
 
-    useEffect(() => {
-        setConfirmacion('')
-    }, [setConfirmacion]);
-
-    //la propiedad de channel debe venir del token, pero sera Arsenal por ahora
-
-
-
+    const { channel } = useContext(CashContext) //la propiedad de channel debe venir del token y viene del cash context
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
-
     const onSubmit = (data) => {
-
-
+        let objExpense = { ...data, ...{ channel: channel } }
         const answer = window.confirm(`Estas registrando un gasto\npor: ${data.expense_amount} \n¿Estas segur@?`);
         if (answer) {
             // Save it!
@@ -50,11 +39,12 @@ const Expenses = () => {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(objExpense)
             })
                 .then(response => response.json())
                 .then(json => window.alert(JSON.stringify(json)))
             reset();
+            navigate('/cash')
         } else {
             // Do nothing!
         }
@@ -81,12 +71,9 @@ const Expenses = () => {
                         <input {...register("expense_amount")}
                             className="campo_entrada"
                             placeholder="Monto del gasto"
-
                         />
                         <p className='error'>{errors.expense_amount?.message}</p>
                     </Row>
-
-
                     <button className='btn-light-bkg' type="submit">Registrar</button>
                 </form>
             </Container>

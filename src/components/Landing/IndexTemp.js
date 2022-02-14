@@ -5,9 +5,9 @@ import '../generic/Light-bkg.css'
 import logo from '../generic/LogoDOKO.svg';
 import foto from '../../Assets/foto.png'
 
-const goToLogin = () => {
-
-}
+// const goToLogin = () => {
+// TODO cambiar para llevar a log in cuando se onte la seguridad
+// }
 
 const IndexTemp = () => {
     let navigate = useNavigate('/menu');
@@ -31,7 +31,7 @@ const IndexTemp = () => {
             <form className='container'>
 
 
-                <button className='btn-light-bkg' onClick={goToLogin}>Spy empleado!</button>
+                <button className='btn-light-bkg' onClick={goToLogin}>Soy empleado!</button>
                 <br /><br />
             </form>
         </div>

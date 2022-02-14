@@ -1,15 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-
-import CashContext from "../../context/CashContext";
 
 import logo from '../generic/LogoDOKO.svg';
 import '../generic/Nav.css'
 
 const GeneralMenu = () => {
 
-    const { lastClose, lastOpen, setConfirmacion, confirmacion } = useContext(CashContext)
 
 
     let navigate = useNavigate();

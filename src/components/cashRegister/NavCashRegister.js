@@ -13,6 +13,7 @@ const NavCashRegister = () => {
 
 
     let navigate = useNavigate();
+
     const goToOpen = () => {
         navigate('/cash/open');
     }
