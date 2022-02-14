@@ -22,12 +22,11 @@ const schema = yup.object({
 });
 
 const CloseRegister = () => {
-    let navigate = useNavigate();
-    const { setConfirmacion, lastOpen, lastClose, canClose, setCanClose } = useContext(CashContext)
 
-    useEffect(() => {
-        setConfirmacion('')
-    }, [setConfirmacion]);
+    let navigate = useNavigate();
+
+    const { setConfirmacion, lastOpen, lastClose, canClose, setCanClose, channel } = useContext(CashContext)
+
     const [willClose, setWillClose] = useState("none")
     const [sellTickets, setSellTickets] = useState([{}]);
     const [totalSales, setTotalSales] = useState(0);
@@ -47,35 +46,53 @@ const CloseRegister = () => {
     });
 
     useEffect(() => {
-
-    }, [willClose]);
-
+        // resetea la advertencia de apertura/cierre
+        setConfirmacion('')
+    }, [setConfirmacion]);
 
     useEffect(() => {
+        //trae los metodos de pago para la clasificacion de las ventas por medio de pago
         fetch(`${server}/paymentMethods`)
             .then(response => response.json())
             .then(json => setPaymentMethods(json));
     }, [])
 
     useEffect(() => {
-        fetch(`${server}/cash/expense/unaccounted`)
+        //trae los gastos no cerrados del canal actual
+        fetch(`${server}/cash/expense/unaccounted`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ channel: channel })
+        })
             .then(response => response.json())
             .then(json => setExpenses(json));
     }, [])
 
     useEffect(() => {
-        fetch(`${server}/cash/deposit/unaccounted`)
+        //trae los depositos no cerrados del canal actual
+        fetch(`${server}/cash/deposit/unaccounted`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ channel: channel })
+        })
             .then(response => response.json())
             .then(json => setDeposits(json));
-    }, [])
+    }, [channel])
 
     useEffect(() => {
+        // TODO filtrar por los del channel que viene del contexto y del token
+        //una vez se ajuste la estructura del sell ticket
         fetch(`${server}/cash/sellTickets/unaccounted`)
             .then(response => response.json())
             .then(json => setSellTickets(json));
     }, [])
 
     useEffect(() => {
+        // totaliza los depositos, los gastos las ventas totales/efectivo/otros medios
         let temp = 0
         deposits.forEach(element => { temp = temp + element.amount });
         setTotalDeposits(temp)
@@ -99,12 +116,13 @@ const CloseRegister = () => {
     }, [deposits, expenses, sellTickets, lastClose, lastOpen]);
 
     useEffect(() => {
-
+        //Estabiliza la presentacion de las variables del segundo parametro
     }, [countedCash, expectedCashOnHand]);
 
     const presentClose = () => {
-        if ((countedCash - expectedCashOnHand < 3000) || (expectedCashOnHand - countedCash < 3000))
+        if ((countedCash - expectedCashOnHand < 10000) || (expectedCashOnHand - countedCash < 10000)) {
             setWillClose('block')
+        }
     }
 
     const handleCountedCash = () => {
@@ -226,6 +244,7 @@ const CloseRegister = () => {
                     .then(response => response.json())
                     .then(json => window.alert(JSON.stringify(json)))
                 reset()
+                navigate('/cash')
             } else {
                 // Do nothing!
             }
@@ -255,7 +274,7 @@ const CloseRegister = () => {
                             <input {...register("cash_on_hand")}
                                 className="campo_entrada"
                                 placeholder="Efectivo en caja Ahora"
-                                id='cash_on_hand' onChange={handleCountedCash}
+                                id='cash_on_hand' onBlur={handleCountedCash}
 
                             />
                             <p className='error'>{errors.cash_on_hand?.message}</p>

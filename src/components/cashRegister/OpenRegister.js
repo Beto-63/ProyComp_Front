@@ -1,7 +1,7 @@
 /**********************Importacion de Librerias****************************/
 
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,11 +22,14 @@ const schema = yup.object({
 
 const OpenRegister = () => {
 
-    const { setConfirmacion, lastClose } = useContext(CashContext)
+    let navigate = useNavigate();
+
+    const { setConfirmacion, lastClose, channel } = useContext(CashContext)
 
     useEffect(() => {
         setConfirmacion('')
     }, [setConfirmacion]);
+
 
     const [newAmountToDeposit, setNewAmountToDeposit] = useState(0);
 
@@ -39,14 +42,14 @@ const OpenRegister = () => {
     };
 
     const onSubmit = (data) => {
-        const answer = window.confirm(`Revisa el valore que tienes disponible por consignar\n¿Abrimos?`);
+        const answer = window.confirm(`Anota el valore que tienes disponible por consignar: $${newAmountToDeposit} \n¿Abrimos?`);
         if (answer) {
             let obj = {
                 operation: 'open',
                 amount_to_deposit: newAmountToDeposit,
                 cash_on_hand: data.change_amount + newAmountToDeposit,
                 change_amount: data.change_amount,
-                channel: 'Arsenal', //del token
+                channel: channel, //del token
                 status: 1
             }
             // fetch de apertura
@@ -60,8 +63,7 @@ const OpenRegister = () => {
             })
                 .then(response => response.json())
                 .then(json => window.alert(JSON.stringify(json)))
-
-            // fetch de cambio de estado al ultimo cierre NO FUNCIONA
+            // Al cerrar 
             fetch(`${server}/cash/lastClose/account`, {
                 method: 'POST',
                 headers: {
@@ -73,6 +75,7 @@ const OpenRegister = () => {
                 .then(json => window.alert(JSON.stringify(json)))
 
             reset();
+            navigate('/cash')
         } else {
             // Do nothing!
         }

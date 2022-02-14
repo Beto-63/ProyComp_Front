@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 
 //Importar componentes o paginas
 import IndexTemp from '../components/Landing/IndexTemp'
-import Auth from '../pages/Auth';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
 import Sell from '../pages/SellTicket';

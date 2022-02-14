@@ -6,8 +6,6 @@ import Auth from '../pages/Auth';
 import Login from '../components/auth/Login';
 import PasswordRecovery1 from '../components/auth/PasswordRecovery1';
 import PasswordRecovery2 from '../components/auth/PasswordRecovery2';
-import NotFound from '../components/auth/NotFound';
-
 
 export const UnauthRouter = () => {
     return (
