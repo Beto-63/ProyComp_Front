@@ -31,7 +31,7 @@ const GeneralMenu = () => {
     return (
         <div className='canvas_oscuro'>
             {/* Este Link debe cambiarse a "to='/Logout' cuando se monte la seguridad" */}
-            <Link to="/" className='inicio'>Salir</Link>
+            <Link to="/logout" className='inicio'>Salir</Link>
 
             <p className="titulo_claro">Cómo quieres administrar tu tienda</p>
 
