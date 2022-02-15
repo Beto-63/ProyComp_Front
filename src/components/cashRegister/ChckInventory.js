@@ -9,7 +9,7 @@ import { server } from '../../context/Api'
 import '../generic/Light-bkg.css'
 import CashContext from "../../context/CashContext";
 
-
+//TODO Incluir paginacion en el ajuste de inventario de la tienda
 const ChckInventory = () => {
     let items = [];
     const [stockItems, setStockItems] = useState([{}]);

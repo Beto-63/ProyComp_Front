@@ -34,6 +34,17 @@
     margin:1em
  }
 
+ .btn-dark-bkg-small {
+    background-color: #8EA7A9 ;
+    border: 2px solid;
+    border-color:#F1F0E8 ;
+    color: #F1F0E8;
+    width:130px;
+    height: 35px;
+    border-radius: 0.5em;
+
+    margin:1em
+ }
  .openclose {
 color: rgb(125, 26, 26);
  }

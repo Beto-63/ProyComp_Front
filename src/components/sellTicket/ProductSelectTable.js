@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import CashContext from '../../context/CashContext';
+import SellTicketContext from '../../context/SellTicketContext';
 
 const ProductSelectTable = () => {
+
+    const { origins, paymentMethods } = useContext(SellTicketContext)
+    const { channel } = useContext(CashContext)
+
     return (
         <div>
+            { }
             <div>
                 <Table striped bordered hover size="sm">
                     <thead>
@@ -44,9 +51,24 @@ const ProductSelectTable = () => {
                 <p>Medio de Pago</p>
                 <select>
                     <option value=''>Elija Medio de Pago</option>
-                    <option value='Crédito'>Tarjeta de Crédito</option>
-                    <option value='Débito'>Tarjeta Débito</option>
-                    <option value='Efectivo'>Efectivo</option>
+                    {paymentMethods.map((e, index) => {
+                        return (
+                            <option key={index} value={e.name} >{e.name}</option>
+                        )
+                    })}
+
+                </select>
+            </div>
+            <div>
+                <p>Origen de la venta</p>
+                <select>
+                    <option defaultValue={channel}>La venta se origina en:</option>
+                    {origins.map((e, index) => {
+                        return (
+                            <option key={index} value={e.name} >{e.name}</option>
+                        )
+                    })}
+
                 </select>
             </div>
             <Button type="submit">Vender</Button>

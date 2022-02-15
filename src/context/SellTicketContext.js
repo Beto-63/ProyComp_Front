@@ -1,15 +1,16 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 //se crea el contexto
 const SellTicketContext = createContext();
 
 //se crea el proveedor de contexto (es el que agrupa el arbol de elementos)
-const SellTicketProvider = ({children})=>{
-
+const SellTicketProvider = ({ children }) => {
+    const [origins, setOrigins] = useState([{}]);
+    const [paymentMethods, setPaymentMethods] = useState([{}])
     //Función para enviar petición al servidor
-    const handleClientRegister = async (objClient)=>{
+    const handleClientRegister = async (objClient) => {
         //enviar los datos capturados a la base de datos
-        const resp = await fetch('https://dokotestback.herokuapp.com/client',{
+        const resp = await fetch('https://dokotestback.herokuapp.com/client', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -17,9 +18,9 @@ const SellTicketProvider = ({children})=>{
             //enviamos los datos por body y se debe convertir el objeto en JSON
             body: JSON.stringify(objClient)
         })
-        return resp;    
+        return resp;
     }
-    const getProductByCatName = async (objProduct) => {        
+    const getProductByCatName = async (objProduct) => {
         const resp = await fetch('https://dokotestback.herokuapp.com/product/findByCatName', {
             method: 'POST',
             headers: {
@@ -30,11 +31,15 @@ const SellTicketProvider = ({children})=>{
         return resp;
     }
     //aqui voy a crear el GET - hay que envolver toda la app con un Contexto global y empezar a hacer los contextos unitarios.
-    const data = {handleClientRegister, getProductByCatName};
+    const data = {
+        handleClientRegister, getProductByCatName,
+        origins, setOrigins,
+        paymentMethods, setPaymentMethods
+    };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>
 }
 
 //se exportan el context y el provider
-export {SellTicketProvider};
+export { SellTicketProvider };
 export default SellTicketContext;

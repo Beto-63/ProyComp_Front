@@ -4,15 +4,6 @@ const CashContext = createContext();
 
 const CashProvider = ({ children }) => {
 
-    // const transaction = {
-    //     operation: "",
-    //     cash_on_hand: 0,
-    //     change_amount: 0,
-    //     channel: "",
-    //     status: null,
-    //     amount_to_deposit: 0,
-    // }
-
     const [lastOpen, setLastOpen] = useState([{}]);
     const [lastClose, setLastClose] = useState([{}]);
 

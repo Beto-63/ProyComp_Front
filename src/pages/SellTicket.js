@@ -5,9 +5,7 @@ import GeneralNav from '../components/generic/GeneralNav'
 function Sell() {
     return (
         <div>
-            <GeneralNav />
-            VENTAS
-                <STClient />
+            <STClient />
         </div>
     )
 }
