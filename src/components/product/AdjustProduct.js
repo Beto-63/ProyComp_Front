@@ -296,8 +296,8 @@ const AdjustProduct = () => {
               id='temperatureEdit'
             >
               <option value={toEdit.temeprature}>{toEdit.temeprature}</option>
-              <option value='caliente'>Caliente</option>
-              <option value='frio'>Frio</option>
+              <option value='Caliente'>Caliente</option>
+              <option value='Frío'>Frío</option>
             </select>
             <p className='error'>{errors.temperature?.message}</p>
           </Row>

@@ -25,8 +25,8 @@ import AdjustElement from '../components/Stock/AdjustElement';
 import CreateUser from '../components/user/CreateUser';
 import AdjustUser from '../components/user/AdjustUser';
 import NotFound from '../components/auth/NotFound';
-import STProductSelect from '../components/sellTicket/STProductSelect';
-import STProductChoiceTable from '../components/sellTicket/STProductChoiceTable';
+import CatAndTempSelction from '../components/sellTicket/CatAndTempSalection';
+import ChooseProductTable from '../components/sellTicket/ChooseProductTable';
 import GeneralMenu from '../components/generic/GeneralMenu';
 
 
@@ -48,8 +48,8 @@ export const AppRouter = () => {
             <Route path="/product/adjust" element={<AdjustProduct />} />
 
             <Route path="/sell" element={<Sell />} />
-            <Route path="/sell/productSelect" element={<STProductSelect />} />
-            <Route path="/sell/productChoice" element={<STProductChoiceTable />} />
+            <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
+            <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
 
             <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />

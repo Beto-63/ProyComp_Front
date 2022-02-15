@@ -4,15 +4,10 @@ import { useContext } from 'react';
 import SellTicketContext from '../../context/SellTicketContext';
 
 const STProductChoiceTable = () => {
-    const { getProductByCatName } = useContext(SellTicketContext)
-    const [product, setProduct] = useState([]);
+    const { selectedProducts } = useContext(SellTicketContext)
 
-    useEffect(() => {
-        getProductByCatName().then(async resp => {
-            let json = await resp.json();
-            setProduct(json)
-        })
-    }, []);
+
+
 
     return (
         <div>
@@ -26,7 +21,7 @@ const STProductChoiceTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {product.map((element, i) => {
+                    {selectedProducts.map((element, i) => {
                         return (
                             <tr key={i}>
                                 <td>{i + 1}</td>
