@@ -42,7 +42,7 @@ const ProductSelectForm = () => {
 
 
     const handleProduct = (objProduct) => {
-        if (temp.temp === '') {
+        if (!drink) {
             let obj = {
                 cat_name: cat.cat_name
             };
