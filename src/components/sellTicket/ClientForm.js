@@ -44,7 +44,6 @@ const ClientForm = () => {
         setClient(objClient)
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         handleClient(form); //estas son las props de Client
