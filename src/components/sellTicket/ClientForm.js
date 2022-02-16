@@ -38,10 +38,10 @@ const ClientForm = () => {
             //enviamos los datos por body y se debe convertir el objeto en JSON
             body: JSON.stringify(objClient)
         })
-
             .then(response => response.json())
-            .then(json => setClientId(json._id))
-        setClient(objClient)
+            .then(json => setClientId(json))
+
+
     }
 
     const handleSubmit = (e) => {
@@ -49,6 +49,7 @@ const ClientForm = () => {
         handleClient(form); //estas son las props de Client
         setForm(objForm) //limpia los campos del formulario
         e.target.reset() //limpia la selección de los botones
+        //TODO condicionar el navigate al response.status 201
         navigate('/sell/catTempSelection')
     }
 
@@ -105,20 +106,20 @@ const ClientForm = () => {
                         <Form.Check
                             onClick={handleForm}
                             inline
-                            label="12-20"
+                            label="12-19"
                             name="age_group"
                             type='radio'
                             id={`inline-radio-2`}
-                            value={'12-20'}
+                            value={'12-19'}
                         />
                         <Form.Check
                             onClick={handleForm}
                             inline
-                            label="21-29"
+                            label="20-29"
                             name="age_group"
                             type='radio'
                             id={`inline-radio-2`}
-                            value={'21-29'}
+                            value={'20-29'}
                         />
                         <Form.Check
                             onClick={handleForm}
@@ -154,7 +155,7 @@ const ClientForm = () => {
                             name="age_group"
                             type='radio'
                             id={`inline-radio-2`}
-                            value={'Mayor'}
+                            value={'81-100'}
                         />
                     </div>
 

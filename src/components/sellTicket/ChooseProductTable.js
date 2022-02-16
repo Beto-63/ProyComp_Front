@@ -2,11 +2,21 @@ import React from 'react';
 import { Table, Button } from 'react-bootstrap'
 import { useContext } from 'react';
 import SellTicketContext from '../../context/SellTicketContext';
+import QuantityDefinition from './QuantityDefinition';
 
 const STProductChoiceTable = () => {
-    const { selectedProducts } = useContext(SellTicketContext)
+    const { selectedProducts, toSellProducts, setToSellProducts } = useContext(SellTicketContext)
 
-
+    const handleSelect = (e) => {
+        let tempArray = []
+        if (toSellProducts.length === 0) {
+            tempArray[0] = e
+        } else {
+            tempArray = [...toSellProducts, e]
+        }
+        console.log(tempArray)
+        setToSellProducts(tempArray)
+    }
 
 
     return (
@@ -17,8 +27,8 @@ const STProductChoiceTable = () => {
                         <th>#</th>
                         <th>Producto</th>
                         <th>Temp</th>
-                        <th>Qty</th>
-                        <th colSpan={2}>Precio</th>
+                        <th>Precio</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,15 +38,19 @@ const STProductChoiceTable = () => {
                                 <td>{i + 1}</td>
                                 <td>{element.name}</td>
                                 <td>{element.temperature}</td>
-                                <td>Cantidad</td>
                                 <td>{element.price}</td>
-                                <td>Seleccionar</td>
+                                <td>
+                                    <Button variant="primary" size="sm" onClick={() => { handleSelect(element) }}>
+                                        Seleccionar
+                                    </Button>{' '}
+                                </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </Table>
             <Button type="submit">Validar</Button>
+
         </div>
     );
 };
