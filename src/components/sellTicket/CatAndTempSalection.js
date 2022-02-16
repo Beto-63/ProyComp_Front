@@ -84,7 +84,7 @@ const ProductSelectForm = () => {
     }
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
+            <Form >
                 <Form.Label>Tipo de Producto:</Form.Label>
                 <div className="mb-3">
                     {categories.map((e, index) => (
@@ -102,7 +102,7 @@ const ProductSelectForm = () => {
                     ))}
                 </div>
                 {drink ?
-                    <Form onSubmit={handleSubmit}>
+                    <Form >
                         <Form.Label>Temperatira de las bebidas:</Form.Label>
                         <div className="mb-3" >
 
@@ -131,7 +131,7 @@ const ProductSelectForm = () => {
 
 
 
-                <Button variant='secondary' type="submit">Escoge el Producto</Button>
+                <Button variant='secondary' onClick={handleSubmit}>Escoge el Producto</Button>
             </Form>
 
         </div>

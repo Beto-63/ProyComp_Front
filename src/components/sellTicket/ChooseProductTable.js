@@ -16,6 +16,7 @@ const STProductChoiceTable = () => {
                     <tr>
                         <th>#</th>
                         <th>Producto</th>
+                        <th>Temp</th>
                         <th>Qty</th>
                         <th colSpan={2}>Precio</th>
                     </tr>
@@ -26,6 +27,7 @@ const STProductChoiceTable = () => {
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{element.name}</td>
+                                <td>{element.temperature}</td>
                                 <td>Cantidad</td>
                                 <td>{element.price}</td>
                                 <td>Seleccionar</td>

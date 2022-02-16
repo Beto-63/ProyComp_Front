@@ -17,7 +17,7 @@ const ClientForm = () => {
         age_group: ''
     }
 
-    const { setClient } = useContext(SellTicketContext)
+    const { setClientId } = useContext(SellTicketContext)
     const navigate = useNavigate();
 
 
@@ -40,6 +40,7 @@ const ClientForm = () => {
         })
 
             .then(response => response.json())
+            .then(json => setClientId(json._id))
         setClient(objClient)
     }
 
