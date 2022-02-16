@@ -15,12 +15,14 @@ const ProductSelectForm = () => {
     }
 
     const objTemp = {
-        temp: ''
+        temperature: ''
     }
 
     const navigate = useNavigate()
 
-    const { categories, selectedProducts, setSelectedProducts } = useContext(SellTicketContext)
+    const { categories, selectedProducts,
+        setSelectedProducts, setSelectedCategory
+    } = useContext(SellTicketContext)
 
     const [drink, setDrink] = useState(false);
     const [cat, setCat] = useState(objCat)
@@ -57,17 +59,17 @@ const ProductSelectForm = () => {
                 .then(response => response.json())
                 .then(json => setSelectedProducts(json));
         } else {
-            let obj = {
+            let obj2 = {
                 cat_name: cat.cat_name,
-                temperature: temp.temp
+                temperature: temp.temperature
             };
-
+            setSelectedCategory(cat.cat_name)
             fetch(`${server}/product/selectCatTemp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(obj)
+                body: JSON.stringify(obj2)
             })
                 .then(response => response.json())
                 .then(json => setSelectedProducts(json));
@@ -102,7 +104,7 @@ const ProductSelectForm = () => {
                     ))}
                 </div>
                 {drink ?
-                    <Form >
+                    <div>
                         <Form.Label>Temperatira de las bebidas:</Form.Label>
                         <div className="mb-3" >
 
@@ -125,7 +127,7 @@ const ProductSelectForm = () => {
                                 value='Frío'
                             />
                         </div>
-                    </Form>
+                    </div>
                     :
                     ''}
 
