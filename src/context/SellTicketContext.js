@@ -9,7 +9,7 @@ const SellTicketProvider = ({ children }) => {
     const [paymentMethods, setPaymentMethods] = useState([{}]);
     const [categories, setCategories] = useState([{}]);
     const [selectedProducts, setSelectedProducts] = useState([{}])
-    const [client, setClient] = useState({})
+    const [clientId, setClientId] = useState({})
 
     const data = {
         //handleClientRegister, //getProductByCatName,
@@ -17,7 +17,7 @@ const SellTicketProvider = ({ children }) => {
         paymentMethods, setPaymentMethods,
         categories, setCategories,
         selectedProducts, setSelectedProducts,
-        client, setClient
+        clientId, setClientId
     };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>
