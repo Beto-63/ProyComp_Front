@@ -11,6 +11,7 @@ import AuthContext from './context/AuthContext';
 import { SellTicketProvider } from './context/SellTicketContext';
 
 
+
 function App() {
 
   const { auth } = useContext(AuthContext);
@@ -20,11 +21,11 @@ function App() {
 
     <div className='App'>
 
-        <SellTicketProvider>
-          <CashProvider>
-            {auth ? <AppRouter /> : <UnauthRouter />}
-          </CashProvider>
-        </SellTicketProvider>
+      <SellTicketProvider>
+        <CashProvider>
+          {auth ? <AppRouter /> : <UnauthRouter />}
+        </CashProvider>
+      </SellTicketProvider>
 
     </div >
   );

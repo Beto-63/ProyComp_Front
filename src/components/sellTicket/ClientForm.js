@@ -56,8 +56,8 @@ const ClientForm = () => {
 
     return (
         <div className='canvas_oscuro'>
-            <p className="titulo_claro">¡Bien hecho!</p>
-            <p className="titulo_claro">¿Quien es tu cliente?</p>
+            <h4 className="titulo_claro">¡Bien hecho!</h4>
+            <h4 className="titulo_claro">¿Quien es tu cliente?</h4>
             <Link to="/" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             <Container>

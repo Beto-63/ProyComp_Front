@@ -5,7 +5,6 @@ import SellTicketContext from '../../context/SellTicketContext';
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api'
 
-/**********************Importacion de Estilos******************************/
 
 const Client = () => {
     //Uso del contexto
