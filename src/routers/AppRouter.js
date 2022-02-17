@@ -28,6 +28,7 @@ import NotFound from '../components/auth/NotFound';
 import CatAndTempSelction from '../components/sellTicket/CatAndTempSalection';
 import ChooseProductTable from '../components/sellTicket/ChooseProductTable';
 import GeneralMenu from '../components/generic/GeneralMenu';
+import ProductSelectForm from '../components/sellTicket/CatAndTempSalection';
 
 
 export const AppRouter = () => {
@@ -48,6 +49,7 @@ export const AppRouter = () => {
             <Route path="/product/adjust" element={<AdjustProduct />} />
 
             <Route path="/sell" element={<Sell />} />
+            <Route path="/sell/prodSelectForm" element={<ProductSelectForm />} />
             <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
             <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
 

@@ -51,8 +51,6 @@ const CreateProduct = () => {
     })
       .then(response => response.json())
       .then(json => window.alert(JSON.stringify(json)))
-
-
     reset();
   };
 

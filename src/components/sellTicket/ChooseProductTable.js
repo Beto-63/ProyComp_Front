@@ -1,8 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Table, Button } from 'react-bootstrap'
 
+/**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+
+/**********************Importacion de Estilos******************************/
+import '../generic/Light-bkg.css'
+
 
 const STProductChoiceTable = () => {
 
@@ -43,7 +49,10 @@ const STProductChoiceTable = () => {
 
 
     return (
-        <>
+        <div className='canvas_claro'>
+            <p className="titulo_oscuro">Proceso de Venta</p>
+            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
             <form>
                 <div>
                     <Table striped bordered hover size="sm">
@@ -78,7 +87,8 @@ const STProductChoiceTable = () => {
                     <Button onClick={handleAddToSale}>Agregar</Button>
                 </div>
             </form>
-        </>
+        </div>
+
     );
 };
 
