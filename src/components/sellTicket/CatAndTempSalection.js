@@ -24,6 +24,7 @@ const ProductSelectForm = () => {
     const navigate = useNavigate()
 
     const { categories, selectedProducts,
+        keepSelecting, setKeepSelecting,
         setSelectedProducts, setSelectedCategory,
     } = useContext(SellTicketContext)
 
@@ -79,6 +80,10 @@ const ProductSelectForm = () => {
         }
     }
 
+    const handleCloseSale = () => {
+        setKeepSelecting(false)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         handleProduct()
@@ -89,59 +94,63 @@ const ProductSelectForm = () => {
     }
     return (
         <div className='canvas_claro'>
-            <p className="titulo_oscuro">Crear producto</p>
+            <p className="titulo_oscuro">Proceso de Venta</p>
             <Link to="/" className='inicio'>Inicio</Link>
             <Link to="/sell" className='volver'>Volver</Link>
             <Container >
                 <Form >
-                    <Form.Label>Tipo de Producto:</Form.Label>
-                    <div className="mb-3">
-                        {categories.map((e, index) => (
-                            <Form.Check
-                                key={index}
-                                onClick={handleCat}
-                                inline
-                                label={e.name}
-                                name="cat_name"
-                                type='radio'
-                                id={`inline-radio-1`}
-                                value={e.name}
-                            />
+                    {keepSelecting ?
 
-                        ))}
-                    </div>
-                    {drink ?
                         <div>
-                            <Form.Label>Temperatira de las bebidas:</Form.Label>
-                            <div className="mb-3" >
+                            <Form.Label>Tipo de Producto:</Form.Label>
+                            <div className="mb-3">
+                                {categories.map((e, index) => (
+                                    <Form.Check
+                                        key={index}
+                                        onClick={handleCat}
+                                        inline
+                                        label={e.name}
+                                        name="cat_name"
+                                        type='radio'
+                                        id={`inline-radio-1`}
+                                        value={e.name}
+                                    />
 
-                                <Form.Check
-                                    onClick={handleTemp}
-                                    inline
-                                    label='Caliente'
-                                    name="temperature"
-                                    type='radio'
-                                    id={`inline-radio-1`}
-                                    value='Caliente'
-                                />
-                                <Form.Check
-                                    onClick={handleTemp}
-                                    inline
-                                    label='Frío'
-                                    name="temperature"
-                                    type='radio'
-                                    id={`inline-radio-1`}
-                                    value='Frío'
-                                />
+                                ))}
                             </div>
+                            {drink ?
+                                <div>
+                                    <Form.Label>Temperatira de las bebidas:</Form.Label>
+                                    <div className="mb-3" >
+
+                                        <Form.Check
+                                            onClick={handleTemp}
+                                            inline
+                                            label='Caliente'
+                                            name="temperature"
+                                            type='radio'
+                                            id={`inline-radio-1`}
+                                            value='Caliente'
+                                        />
+                                        <Form.Check
+                                            onClick={handleTemp}
+                                            inline
+                                            label='Frío'
+                                            name="temperature"
+                                            type='radio'
+                                            id={`inline-radio-1`}
+                                            value='Frío'
+                                        />
+                                    </div>
+                                </div>
+                                :
+                                ''}
+                            <Button variant='secondary' onClick={handleSubmit}>Escoger</Button>
+                            <Button variant='secondary' onClick={handleCloseSale}>Terminar</Button>
                         </div>
                         :
-                        ''}
-
-
-
-
-                    <Button variant='secondary' onClick={handleSubmit}>Escoge el Producto</Button>
+                        ''
+                    }
                 </Form>
             </Container>
             <SaleSummary />

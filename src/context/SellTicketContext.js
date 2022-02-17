@@ -5,6 +5,8 @@ const SellTicketContext = createContext();
 
 //se crea el proveedor de contexto (es el que agrupa el arbol de elementos)
 const SellTicketProvider = ({ children }) => {
+    const [keepSelecting, setKeepSelecting] = useState(true)
+
     const [origins, setOrigins] = useState([{}]);                   // Describe los origenes de la venta
     const [paymentMethods, setPaymentMethods] = useState([{}]);     // Tipo de pago recibido
     const [categories, setCategories] = useState([{}]);             // Categorias de producto para poderlas seleccionar  
@@ -14,7 +16,7 @@ const SellTicketProvider = ({ children }) => {
     const [saleSummary, setSaleSummary] = useState([])
 
     const data = {
-        //handleClientRegister, //getProductByCatName,
+        keepSelecting, setKeepSelecting,
         origins, setOrigins,
         paymentMethods, setPaymentMethods,
         categories, setCategories,

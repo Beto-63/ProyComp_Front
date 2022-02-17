@@ -4,27 +4,41 @@ import { FontAwesomeIcon } from '@fortawesome/free-solid-svg-icons'
 
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
+import AuthContext from '../../context/AuthContext'
 import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
 
-//TODO Falta eliminar una linea
+
 
 
 const SaleSummary = () => {
 
     let saleTotal = 0
 
-    const { saleSummary, setSaleSummary
+    const { saleSummary, setSaleSummary, clientId
     } = useContext(SellTicketContext)
+    const { channel } = useContext(AuthContext)
 
     const handleEliminate = (e) => {
-        console.log("eliminar", e)
+        let array = saleSummary.filter((item) => (item._id !== e._id))
+        setSaleSummary(array)
+        console.log("sin eliminado", array)
     }
 
     const handleSale = () => {
+        let obj = {
+            client_id: clientId._id,
+            products_sold: saleSummary,
+            amount_sold: saleTotal,
+            channel: channel,
+            payment_method: "",
+            user_name: "",
+            sale_origin: "",
+            status: 1
+        }
         //Armar el Objeto de venta hacer el fetch a la base de datos
         //presentar el resumen de lo vendido para la entrega
     }
