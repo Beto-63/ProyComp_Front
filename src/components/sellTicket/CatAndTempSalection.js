@@ -90,17 +90,37 @@ const ProductSelectForm = () => {
         setCat(objCat)
         setTemp(objTemp)
         console.log(selectedProducts)
-        navigate('/sell/chooseProductTable');
-        // switch (objCat.cat_name) {
-        //     case 'Té': navigate('/sell/chooseProductTable');
-        //     case 'Infusión': navigate('/sell/chooseProductTable');
-        //     case 'Evento': navigate('/sell/chooseProductTable');
-        //     case 'Accesorio': navigate('/sell/chooseProductTable');
-        //     case 'Combo': console.log("elemento de Combo");
-        //     case 'Paquete': console.log("elemento de Paquete");
-        //     case 'no inventariable': console.log("retornar");
-
+        let test = cat.cat_name
+        console.log("Objeto de categoria", test)
+        // if (cat.cat_name !== 'Combo') {
+        //     navigate('/sell/chooseProductTable');
+        // } else {
+        //     console.log("otro componente")
         // }
+        switch (cat.cat_name) {
+            case
+                'Té': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Infusión': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Evento': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Accesorio': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Combo': console.log("elemento de Combo");
+                break;
+            case
+                'Paquete': console.log("elemento de Paquete");
+                break;
+            case
+                'no inventariable': console.log("retornar");
+                break;
+
+        }
     }
     return (
         <div className='canvas_claro'>
