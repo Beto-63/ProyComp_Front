@@ -91,6 +91,16 @@ const ProductSelectForm = () => {
         setTemp(objTemp)
         console.log(selectedProducts)
         navigate('/sell/chooseProductTable');
+        // switch (objCat.cat_name) {
+        //     case 'Té': navigate('/sell/chooseProductTable');
+        //     case 'Infusión': navigate('/sell/chooseProductTable');
+        //     case 'Evento': navigate('/sell/chooseProductTable');
+        //     case 'Accesorio': navigate('/sell/chooseProductTable');
+        //     case 'Combo': console.log("elemento de Combo");
+        //     case 'Paquete': console.log("elemento de Paquete");
+        //     case 'no inventariable': console.log("retornar");
+
+        // }
     }
     return (
         <div className='canvas_claro'>
@@ -145,8 +155,10 @@ const ProductSelectForm = () => {
                                 </div>
                                 :
                                 ''}
-                            <Button variant='secondary' onClick={handleSubmit}>Escoger</Button>
-                            <Button variant='secondary' onClick={handleCloseSale}>Terminar</Button>
+
+                            <div><button className='btn-light-bkg' onClick={handleSubmit}>Escoger</button></div>
+                            <br />
+                            <div><button className='btn-light-bkg' onClick={handleCloseSale}>Terminar</button></div>
                         </div>
                         :
                         ''

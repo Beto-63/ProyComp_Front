@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/free-solid-svg-icons'
 
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
-import AuthContext from '../../context/AuthContext'
+import CashContext from '../../context/CashContext'
 import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
@@ -18,9 +18,10 @@ const SaleSummary = () => {
 
     let saleTotal = 0
 
-    const { saleSummary, setSaleSummary, clientId
+    const { saleSummary, setSaleSummary,
+        clientId, paymentMethods, origins
     } = useContext(SellTicketContext)
-    const { channel } = useContext(AuthContext)
+    const { channel, userName } = useContext(CashContext)
 
     const handleEliminate = (e) => {
         let array = saleSummary.filter((item) => (item._id !== e._id))
@@ -34,8 +35,8 @@ const SaleSummary = () => {
             products_sold: saleSummary,
             amount_sold: saleTotal,
             channel: channel,
-            payment_method: "",
-            user_name: "",
+            payment_method: '',
+            user_name: userName,
             sale_origin: "",
             status: 1
         }
@@ -46,7 +47,7 @@ const SaleSummary = () => {
     return (
         <div>
             <hr />
-            <h3>Resumen Parcial</h3>
+            <p className="titulo_oscuro">Resumen Parcial</p>
             <hr />
             <div>
                 <Table striped bordered hover size="sm" >
@@ -76,11 +77,40 @@ const SaleSummary = () => {
                             )
                         })}
                     </tbody>
-                    <h5>{`El total de la venta va en $${saleTotal}`}</h5>
                 </Table>
+                <h5 className="result">{`El total de la venta va en $${saleTotal}`}</h5>
 
             </div>
-            <Button onClick={handleSale}>Vender</Button>
+            <div>
+                <div>
+                    <select
+                        className="campo_entrada"
+                        placeholder="Origen de la venta"
+                        id='origin'
+                    >
+                        <option defaultValue='cash'>Pago en...</option>
+                        {paymentMethods.map((e, index) => {
+                            return (
+                                <option key={index} value={e.name} >{e.name}</option>
+                            )
+                        })}
+                    </select>
+                    <select
+                        className="campo_entrada"
+                        placeholder="Pago en..."
+                        id='payment_method'
+                    >
+                        <option defaultValue='cash'>Venta desde ...</option>
+                        {origins.map((e, index) => {
+                            return (
+                                <option key={index} value={e.name} >{e.name}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+
+                <button className='btn-light-bkg' onClick={handleSale}>Vender</button>
+            </div>
         </div>
     )
 }
