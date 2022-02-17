@@ -8,8 +8,8 @@ import { Row, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
-
 import { server } from '../../context/Api'
+
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 

@@ -11,7 +11,7 @@ const SellTicketProvider = ({ children }) => {
     const [selectedCategory, setSelectedCategory] = useState('')     // Categoria de producto de la cual hacer la seleccion --clave para manejo de Combos
     const [selectedProducts, setSelectedProducts] = useState([{}])  // Son la ista corta de productos por cat y temp(si aplica)
     const [clientId, setClientId] = useState({})                    // Es el Objeto cliente al que se refiere la venta, para armar el sell ticket
-    const [toSellProducts, setToSellProducts] = useState([])        // Arreglo de productos resumen temporal de la venta
+    const [saleSummary, setSaleSummary] = useState([])
 
     const data = {
         //handleClientRegister, //getProductByCatName,
@@ -21,7 +21,7 @@ const SellTicketProvider = ({ children }) => {
         selectedProducts, setSelectedProducts,
         clientId, setClientId,
         selectedCategory, setSelectedCategory,
-        toSellProducts, setToSellProducts
+        saleSummary, setSaleSummary
     };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>
