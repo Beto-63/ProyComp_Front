@@ -49,6 +49,10 @@ input, select {
     color: #8EA7A9; 
 }
 
+td input {
+    width: 5rem;
+}
+
 .result {
 text-align:left;
 color: #F58787;
@@ -134,7 +138,7 @@ margin-right: 10px;
   
   table, td, th {
     padding: 4px;
-    border:solid #8EA7A9;
+    border:1px solid #8EA7A9;
     /* border-collapse: collapse; */
   }
   

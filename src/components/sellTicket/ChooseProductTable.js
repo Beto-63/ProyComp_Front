@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Table, Button } from 'react-bootstrap'
+
 
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
@@ -11,8 +11,6 @@ import '../generic/Light-bkg.css'
 
 
 const STProductChoiceTable = () => {
-
-    let saleTotal = 0
 
     const { selectedProducts,
         saleSummary, setSaleSummary
@@ -55,7 +53,7 @@ const STProductChoiceTable = () => {
             <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
             <form>
                 <div>
-                    <Table striped bordered hover size="sm">
+                    <table className='center' >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -83,8 +81,8 @@ const STProductChoiceTable = () => {
                                 )
                             })}
                         </tbody>
-                    </Table>
-                    <Button onClick={handleAddToSale}>Agregar</Button>
+                    </table>
+                    <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
                 </div>
             </form>
         </div>

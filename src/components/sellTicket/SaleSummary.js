@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { Table, Button } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,10 +20,12 @@ const SaleSummary = () => {
 
     let saleTotal = 0
 
+    const navigate = useNavigate()
+
     const { saleSummary, setSaleSummary,
         keepSelecting, clientId,
         paymentMethods, origins,
-        summary, setSummary
+        setClientId
 
     } = useContext(SellTicketContext)
     const { channel, userName } = useContext(CashContext)
@@ -33,17 +36,37 @@ const SaleSummary = () => {
         console.log("sin eliminado", array)
     }
 
-    const handleSale = () => {
-        let obj = {
-            client_id: clientId._id,
-            products_sold: saleSummary,
-            amount_sold: saleTotal,
-            channel: channel,
-            payment_method: '',
-            user_name: userName,
-            sale_origin: "",
-            status: 1
+    const handleSale = (e) => {
+        e.preventDefault();
+        const answer = window.confirm('Estas confirmando la venta?')
+        if (answer) {
+            let obj = {
+                client_id: clientId._id,
+                products_sold: saleSummary,
+                amount_sold: saleTotal,
+                channel: channel,
+                payment_method: document.getElementById('payment_method').value,
+                user_name: userName,
+                sale_origin: document.getElementById('origin').value,
+                status: 1
+            }
+            console.log('Para la bese de datos va sell ticket', obj)
+
+            fetch(`${server}/sell_ticket`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+                .then(response => response.json())
+                .then(json => window.alert(JSON.stringify(json)))
+            setClientId({})
+            navigate('/sell/deliver')
+        } else {
+            //do nothing
         }
+
         //Armar el Objeto de venta hacer el fetch a la base de datos
         //presentar el resumen de lo vendido para la entrega
     }
@@ -85,38 +108,47 @@ const SaleSummary = () => {
                         </tbody>
                     </table>
                     <h5 className="total">{`El total de la venta va en: $${saleTotal}`}</h5>
+                    <br />
                 </div>
                 {keepSelecting ?
                     ''
                     :
                     <div>
-                        <div>
-                            <select
-                                className="campo_entrada"
-                                placeholder="Origen de la venta"
-                                id='origin'
-                            >
-                                <option defaultValue='cash'>Pago en...</option>
-                                {paymentMethods.map((e, index) => {
-                                    return (
-                                        <option key={index} value={e.name} >{e.name}</option>
-                                    )
-                                })}
-                            </select>
-                            <select
-                                className="campo_entrada"
-                                placeholder="Pago en..."
-                                id='payment_method'
-                            >
-                                <option defaultValue='cash'>Venta desde ...</option>
-                                {origins.map((e, index) => {
-                                    return (
-                                        <option key={index} value={e.name} >{e.name}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <button className='btn-light-bkg' onClick={handleSale}>Vender</button>
+                        <form onSubmit={handleSale}>
+                            <Container>
+                                <div>
+                                    <label htmlFor='payment_method' className='label'>Pagas con:</label>
+                                    <select
+                                        className="campo_entrada summary"
+                                        id='payment_method'
+                                    >
+
+                                        {paymentMethods.map((e, index) => {
+                                            return (
+                                                <option key={index} value={e.name} >{e.name}</option>
+                                            )
+                                        })}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label htmlFor='payment_method' className='label'>Venta originada en:</label>
+                                    <select
+                                        className="campo_entrada summary"
+                                        id='origin'
+                                    >
+
+                                        {origins.map((e, index) => {
+                                            return (
+                                                <option key={index} value={e.name} >{e.name}</option>
+                                            )
+                                        })}
+                                    </select>
+                                </div>
+                            </Container>
+                            <br />
+                            <button className='btn-light-bkg' type='submit'>Vender</button>
+                            <br />
+                        </form>
                     </div>
                 }
             </div>
