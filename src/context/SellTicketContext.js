@@ -15,6 +15,7 @@ const SellTicketProvider = ({ children }) => {
     const [selectedProducts, setSelectedProducts] = useState([{}])  // Son la ista corta de productos por cat y temp(si aplica)
     const [clientId, setClientId] = useState({})                    // Es el Objeto cliente al que se refiere la venta, para armar el sell ticket
     const [saleSummary, setSaleSummary] = useState([])
+    const [packsToFill, setPacksToFill] = useState([])
 
     const data = {
         keepSelecting, setKeepSelecting,
@@ -25,7 +26,8 @@ const SellTicketProvider = ({ children }) => {
         clientId, setClientId,
         selectedCategory, setSelectedCategory,
         saleSummary, setSaleSummary,
-        summary, setSummary
+        summary, setSummary,
+        packsToFill, setPacksToFill
     };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>

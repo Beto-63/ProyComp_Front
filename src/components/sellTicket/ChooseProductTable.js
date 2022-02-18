@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../generic/Light-bkg.css'
 
 
-const STProductChoiceTable = () => {
+const ChooseProductTable = () => {
 
     const { selectedProducts,
         saleSummary, setSaleSummary
@@ -90,4 +90,4 @@ const STProductChoiceTable = () => {
     );
 };
 
-export default STProductChoiceTable;
+export default ChooseProductTable;

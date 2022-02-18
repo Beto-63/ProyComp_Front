@@ -113,13 +113,13 @@ const ProductSelectForm = () => {
                 'Accesorios': navigate('/sell/chooseProductTable');
                 break;
             case
-                'Combo': console.log("elemento de Combo");
+                'Combo': navigate("/sell/combo");
                 break;
             case
-                'Paquete': console.log("elemento de Paquete");
+                'Paquete': navigate("/sell/packet");
                 break;
             case
-                'no inventariable': console.log("retornar");
+                'no inventariable': navigate("/sell/catTempSelection");
                 break;
 
         }
