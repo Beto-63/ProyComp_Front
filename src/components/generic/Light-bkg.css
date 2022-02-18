@@ -114,6 +114,17 @@ margin-right: 10px;
     border-radius: 0.5em;
  }
 
+ .btn-light-bkg-short {
+    background-color: #8EA7A9 ;
+    border: 2px solid #8EA7A9 ;
+    color: #F1F0E8;
+    margin: 0.5vh;
+    width:80px;
+    height: 30px;
+    bottom:5vh;
+    border-radius: 0.5em;
+ }
+
  .btn-light-bkg-mid-page {
     background-color: #8EA7A9 ;
     border: 2px solid #8EA7A9 ;
