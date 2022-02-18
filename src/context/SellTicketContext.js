@@ -5,7 +5,8 @@ const SellTicketContext = createContext();
 
 //se crea el proveedor de contexto (es el que agrupa el arbol de elementos)
 const SellTicketProvider = ({ children }) => {
-    const [keepSelecting, setKeepSelecting] = useState(true)
+    const [keepSelecting, setKeepSelecting] = useState(true)        //Se usa para predentar las variables de categoria a
+    const [summary, setSummary] = useState(false)                   // se usa para esconder el resumen antes de que exista
 
     const [origins, setOrigins] = useState([{}]);                   // Describe los origenes de la venta
     const [paymentMethods, setPaymentMethods] = useState([{}]);     // Tipo de pago recibido
@@ -23,7 +24,8 @@ const SellTicketProvider = ({ children }) => {
         selectedProducts, setSelectedProducts,
         clientId, setClientId,
         selectedCategory, setSelectedCategory,
-        saleSummary, setSaleSummary
+        saleSummary, setSaleSummary,
+        summary, setSummary
     };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>

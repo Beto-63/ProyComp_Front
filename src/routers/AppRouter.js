@@ -29,6 +29,7 @@ import CatAndTempSelction from '../components/sellTicket/CatAndTempSalection';
 import ChooseProductTable from '../components/sellTicket/ChooseProductTable';
 import GeneralMenu from '../components/generic/GeneralMenu';
 import ProductSelectForm from '../components/sellTicket/CatAndTempSalection';
+import CloseTransaction from '../components/sellTicket/CloseTransaction';
 
 
 export const AppRouter = () => {
@@ -52,6 +53,7 @@ export const AppRouter = () => {
             <Route path="/sell/prodSelectForm" element={<ProductSelectForm />} />
             <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
             <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
+            <Route path="/sell/deliver" element={<CloseTransaction />} />
 
             <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />
