@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -26,11 +26,17 @@ const ProductSelectForm = () => {
     const { categories, selectedProducts,
         keepSelecting, setKeepSelecting,
         setSelectedProducts, setSelectedCategory,
+        saleSummary, summary, setSummary
     } = useContext(SellTicketContext)
 
     const [drink, setDrink] = useState(false);
     const [cat, setCat] = useState(objCat)
     const [temp, setTemp] = useState(objTemp)
+
+    useEffect(() => {
+        if (saleSummary.length > 0) { setSummary(true) }
+
+    }, [])
 
     const handleCat = (e) => {
         let obj = { ...cat, [e.target.name]: e.target.value }
@@ -92,11 +98,7 @@ const ProductSelectForm = () => {
         console.log(selectedProducts)
         let test = cat.cat_name
         console.log("Objeto de categoria", test)
-        // if (cat.cat_name !== 'Combo') {
-        //     navigate('/sell/chooseProductTable');
-        // } else {
-        //     console.log("otro componente")
-        // }
+
         switch (cat.cat_name) {
             case
                 'Té': navigate('/sell/chooseProductTable');
@@ -108,7 +110,7 @@ const ProductSelectForm = () => {
                 'Evento': navigate('/sell/chooseProductTable');
                 break;
             case
-                'Accesorio': navigate('/sell/chooseProductTable');
+                'Accesorios': navigate('/sell/chooseProductTable');
                 break;
             case
                 'Combo': console.log("elemento de Combo");
@@ -185,7 +187,11 @@ const ProductSelectForm = () => {
                     }
                 </Form>
             </Container>
-            <SaleSummary />
+            {summary ?
+                <SaleSummary />
+                :
+                ''
+            }
         </div>
 
     );

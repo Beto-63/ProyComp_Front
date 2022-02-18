@@ -63,6 +63,13 @@ color: #F58787;
     text-align:left;
     color: rgb(60, 158, 119)
     }
+
+.total {
+    text-align:right;
+    color: rgb(60, 158, 119);
+margin-right: 10px;    
+    }
+
 .label {
     text-align:left;
     
@@ -123,4 +130,23 @@ color: #F58787;
   .foto {
      width :65%;
      height: auto;
+  }
+  
+  table, td, th {
+    padding: 4px;
+    border:solid #8EA7A9;
+    /* border-collapse: collapse; */
+  }
+  
+  thead th, tbody td {
+    text-align:center;
+  }
+
+  div table {
+    text-align:center;
+  }
+  
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
   }
