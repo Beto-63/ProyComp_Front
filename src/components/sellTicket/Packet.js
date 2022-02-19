@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,76 +7,93 @@ import { Link, useNavigate } from 'react-router-dom';
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
-import FillPacket from './FillPacket';
+import FilterPacket from './FilterPacket';
 
 
 
 const Packet = () => {
 
-    const [fillPacket, setFillPacket] = useState(false)
+    const [unFilteredPacket] = useState(false)
+    const [saleProductTemp, setSaleProductTemp] = useState([])
+
+    const navigate = useNavigate()
 
     const { selectedProducts,
-        packsToFill, setPacksToFill
+        saleSummary, setSaleSummary,
     } = useContext(SellTicketContext)
 
     useEffect(() => {
-        if (packsToFill.length > 0) { setPacksToFill(true) }
-    }, [])
+    }, [unFilteredPacket])
 
-
-    const handleFillPack = (element) => {
-        console.log('element', element)
-        let array = packsToFill
-        array = [...array, element]
-        setPacksToFill(array)
-        console.log('arreglo', array)
+    const handleAddQuantity = (obj, qty) => {
+        if (qty !== NaN || qty !== 0) {
+            let array = saleProductTemp.filter((e) => (e._id !== obj._id))
+            let newObj = { ...obj, ...{ quantity: qty } }
+            console.log('Objeto con Cantidad', newObj)
+            if (qty !== 0) {
+                array = [...array, newObj]
+            }
+            setSaleProductTemp(array)
+            console.log('arreglo con cantidades', array)
+        } else {
+            console.log("valor de la linea en cero o inexistente")
+        }
     }
 
-    const handleAddToSale = () => {
 
+    const handleAddToSale = () => {
+        let array = saleSummary
+        console.log('Antes de "Agregar"', array)
+        array = [...array, ...saleProductTemp]
+        console.log('Despues de "Agregar"', array)
+        setSaleSummary(array)
+        setSaleProductTemp([])
+        navigate('/sell/catTempSelection')
     }
 
     return (
         <>
 
             <div className='canvas_claro'>
-                <p className="titulo_oscuro">Seleccion y llenado de Paquetes</p>
-                <Link to="/" className='inicio'>Inicio</Link>
-                <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
-
                 <div>
-                    <table className='center' >
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Temp</th>
-                                <th>Precio</th>
-                                <th>Cant.</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {selectedProducts.map((element, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{element.name}</td>
-                                        <td>{element.temperature}</td>
-                                        <td>{element.price}</td>
-                                        <td>
-                                            <button className='btn-light-bkg-short' onClick={() => handleFillPack(element)}>Llenar</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                    <p className="titulo_oscuro">Tipo y Cantidad de paquetes</p>
+                    <Link to="/" className='inicio'>Inicio</Link>
+                    <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
 
+
+                    <FilterPacket />
+
+                    <div>
+                        <table className='center' >
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedProducts.map((element, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{element.name}</td>
+                                            <td>{element.price}</td>
+                                            <td>
+                                                <input id='quantity'
+                                                    onBlur={(event) => { handleAddQuantity(element, parseInt(event.target.value)) }}
+                                                />
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
+                </div>
+                <br />
             </div>
-            {fillPacket ?
-                <FillPacket /> :
-                ''
-            }
         </>
     )
 }

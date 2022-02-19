@@ -17,6 +17,8 @@ import '../generic/Light-bkg.css';
 const schema = yup.object({
   cat_name: yup.string().trim().required("Se requiere para agilizar la seleccion"),
   cat_nameEdit: yup.string(),
+  fill: yup.string(),
+  fillEdit: yup.string(),
   name: yup.string().trim().required("Con el nombre se despliega la Inofrmacion almacenada "),
   nameEdit: yup.string(),
   product_id: yup.string(),
@@ -45,12 +47,16 @@ const AdjustProduct = () => {
     description: '',
     price: null,
     cat_name: '',
+    fill: '',
     temperature: '',
     img_url: '',
     stock_name: '',
     stock_qty: 0,
     status: null
   }
+
+  let esPaquete = false
+  let esBebida = false
 
   const [categories, setCategories] = useState([{}]);
   const [selectedNames, setSelectedNames] = useState([{}]);
@@ -67,79 +73,20 @@ const AdjustProduct = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
-  const onSubmit = (data) => {
-
-    let newObj = { id: toEdit._id, status: data.statusEdit }
-    if (data.product_idEdit !== '') {
-      newObj = { ...newObj, product_id: data.product_idEdit }
-    } else {
-      newObj = { ...newObj, product_id: toEdit.product_id }
-    }
-    if (data.nameEdit !== '') {
-      newObj = { ...newObj, name: data.nameEdit }
-    } else {
-      newObj = { ...newObj, name: toEdit.name }
-    }
-    if (data.descriptionEdit !== '') {
-      newObj = { ...newObj, description: data.descriptionEdit }
-    } else {
-      newObj = { ...newObj, description: toEdit.description }
-    }
-    if (data.priceEdit !== '') {
-      newObj = { ...newObj, price: data.priceEdit }
-    } else {
-      newObj = { ...newObj, price: toEdit.price }
-    }
-    if (data.cat_nameEdit !== '') {
-      newObj = { ...newObj, cat_name: data.cat_nameEdit }
-    } else {
-      newObj = { ...newObj, cat_name: toEdit.cat_name }
-    }
-    if (data.temperatureEdit !== '') {
-      newObj = { ...newObj, temperature: data.temperatureEdit.trim() }
-    } else {
-      newObj = { ...newObj, temperature: toEdit.temperature.trim() }
-    }
-    if (data.img_urlEdit !== '') {
-      newObj = { ...newObj, img_url: data.img_urlEdit.trim() }
-    } else {
-      newObj = { ...newObj, img_url: toEdit.img_url.trim() }
-    }
-    if (data.stock_nameEdit !== '') {
-      newObj = { ...newObj, stock_name: data.stock_nameEdit.trim() }
-    } else {
-      newObj = { ...newObj, stock_name: toEdit.stock_name.trim() }
-    }
-    if (data.stock_qtyEdit !== '') {
-      newObj = { ...newObj, stock_qty: data.stock_qtyEdit }
-    } else {
-      newObj = { ...newObj, stock_qty: toEdit.stock_qty }
-    }
-    if (data.statusEdit !== '') {
-      newObj = { ...newObj, status: data.statusEdit }
-    } else {
-      newObj = { ...newObj, status: toEdit.status }
-    }
-
-    fetch(`${server}/product`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      //enviamos los datos por body y se debe convertir el objeto en JSON
-      body: JSON.stringify(newObj)
-    })
-      .then(response => response.json())
-      .then(json => window.alert(JSON.stringify(json)))
-    reset();
-    setToEdit(objProduct);
-  };
 
   const handleCatChange = () => {
     let obj = {
       cat_name: document.getElementById('cat_name').value,
     };
-
+    if (document.getElementById('cat_name').value === 'Paquete') {
+      esPaquete = true;
+      esBebida = false
+    }
+    if (document.getElementById('cat_name').value === 'Té' ||
+      document.getElementById('cat_name').value === 'Infusión') {
+      esBebida = true;
+      esPaquete = false
+    }
     fetch(`${server}/product/findByCatName`, {
       method: 'POST',
       headers: {
@@ -183,10 +130,78 @@ const AdjustProduct = () => {
       .then(json => setToEdit(json));
   }
 
+  const onSubmit = (data) => {
 
+    let newObj = { id: toEdit._id, status: data.statusEdit }
+    if (data.product_idEdit !== '') {
+      newObj = { ...newObj, product_id: data.product_idEdit }
+    } else {
+      newObj = { ...newObj, product_id: toEdit.product_id }
+    }
+    if (data.nameEdit !== '') {
+      newObj = { ...newObj, name: data.nameEdit }
+    } else {
+      newObj = { ...newObj, name: toEdit.name }
+    }
+    if (data.descriptionEdit !== '') {
+      newObj = { ...newObj, description: data.descriptionEdit }
+    } else {
+      newObj = { ...newObj, description: toEdit.description }
+    }
+    if (data.priceEdit !== '') {
+      newObj = { ...newObj, price: data.priceEdit }
+    } else {
+      newObj = { ...newObj, price: toEdit.price }
+    }
+    if (data.cat_nameEdit !== '') {
+      newObj = { ...newObj, cat_name: data.cat_nameEdit }
+    } else {
+      newObj = { ...newObj, cat_name: toEdit.cat_name }
+    }
+    if (data.fillEdit !== '') {
+      newObj = { ...newObj, fill: data.fillEdit }
+    } else {
+      newObj = { ...newObj, fill: toEdit.fill }
+    }
+    if (data.temperatureEdit !== '') {
+      newObj = { ...newObj, temperature: data.temperatureEdit.trim() }
+    } else {
+      newObj = { ...newObj, temperature: toEdit.temperature.trim() }
+    }
+    if (data.img_urlEdit !== '') {
+      newObj = { ...newObj, img_url: data.img_urlEdit.trim() }
+    } else {
+      newObj = { ...newObj, img_url: toEdit.img_url.trim() }
+    }
+    if (data.stock_nameEdit !== '') {
+      newObj = { ...newObj, stock_name: data.stock_nameEdit.trim() }
+    } else {
+      newObj = { ...newObj, stock_name: toEdit.stock_name.trim() }
+    }
+    if (data.stock_qtyEdit !== '') {
+      newObj = { ...newObj, stock_qty: data.stock_qtyEdit }
+    } else {
+      newObj = { ...newObj, stock_qty: toEdit.stock_qty }
+    }
+    if (data.statusEdit !== '') {
+      newObj = { ...newObj, status: data.statusEdit }
+    } else {
+      newObj = { ...newObj, status: toEdit.status }
+    }
 
-
-
+    fetch(`${server}/product`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      //enviamos los datos por body y se debe convertir el objeto en JSON
+      body: JSON.stringify(newObj)
+    })
+      .then(response => response.json())
+      .then(json => window.alert(JSON.stringify(json)))
+    reset();
+    setToEdit(objProduct);
+  };
 
   return (
     <div className='canvas_claro'>
@@ -289,7 +304,20 @@ const AdjustProduct = () => {
             <p className='error'>{errors.cat_nameEdit?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='temperatureEdit' className='label'>Temperatura</label>
+            <label htmlFor='fillEdit' className='label'>Si es un Paquete defina si es de Té o Infusión</label>
+            <select  {...register("fillEdit")}
+              className="campo_entrada"
+              placeholder={toEdit.fill}
+              id='fillEdit'
+            >
+              <option value={toEdit.fill}>{toEdit.fill}</option>
+              <option value='Té'>Té</option>
+              <option value='Infusión'>Infusión</option>
+            </select>
+            <p className='error'>{errors.temperature?.message}</p>
+          </Row>
+          <Row>
+            <label htmlFor='temperatureEdit' className='label'>Si es una bebida defina la temperatura</label>
             <select  {...register("temperatureEdit")}
               className="campo_entrada"
               placeholder={toEdit.temperature}
