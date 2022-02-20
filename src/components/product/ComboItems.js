@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap'
+import { Form, Row, Col } from 'react-bootstrap'
 
 /**********************Importacion de Componentes**************************/
 import CashContext from '../../context/CashContext'
@@ -110,7 +110,7 @@ const ComboItems = () => {
     useEffect(() => {
         let obj = {
             fill: 'Infusión',
-            stock_qty: 20
+            stock_qty: 50
         };
         fetch(`${server}/product/selectPacketAndFill`, {
             method: 'POST',
@@ -164,114 +164,157 @@ const ComboItems = () => {
     }
 
     return (
-        <div className='canvas_claro'>
+
+        <div >
+            <hr />
             <div>
                 <p className="titulo_oscuro">Especifica: té/infusión/accesorio y unidades a vender</p>
-
-
+                <Row>
+                    <Col>
+                        <Form >
+                            <div>
+                                <div className="mb-3" >
+                                    <Form.Check
+                                        onClick={() => handleFill('Té')}
+                                        inline
+                                        label='Té'
+                                        name="primer"
+                                        type='radio'
+                                        id={`radio-1`}
+                                        value='Té'
+                                    />
+                                    <Form.Check
+                                        onClick={() => handleFill('Infusión')}
+                                        inline
+                                        label='Infusión'
+                                        name="primer"
+                                        type='radio'
+                                        id={`radio-2`}
+                                        value='Infusión'
+                                    />
+                                    <Form.Check
+                                        onClick={() => handleFill('Accesorio')}
+                                        inline
+                                        label='Accesorio'
+                                        name="primer"
+                                        type='radio'
+                                        id={`-radio-3`}
+                                        value='Accesorio'
+                                    />
+                                </div>
+                            </div>
+                        </Form>
+                    </Col>
+                    <Col>
+                        <Form >
+                            <div>
+                                <div className="mb-3" >
+                                    <Form.Check
+                                        onClick={() => handleStockQty(20)}
+                                        inline
+                                        label='20 gr'
+                                        name="stock_qty"
+                                        type='radio'
+                                        id={`radio-1`}
+                                        value={20}
+                                    />
+                                    <Form.Check
+                                        onClick={() => handleStockQty(50)}
+                                        inline
+                                        label='50 gr'
+                                        name="stock_qty"
+                                        type='radio'
+                                        id={`radio-2`}
+                                        value={50}
+                                    />
+                                </div>
+                            </div>
+                        </Form>
+                    </Col>
+                </Row>
                 <div>
-                    <table className='center' >
-                        <thead>
-                            <tr>
-                                <th>Té/Inf/Accs</th>
-                                <th>Gramos</th>
-                                <th>Item</th>
-                                <th>Cant.</th>
-                                <th>+</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <Form >
-                                        <div>
-                                            <div className="mb-3" >
-                                                <Form.Check
-                                                    onClick={() => handleFill('Té')}
-                                                    inline
-                                                    label='Té'
-                                                    name="primer"
-                                                    type='radio'
-                                                    id={`radio-1`}
-                                                    value='Té'
-                                                />
-                                                <Form.Check
-                                                    onClick={() => handleFill('Infusión')}
-                                                    inline
-                                                    label='Infusión'
-                                                    name="primer"
-                                                    type='radio'
-                                                    id={`radio-2`}
-                                                    value='Infusión'
-                                                />
-                                                <Form.Check
-                                                    onClick={() => handleFill('Accesorio')}
-                                                    inline
-                                                    label='Accesorio'
-                                                    name="primer"
-                                                    type='radio'
-                                                    id={`-radio-3`}
-                                                    value='Accesorio'
-                                                />
-                                            </div>
-                                        </div>
-                                    </Form>
-                                </td>
-                                <td>
-                                    <Form >
-                                        <div>
-                                            <div className="mb-3" >
-                                                <Form.Check
-                                                    onClick={() => handleStockQty(20)}
-                                                    inline
-                                                    label='20 gr'
-                                                    name="stock_qty"
-                                                    type='radio'
-                                                    id={`radio-1`}
-                                                    value={20}
-                                                />
-                                                <Form.Check
-                                                    onClick={() => handleStockQty(50)}
-                                                    inline
-                                                    label='50 gr'
-                                                    name="stock_qty"
-                                                    type='radio'
-                                                    id={`radio-2`}
-                                                    value={50}
-                                                />
-                                            </div>
-                                        </div>
-                                    </Form>
-                                </td>
-                                <td>
-                                    {esAccesorio ?
-                                        <select
-                                            className="campo_entrada"
-                                            placeholder="Item"
-                                            id='name'
-                                        >
-                                            {Accesorios.map((e, index) => {
-                                                return (
-                                                    <option key={index} value={e.name} >{e.name}</option>
-                                                )
-                                            })}
-                                        </select>
-                                        :
-                                        ''
-                                    }
-                                </td>
-                                <td>
-                                    <input onBlur={handleItemQuantity}></input>
-                                </td>
-                                <td>
-                                    <FontAwesomeIcon icon={faArrowDownShortWide} onClick={() => handleAddProductToCombo()}></FontAwesomeIcon>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    {esAccesorio ?
+                        <select
+                            className="campo_entrada"
+                            placeholder="Item"
+                            id='name'
+                        >
+                            {Accesorios.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        :
+                        ''
+                    }
+                    {(esTe && esLarge && !esAccesorio) ?
+                        <select
+                            className="campo_entrada"
+                            placeholder="Item"
+                            id='name'
+                        >
+                            {tePacketsLarge.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        :
+                        ''}
+                    {(esTe && !esLarge && !esAccesorio) ?
+                        <select
+                            className="campo_entrada"
+                            placeholder="Item"
+                            id='name'
+                        >
+                            {tePacketsSmall.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        :
+                        ''}
+                    {(!esTe && esLarge && !esAccesorio) ?
+                        <select
+                            className="campo_entrada"
+                            placeholder="Item"
+                            id='name'
+                        >
+                            {infPacketsLarge.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        :
+                        ''}
+                    {(!esTe && !esLarge && !esAccesorio) ?
+                        <select
+                            className="campo_entrada"
+                            placeholder="Item"
+                            id='name'
+                        >
+                            {infPacketsSmall.map((e, index) => {
+                                return (
+                                    <option key={index} value={e.name} >{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        :
+                        ''}
+                </div>
+                <div>
+                    <label htmlFor='quantity' />
+                    <input onBlur={handleItemQuantity} type='number' defaultValue={1}></input>
+                </div>
+                <div>
+                    <FontAwesomeIcon icon={faArrowDownShortWide} onClick={() => handleAddProductToCombo()}></FontAwesomeIcon>
                 </div>
             </div>
-        </div >
+            <hr />
+        </div>
     )
 }
 
