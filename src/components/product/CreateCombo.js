@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 
 /**********************Importacion de Componentes**************************/
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import ProductContext from '../../context/ProductContext'
 import { server } from '../../context/Api'
 
@@ -10,8 +10,11 @@ import { server } from '../../context/Api'
 
 import '../generic/Light-bkg.css'
 import ComboItems from './ComboItems';
+import ComboSummary from './ComboSummary';
 
 const CreateCombo = () => {
+
+    let navigate = useNavigate()
 
     let products = []
     let objProduct = {
@@ -31,23 +34,46 @@ const CreateCombo = () => {
         setName(document.getElementById('name').value)
         console.log(document.getElementById('name').value)
     }
+    //TODO validar que no se haga el click si falta valores verificar con yup
+    const handleCreateCombo = () => {
+        let objCombo = {
+            name: name,
+            products: productsArray
+        }
+        fetch(`${server}/product/combo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objCombo)
+        })
+            .then(response => response.json())
+        setProductsArray([])
+        setName('')
+        navigate('/product')
+    }
 
 
     return (
         <div className='canvas_claro'>
             <div>
-                <p className="titulo_oscuro">Nombre del conjunto, numero de items </p>
+                <p className="titulo_oscuro">Nombre del conjunto</p>
                 <Link to="/" className='inicio'>Inicio</Link>
-                <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
-                <label htmlFor='name'>Nombre para creacion del combo en "Producto"</label>
-                <input id='name' onBlur={handleName} />
+                <Link to="/product" className='volver'>Volver</Link>
+                <label htmlFor='name'>Este se usa en la creación del "Producto"</label>
+                <input
+                    id='name'
+                    onBlur={handleName}
+                    style={{ marginLeft: '1rem' }} />
                 <br /><br />
 
             </div>
             <ComboItems />
-            <div>
-                <h2> Aqui desplegar los items y el nombre del grupo con la x para eliminarlo</h2>
-            </div>
+            <ComboSummary />
+
+            <br />
+            <button className='btn-light-bkg' onClick={handleCreateCombo}>Crear Combo</button>
+
         </div>
     )
 }

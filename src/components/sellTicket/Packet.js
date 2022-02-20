@@ -13,17 +13,19 @@ import FilterPacket from './FilterPacket';
 
 const Packet = () => {
 
-    const [unFilteredPacket] = useState(false)
+
+
+
     const [saleProductTemp, setSaleProductTemp] = useState([])
 
     const navigate = useNavigate()
 
     const { selectedProducts,
         saleSummary, setSaleSummary,
+        showPacketList, setShowPacketList
     } = useContext(SellTicketContext)
 
-    useEffect(() => {
-    }, [unFilteredPacket])
+
 
     const handleAddQuantity = (obj, qty) => {
         if (qty !== NaN || qty !== 0) {
@@ -62,34 +64,37 @@ const Packet = () => {
 
 
                     <FilterPacket />
+                    {showPacketList ?
+                        <div>
+                            <table className='center' >
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
 
-                    <div>
-                        <table className='center' >
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-
-                                    <th>Cantidad</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {selectedProducts.map((element, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <td>{element.name}</td>
-                                            <td>{element.price}</td>
-                                            <td>
-                                                <input id='quantity'
-                                                    onBlur={(event) => { handleAddQuantity(element, parseInt(event.target.value)) }}
-                                                />
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {selectedProducts.map((element, i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>{element.name}</td>
+                                                <td>{element.price}</td>
+                                                <td>
+                                                    <input id='quantity'
+                                                        onBlur={(event) => { handleAddQuantity(element, parseInt(event.target.value)) }}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        :
+                        ''
+                    }
                     <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
                 </div>
                 <br />

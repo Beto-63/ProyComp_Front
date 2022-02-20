@@ -34,7 +34,7 @@ const ChooseProductTable = () => {
             console.log("valor de la linea en cero o inexistente")
         }
     }
-
+    //TODO evitar que entre NaN a la seleccion puede ser con Yup
     const handleAddToSale = () => {
         let array = saleSummary
         console.log('Antes de "Agregar"', array)

@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Form, Row, Col } from 'react-bootstrap'
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
 import CashContext from '../../context/CashContext'
@@ -9,11 +12,20 @@ import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import '../generic/Light-bkg.css'
+
+const schema = yup.object({
+    quantity: yup.number().typeError('Numero de unidades incluidas en el Combo').moreThan(0, 'El valor debe ser positivo').required(),
+    name: yup.string('Solo se aceptan caracteres').required('Nombre del producto catalogado Incluido en el Combo').trim('No dejar espacios antes o al final')
+})
 
 
 const ComboItems = () => {
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
 
     //cinco listas de elementos para conformar el combo
     const [tePacketsLarge, setTePacketsLarge] = useState([])
@@ -33,12 +45,6 @@ const ComboItems = () => {
 
     //este arreglo contrndra los items que van en el combo
     const { productsArray, setProductsArray } = useContext(ProductContext)
-
-    useEffect(() => {
-
-        console.log("renderizo")
-    }, esAccesorio, esTe, esLarge)
-
 
     useEffect(() => {
         let obj = {
@@ -125,10 +131,6 @@ const ComboItems = () => {
     }, [])
 
 
-    const handleAddProductToCombo = () => {
-
-    }
-
     const handleFill = (valor) => {
         if (valor === 'Accesorio') {
             setEsAccesorio(true)
@@ -155,20 +157,25 @@ const ComboItems = () => {
 
     }
 
-    const handleItemName = () => {
 
-    }
 
-    const handleItemQuantity = () => {
-
-    }
+    const onSubmit = (data) => {
+        setObjItem(data)
+        let array = productsArray
+        array = [...array, data]
+        setProductsArray(array)
+        console.log(array)
+        reset();
+        setEsTe(false)
+        setEsAccesorio(false)
+        setEsLarge(false)
+    };
 
     return (
 
         <div >
-            <hr />
             <div>
-                <p className="titulo_oscuro">Especifica: té/infusión/accesorio y unidades a vender</p>
+                <p className="">componentes del conjunto</p>
                 <Row>
                     <Col>
                         <Form >
@@ -232,89 +239,103 @@ const ComboItems = () => {
                         </Form>
                     </Col>
                 </Row>
-                <div>
-                    {esAccesorio ?
-                        <select
-                            className="campo_entrada"
-                            placeholder="Item"
-                            id='name'
-                        >
-                            {Accesorios.map((e, index) => {
-                                return (
-                                    <option key={index} value={e.name} >{e.name}</option>
-                                )
-                            })}
-                        </select>
-                        :
-                        ''
-                    }
-                    {(esTe && esLarge && !esAccesorio) ?
-                        <select
-                            className="campo_entrada"
-                            placeholder="Item"
-                            id='name'
-                        >
-                            {tePacketsLarge.map((e, index) => {
-                                return (
-                                    <option key={index} value={e.name} >{e.name}</option>
-                                )
-                            })}
-                        </select>
-                        :
-                        ''}
-                    {(esTe && !esLarge && !esAccesorio) ?
-                        <select
-                            className="campo_entrada"
-                            placeholder="Item"
-                            id='name'
-                        >
-                            {tePacketsSmall.map((e, index) => {
-                                return (
-                                    <option key={index} value={e.name} >{e.name}</option>
-                                )
-                            })}
-                        </select>
-                        :
-                        ''}
-                    {(!esTe && esLarge && !esAccesorio) ?
-                        <select
-                            className="campo_entrada"
-                            placeholder="Item"
-                            id='name'
-                        >
-                            {infPacketsLarge.map((e, index) => {
-                                return (
-                                    <option key={index} value={e.name} >{e.name}</option>
-                                )
-                            })}
-                        </select>
-                        :
-                        ''}
-                    {(!esTe && !esLarge && !esAccesorio) ?
-                        <select
-                            className="campo_entrada"
-                            placeholder="Item"
-                            id='name'
-                        >
-                            {infPacketsSmall.map((e, index) => {
-                                return (
-                                    <option key={index} value={e.name} >{e.name}</option>
-                                )
-                            })}
-                        </select>
-                        :
-                        ''}
-                </div>
-                <div>
-                    <label htmlFor='quantity' />
-                    <input onBlur={handleItemQuantity} type='number' defaultValue={1}></input>
-                </div>
-                <div>
-                    <FontAwesomeIcon icon={faArrowDownShortWide} onClick={() => handleAddProductToCombo()}></FontAwesomeIcon>
-                </div>
+                <Row>
+                    <form className='container' onSubmit={handleSubmit(onSubmit)}>
+
+
+                        <label htmlFor='quantity' >Unidades</label>
+                        <input {...register("quantity")}
+                            className='short'
+                            type='number' defaultValue={1}
+                            style={{ marginRight: '1rem' }}
+                        />
+
+
+                        {esAccesorio ?
+                            <select {...register("name")}
+                                className="campo_entrada"
+                                placeholder="Item"
+                                id='name'
+                            >
+                                {Accesorios.map((e, index) => {
+                                    return (
+                                        <option key={index} value={e.name} >{e.name}</option>
+                                    )
+                                })}
+                            </select>
+                            :
+                            ''
+                        }
+                        {(esTe && esLarge && !esAccesorio) ?
+                            <select {...register("name")}
+                                className="campo_entrada"
+                                placeholder="Item"
+                                id='name'
+                            >
+                                {tePacketsLarge.map((e, index) => {
+                                    return (
+                                        <option key={index} value={e.name} >{e.name}</option>
+                                    )
+                                })}
+                            </select>
+                            :
+                            ''}
+                        {(esTe && !esLarge && !esAccesorio) ?
+                            <select {...register("name")}
+                                className="campo_entrada"
+                                placeholder="Item"
+                                id='name'
+                            >
+                                {tePacketsSmall.map((e, index) => {
+                                    return (
+                                        <option key={index} value={e.name} >{e.name}</option>
+                                    )
+                                })}
+                            </select>
+                            :
+                            ''}
+                        {(!esTe && esLarge && !esAccesorio) ?
+                            <select {...register("name")}
+                                className="campo_entrada"
+                                placeholder="Item"
+                                id='name'
+                            >
+                                {infPacketsLarge.map((e, index) => {
+                                    return (
+                                        <option key={index} value={e.name} >{e.name}</option>
+                                    )
+                                })}
+                            </select>
+                            :
+                            ''}
+                        {(!esTe && !esLarge && !esAccesorio) ?
+                            <select {...register("name")}
+                                className="campo_entrada"
+                                placeholder="Item"
+                                id='name'
+                            >
+                                {infPacketsSmall.map((e, index) => {
+                                    return (
+                                        <option key={index} value={e.name} >{e.name}</option>
+                                    )
+                                })}
+                            </select>
+                            :
+                            ''}
+
+
+                        <div>
+                            <br />
+                            <button className='btn-light-bkg-tall' type="submit" >
+                                <FontAwesomeIcon icon={faCirclePlus} size="2x" />
+                            </button>
+                        </div>
+                    </form>
+                </Row>
+                <br />
             </div>
             <hr />
-        </div>
+        </div >
     )
 }
 

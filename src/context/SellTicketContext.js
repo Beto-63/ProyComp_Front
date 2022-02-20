@@ -7,7 +7,8 @@ const SellTicketContext = createContext();
 const SellTicketProvider = ({ children }) => {
     const [keepSelecting, setKeepSelecting] = useState(true)        //Se usa para predentar las variables de categoria a
     const [summary, setSummary] = useState(false)                 // se usa para esconder el resumen antes de que exista
-    const [unFilteredPacket, setUnFilteredPacket] = useState(true)
+    const [showPacketList, setShowPacketList] = useState(false)
+
 
     const [origins, setOrigins] = useState([{}]);                   // Describe los origenes de la venta
     const [paymentMethods, setPaymentMethods] = useState([{}]);     // Tipo de pago recibido
@@ -32,7 +33,7 @@ const SellTicketProvider = ({ children }) => {
         summary, setSummary,
         packsToFill, setPacksToFill,
         allPackets, setAllPackets,
-        unFilteredPacket, setUnFilteredPacket
+        showPacketList, setShowPacketList
 
     };
 
