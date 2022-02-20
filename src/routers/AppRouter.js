@@ -31,7 +31,7 @@ import GeneralMenu from '../components/generic/GeneralMenu';
 import ProductSelectForm from '../components/sellTicket/CatAndTempSalection';
 import CloseTransaction from '../components/sellTicket/CloseTransaction';
 import Packet from '../components/sellTicket/Packet';
-import Combo from '../components/sellTicket/Combo';
+import CreateCombo from '../components/product/CreateCombo';
 
 
 export const AppRouter = () => {
@@ -50,13 +50,13 @@ export const AppRouter = () => {
             <Route path="/product" element={<Product />} />
             <Route path="/product/create" element={<CreateProduct />} />
             <Route path="/product/adjust" element={<AdjustProduct />} />
+            <Route path="/product/combo" element={<CreateCombo />} />
 
             <Route path="/sell" element={<Sell />} />
             <Route path="/sell/prodSelectForm" element={<ProductSelectForm />} />
             <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
             <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
             <Route path="/sell/packet" element={<Packet />} />
-            <Route path="/sell/combo" element={<Combo />} />
             <Route path="/sell/deliver" element={<CloseTransaction />} />
 
             <Route path="/stock" element={<Stock />} />
