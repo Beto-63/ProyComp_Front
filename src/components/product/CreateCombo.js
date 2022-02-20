@@ -46,7 +46,7 @@ const CreateCombo = () => {
             </div>
             <ComboItems />
             <div>
-
+                <h2> Aqui desplegar los items y el nombre del grupo con la x para eliminarlo</h2>
             </div>
         </div>
     )
