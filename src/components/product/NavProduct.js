@@ -12,6 +12,9 @@ const NavStock = () => {
     const goToAdjust = () => {
         navigate('/product/adjust');
     }
+    const goToCombo = () => {
+        navigate('/product/combo');
+    }
     return (
         <div className='canvas_oscuro'>
             <Link to="/" className='inicio' >Inicio</Link>
@@ -25,6 +28,9 @@ const NavStock = () => {
                     </Col>
                     <Col>
                         <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste a Producto</button>
+                    </Col>
+                    <Col>
+                        <button className='btn-dark-bkg' onClick={goToCombo} >Items de Combo</button>
                     </Col>
                 </Row>
             </Container>

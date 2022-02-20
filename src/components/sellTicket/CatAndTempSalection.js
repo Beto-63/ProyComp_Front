@@ -113,7 +113,7 @@ const ProductSelectForm = () => {
                 'Accesorios': navigate('/sell/chooseProductTable');
                 break;
             case
-                'Combo': navigate("/sell/combo");
+                'Combo': navigate('/sell/chooseProductTable');
                 break;
             case
                 'Paquete': navigate("/sell/packet");
