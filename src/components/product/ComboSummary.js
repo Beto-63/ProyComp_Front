@@ -16,7 +16,7 @@ const ComboSummary = () => {
     // TODO Hacer que no aparezcan las infusiones por default tal vez con default valye en el select
     return (
         <div>
-            <label>Asi quedará conformado el Combo</label>
+            <label className="titulo_oscuro">Asi quedará conformado el Combo</label>
             <br />
             <p>{`Nombre del Combo : ${name}`}</p>
             <table className='center'>

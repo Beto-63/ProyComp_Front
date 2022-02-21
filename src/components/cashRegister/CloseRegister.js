@@ -27,7 +27,7 @@ const CloseRegister = () => {
 
     const { setConfirmacion, lastOpen, lastClose, canClose, setCanClose, channel } = useContext(CashContext)
 
-    const [willClose, setWillClose] = useState("none")
+    const [showClosure, setShowClosure] = useState(false)
     const [sellTickets, setSellTickets] = useState([{}]);
     const [totalSales, setTotalSales] = useState(0);
     const [deposits, setDeposits] = useState([{}]);
@@ -119,9 +119,9 @@ const CloseRegister = () => {
         //Estabiliza la presentacion de las variables del segundo parametro
     }, [countedCash, expectedCashOnHand]);
 
-    const presentClose = () => {
-        if ((countedCash - expectedCashOnHand < 10000) || (expectedCashOnHand - countedCash < 10000)) {
-            setWillClose('block')
+    const presentClose = (cash) => {
+        if (!(cash / expectedCashOnHand < 0.95) || (cash / expectedCashOnHand > 1.05)) {
+            setShowClosure(true)
         }
     }
 
@@ -135,8 +135,8 @@ const CloseRegister = () => {
             totalExpenses
         )
         setCountedCash(document.getElementById('cash_on_hand').value)
-        presentClose();
-        console.log("se puede cerrar", willClose)
+        presentClose(document.getElementById('cash_on_hand').value);
+        console.log("se puede cerrar", showClosure)
         console.log("expected", expectedCashOnHand)
         console.log("counted", countedCash)
     }
@@ -280,35 +280,39 @@ const CloseRegister = () => {
                             <p className='error'>{errors.cash_on_hand?.message}</p>
                         </Col>
                     </Row>
-                    <div style={{ display: willClose }}>
-                        <p className="label">{`Las ventas en efectivo del dia HOY_______$${cashSales}`}</p>
-                        <p className="label">{`Desde el ultimo cierre consigné__________$${totalDeposits},`}</p>
-                        <p className="label">{`Desde el ultimo cierre tuve gastos por___$${totalExpenses}`}</p>
-                        <hr />
-                        <p className="label">{`Se espera tener en efectivo a mano_______$${expectedCashOnHand},`}</p>
-                        <hr />
+                    {showClosure ?
+                        <div>
+                            <p className="label">{`Las ventas en efectivo del dia HOY_______$${cashSales}`}</p>
+                            <p className="label">{`Desde el ultimo cierre consigné__________$${totalDeposits},`}</p>
+                            <p className="label">{`Desde el ultimo cierre tuve gastos por___$${totalExpenses}`}</p>
+                            <hr />
+                            <p className="label">{`Se espera tener en efectivo a mano_______$${expectedCashOnHand},`}</p>
+                            <hr />
 
-                        <p p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
-                        <p className={(expectedCashOnHand - countedCash === 0) ? "perfect" : "result"}>{(expectedCashOnHand - countedCash === 0) ? `Puede cerrar` : (expectedCashOnHand - countedCash > 0) ? `Hay un faltante` : `Hay un excedente`}</p>
-                        <Row>
-                            <Col>
-                                <label htmlFor='change_amount' className='label'>Cual sera la base de cambio manana?</label>
-                            </Col>
-                            <Col>
-                                <input {...register("change_amount")}
-                                    className="campo_entrada"
-                                    placeholder="Cambio para Manana"
-                                    id='change_amount' onChange={handleNewChangeAmount}
-                                // onChange={handleOpen}
-                                />
-                                <p className='error'>{errors.change_amount?.message}</p>
-                            </Col>
-                        </Row>
-                        <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
-                        <p className="label">{`Las Ventas totales han sido de___________$${totalSales},`}</p>
-                        <p className="result">{`Por tanto debo consignar_________________$${newAmountToDeposit}`}</p>
-                        <button className='btn-light-bkg' type="submit">Cerrar</button>
-                    </div>
+                            <p p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
+                            <p className={(expectedCashOnHand - countedCash === 0) ? "perfect" : "result"}>{(expectedCashOnHand - countedCash === 0) ? `Puede cerrar` : (expectedCashOnHand - countedCash > 0) ? `Hay un faltante` : `Hay un excedente`}</p>
+                            <Row>
+                                <Col>
+                                    <label htmlFor='change_amount' className='label'>Cual sera la base de cambio manana?</label>
+                                </Col>
+                                <Col>
+                                    <input {...register("change_amount")}
+                                        className="campo_entrada"
+                                        placeholder="Cambio para Manana"
+                                        id='change_amount' onChange={handleNewChangeAmount}
+                                    // onChange={handleOpen}
+                                    />
+                                    <p className='error'>{errors.change_amount?.message}</p>
+                                </Col>
+                            </Row>
+                            <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
+                            <p className="label">{`Las Ventas totales han sido de___________$${totalSales},`}</p>
+                            <p className="result">{`Por tanto debo consignar_________________$${newAmountToDeposit}`}</p>
+                        </div>
+                        :
+                        ''
+                    }
+                    <button className='btn-light-bkg' type="submit" disabled={showClosure}>Cerrar</button>
                 </form>
             </Container>
         </div >

@@ -41,10 +41,12 @@ const ComboItems = () => {
     const [esAccesorio, setEsAccesorio] = useState(false)
     const [esTe, setEsTe] = useState(false)
     const [esLarge, setEsLarge] = useState(false)
+    const [showQuantity, setShowQuantity] = useState(false)
 
 
     //este arreglo contrndra los items que van en el combo
     const { productsArray, setProductsArray } = useContext(ProductContext)
+
 
     useEffect(() => {
         let obj = {
@@ -135,14 +137,17 @@ const ComboItems = () => {
         if (valor === 'Accesorio') {
             setEsAccesorio(true)
             setEsTe(false)
+            setShowQuantity(false)
         }
         if (valor === 'Té') {
             setEsTe(true)
             setEsAccesorio(false)
+            setShowQuantity(true)
         }
         if (valor === 'Infusión') {
             setEsTe(false)
             setEsAccesorio(false)
+            setShowQuantity(true)
         }
 
     }
@@ -175,44 +180,44 @@ const ComboItems = () => {
 
         <div >
             <div>
-                <p className="">componentes del conjunto</p>
+                <p className="titulo_oscuro">Componentes del conjunto</p>
                 <Row>
-                    <Col>
-                        <Form >
-                            <div>
-                                <div className="mb-3" >
-                                    <Form.Check
-                                        onClick={() => handleFill('Té')}
-                                        inline
-                                        label='Té'
-                                        name="primer"
-                                        type='radio'
-                                        id={`radio-1`}
-                                        value='Té'
-                                    />
-                                    <Form.Check
-                                        onClick={() => handleFill('Infusión')}
-                                        inline
-                                        label='Infusión'
-                                        name="primer"
-                                        type='radio'
-                                        id={`radio-2`}
-                                        value='Infusión'
-                                    />
-                                    <Form.Check
-                                        onClick={() => handleFill('Accesorio')}
-                                        inline
-                                        label='Accesorio'
-                                        name="primer"
-                                        type='radio'
-                                        id={`-radio-3`}
-                                        value='Accesorio'
-                                    />
-                                </div>
+
+                    <Form >
+                        <div>
+                            <div className="mb-3" >
+                                <Form.Check
+                                    onClick={() => handleFill('Té')}
+                                    inline
+                                    label='Té'
+                                    name="primer"
+                                    type='radio'
+                                    id={`radio-1`}
+                                    value='Té'
+                                />
+                                <Form.Check
+                                    onClick={() => handleFill('Infusión')}
+                                    inline
+                                    label='Infusión'
+                                    name="primer"
+                                    type='radio'
+                                    id={`radio-2`}
+                                    value='Infusión'
+                                />
+                                <Form.Check
+                                    onClick={() => handleFill('Accesorio')}
+                                    inline
+                                    label='Accesorio'
+                                    name="primer"
+                                    type='radio'
+                                    id={`-radio-3`}
+                                    value='Accesorio'
+                                />
                             </div>
-                        </Form>
-                    </Col>
-                    <Col>
+                        </div>
+                    </Form>
+
+                    {showQuantity ?
                         <Form >
                             <div>
                                 <div className="mb-3" >
@@ -237,7 +242,10 @@ const ComboItems = () => {
                                 </div>
                             </div>
                         </Form>
-                    </Col>
+                        :
+                        ''
+                    }
+
                 </Row>
                 <Row>
                     <form className='container' onSubmit={handleSubmit(onSubmit)}>

@@ -30,7 +30,7 @@ const NavStock = () => {
                         <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste a Producto</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToCombo} >Items de Combo</button>
+                        <button className='btn-dark-bkg' onClick={goToCombo} >Agrupación Xa Combo</button>
                     </Col>
                 </Row>
             </Container>
