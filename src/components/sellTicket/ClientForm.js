@@ -58,7 +58,7 @@ const ClientForm = () => {
         <div className='canvas_oscuro'>
             <h4 className="titulo_claro">¡Bien hecho!</h4>
             <h4 className="titulo_claro">¿Quien es tu cliente?</h4>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -90,6 +90,15 @@ const ClientForm = () => {
                             type='radio'
                             id={`inline-radio-2`}
                             value={"M"}
+                        />
+                        <Form.Check
+                            onClick={handleForm}
+                            inline
+                            label="Otro"
+                            name="gender"
+                            type='radio'
+                            id={`inline-radio-2`}
+                            value={"Otro"}
                         />
                     </div>
                     <Form.Label>Edad:</Form.Label>

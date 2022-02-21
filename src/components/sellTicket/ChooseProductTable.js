@@ -49,7 +49,7 @@ const ChooseProductTable = () => {
     return (
         <div className='canvas_claro'>
             <p className="titulo_oscuro">Proceso de Venta</p>
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
             <form>
                 <div>

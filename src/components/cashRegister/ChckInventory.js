@@ -62,7 +62,7 @@ const ChckInventory = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">{`Ajuste general de Inventario en ${channel}`}</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             {console.log('lista', stockItems)}
             {createItemsCopy()}

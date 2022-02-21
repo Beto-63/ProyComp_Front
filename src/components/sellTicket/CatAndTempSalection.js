@@ -127,7 +127,7 @@ const ProductSelectForm = () => {
     return (
         <div className='canvas_claro'>
             <p className="titulo_oscuro">Proceso de Venta</p>
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/sell" className='volver'>Volver</Link>
             <Container >
                 <Form >

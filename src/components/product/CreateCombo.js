@@ -58,7 +58,7 @@ const CreateCombo = () => {
         <div className='canvas_claro'>
             <div>
                 <p className="titulo_oscuro">Nombre del conjunto</p>
-                <Link to="/" className='inicio'>Inicio</Link>
+                <Link to="/menu" className='inicio'>Inicio</Link>
                 <Link to="/product" className='volver'>Volver</Link>
                 <label htmlFor='name'>Este se usa en la creación del "Producto"</label>
                 <input

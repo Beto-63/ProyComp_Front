@@ -9,7 +9,7 @@ const LogoutTemp = () => {
             <p className="titulo_oscuro">Terminar el uso de la Aplicacion</p>
 
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <form className='container'>
                 <h6 className='openclose'>Si sales, tendras que autenticarte de nuevo para usar la aplicación...</h6>

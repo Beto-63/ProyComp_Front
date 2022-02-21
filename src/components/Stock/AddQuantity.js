@@ -74,7 +74,7 @@ const AddQuantity = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Agregar cantidad al sotock</p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
