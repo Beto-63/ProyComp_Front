@@ -9,11 +9,11 @@ import foto from '../../Assets/foto.png'
 // TODO cambiar para llevar a log in cuando se onte la seguridad
 // }
 
-const IndexTemp = () => {
+const Index = () => {
     let navigate = useNavigate('/menu');
 
     const goToLogin = () => {
-        navigate('/menu')
+        navigate('/login')
         // nivigate('/login') Una vez se implemente la seguridad debera cambiarse esta funcion par
         // que no lleve a esta pagina sino a la de autenticacion, i esa si al menu real <generalNav></generalNav>
     }
@@ -38,4 +38,4 @@ const IndexTemp = () => {
     )
 }
 
-export default IndexTemp
+export default Index

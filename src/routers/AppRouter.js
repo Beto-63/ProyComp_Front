@@ -1,8 +1,8 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 //Importar componentes o paginas
-import IndexTemp from '../components/Landing/IndexTemp'
+import GeneralMenu from '../components/generic/GeneralMenu';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
 import Sell from '../pages/SellTicket';
@@ -33,12 +33,13 @@ import CloseTransaction from '../components/sellTicket/CloseTransaction';
 import Packet from '../components/sellTicket/Packet';
 import CreateCombo from '../components/product/CreateCombo';
 
+import Logout from '../components/auth/Logout';
 
 export const AppRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={<IndexTemp />} />
-            <Route path="/menu" element={<GeneralMenu />} />
+
+            <Route path="/" element={<GeneralMenu />} />
 
             <Route path="/cash" element={<CashRegister />} />
             <Route path="/cash/open" element={<OpenRegister />} />
@@ -72,7 +73,10 @@ export const AppRouter = () => {
             <Route path="/user" element={<User />} />
             <Route path="/user/createUser" element={<CreateUser />} />
             <Route path="/user/adjustUser" element={<AdjustUser />} />
-            <Route path="*" element={<NotFound />} />
+            
+            <Route path='/logout' element={<Logout />} />
+            
+            <Route path="*" element={<Navigate replace to="/" />} />
 
 
         </Routes>
