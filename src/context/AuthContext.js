@@ -10,10 +10,10 @@ const AuthProvider = ({ children }) => {
     * Debe siempre empezar en "false" cuando esten implementadas las seguridades  *
     *por ahora se deja en "true"                                                  *
     ******************************************************************************/
-    const [auth, setAuth] = useState(true);
+    const [auth, setAuth] = useState(false);
     //const [token, setToken] = useState('');
 
-    /* useEffect(()=>{
+    useEffect(()=>{
 
         const token = localStorage.getItem('token');
 
@@ -64,7 +64,7 @@ const AuthProvider = ({ children }) => {
             //navigate("/");
         }
 
-    }, []); */
+    }, []);
 
 
     // ****************** Código del profesor ***********************
