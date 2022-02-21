@@ -4,51 +4,42 @@ import { createContext, useState } from "react";
 const SellTicketContext = createContext();
 
 //se crea el proveedor de contexto (es el que agrupa el arbol de elementos)
-const SellTicketProvider = ({children})=>{
+const SellTicketProvider = ({ children }) => {
+    const [keepSelecting, setKeepSelecting] = useState(true)        //Se usa para predentar las variables de categoria a
+    const [summary, setSummary] = useState(false)                 // se usa para esconder el resumen antes de que exista
+    const [showPacketList, setShowPacketList] = useState(false)
 
-    
-    //Función para enviar petición al servidor
-    const handleClientRegister = async (objClient)=>{
-        //enviar los datos capturados a la base de datos
-        const resp = await fetch('https://dokotestback.herokuapp.com/client',{
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            //enviamos los datos por body y se debe convertir el objeto en JSON
-            body: JSON.stringify(objClient)
-        })
-        return resp;    
-    }
-    const getProductByCatName = async (objProduct) => {        
-        const resp = await fetch('https://dokotestback.herokuapp.com/product/findByCatName', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(objProduct)
-        })
-        return resp;
-    }
 
-    const [form, setForm] = useState()
+    const [origins, setOrigins] = useState([{}]);                   // Describe los origenes de la venta
+    const [paymentMethods, setPaymentMethods] = useState([{}]);     // Tipo de pago recibido
+    const [categories, setCategories] = useState([{}]);             // Categorias de producto para poderlas seleccionar  
+    const [selectedCategory, setSelectedCategory] = useState('')     // Categoria de producto de la cual hacer la seleccion --clave para manejo de Combos
+    const [selectedProducts, setSelectedProducts] = useState([{}])  // Son la ista corta de productos por cat y temp(si aplica)
+    const [clientId, setClientId] = useState({})                    // Es el Objeto cliente al que se refiere la venta, para armar el sell ticket
+    const [saleSummary, setSaleSummary] = useState([])
+    const [packsToFill, setPacksToFill] = useState([])
+    const [allPackets, setAllPackets] = useState([])
 
-    const [product, setProduct] = useState([]);
 
-    const [selected, setSelected] = useState([]);
-    console.log('Selected desde el Context: ')
-    console.log(selected)
+    const data = {
+        keepSelecting, setKeepSelecting,
+        origins, setOrigins,
+        paymentMethods, setPaymentMethods,
+        categories, setCategories,
+        selectedProducts, setSelectedProducts,
+        clientId, setClientId,
+        selectedCategory, setSelectedCategory,
+        saleSummary, setSaleSummary,
+        summary, setSummary,
+        packsToFill, setPacksToFill,
+        allPackets, setAllPackets,
+        showPacketList, setShowPacketList
 
-    const [amount, setAmount] = useState("")
-    console.log('amount desde el Context: ')
-    console.log(amount)
-      
-    //aqui voy a crear el GET - hay que envolver toda la app con un Contexto global y empezar a hacer los contextos unitarios.
-    const data = {handleClientRegister, getProductByCatName, form, setForm, product, setProduct, selected, setSelected, amount, setAmount };
+    };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>
 }
 
 //se exportan el context y el provider
-export {SellTicketProvider};
+export { SellTicketProvider };
 export default SellTicketContext;

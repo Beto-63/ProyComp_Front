@@ -1,13 +1,18 @@
+/**********************Importacion de Librerias****************************/
 import React from 'react'
-import STClient from '../components/sellTicket/STClient'
-import GeneralNav from '../components/generic/GeneralNav'
+
+/**********************Importacion de Componentes**************************/
+import Client from '../components/sellTicket/Client'
+
+
+
+
 
 function Sell() {
+
     return (
         <div>
-            <GeneralNav />
-            VENTAS
-                <STClient />
+            <Client />
         </div>
     )
 }

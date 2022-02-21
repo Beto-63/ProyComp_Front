@@ -1,5 +1,5 @@
 /**********************Importacion de Librerias****************************/
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -54,7 +54,7 @@ const Expenses = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Registra gastos menores</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

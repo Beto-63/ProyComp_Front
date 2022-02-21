@@ -75,7 +75,7 @@ const ItemsByName = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Consulta por nombre</p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -102,10 +102,10 @@ const ItemsByName = () => {
                             placeholder="Escoja el Item"
                             id='name'
                         >
-                            <option value=''>Elemento a adicionar</option>
+                            <option value=''>Selecciona el Elemento</option>
                             {selectedNames.map((e, index) => {
                                 return (
-                                    <option key={index} value={e.name} >{`El producto ${e.name} / ${e.channel}`}</option>
+                                    <option key={index} value={e.name} >{`${e.name} / ${e.channel}`}</option>
                                 )
                             })}
                         </select>

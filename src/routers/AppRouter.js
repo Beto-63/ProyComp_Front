@@ -24,8 +24,14 @@ import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
 import CreateUser from '../components/user/CreateUser';
 import AdjustUser from '../components/user/AdjustUser';
-import STProductSelect from '../components/sellTicket/STProductSelect';
-import STProductChoiceTable from '../components/sellTicket/STProductChoiceTable';
+import NotFound from '../components/auth/NotFound';
+import CatAndTempSelction from '../components/sellTicket/CatAndTempSalection';
+import ChooseProductTable from '../components/sellTicket/ChooseProductTable';
+import GeneralMenu from '../components/generic/GeneralMenu';
+import ProductSelectForm from '../components/sellTicket/CatAndTempSalection';
+import CloseTransaction from '../components/sellTicket/CloseTransaction';
+import Packet from '../components/sellTicket/Packet';
+import CreateCombo from '../components/product/CreateCombo';
 
 import Logout from '../components/auth/Logout';
 
@@ -45,10 +51,14 @@ export const AppRouter = () => {
             <Route path="/product" element={<Product />} />
             <Route path="/product/create" element={<CreateProduct />} />
             <Route path="/product/adjust" element={<AdjustProduct />} />
+            <Route path="/product/combo" element={<CreateCombo />} />
 
             <Route path="/sell" element={<Sell />} />
-            <Route path="/sell/productSelect" element={<STProductSelect />} />
-            <Route path="/sell/productChoice" element={<STProductChoiceTable />} />
+            <Route path="/sell/prodSelectForm" element={<ProductSelectForm />} />
+            <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
+            <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
+            <Route path="/sell/packet" element={<Packet />} />
+            <Route path="/sell/deliver" element={<CloseTransaction />} />
 
             <Route path="/stock" element={<Stock />} />
             <Route path="/stock/create" element={<CreateStockItem />} />

@@ -84,7 +84,7 @@ const InventoryTransfer = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Traslado de cantidades </p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -105,6 +105,7 @@ const InventoryTransfer = () => {
                         <p className='error'>{errors.cat_name?.message}</p>
                     </Row>
                     <Row>
+                        //TODO revisar carga de esta seccion
                         <label htmlFor='name' className='label'>Nombre del elemento a trasladar</label>
                         <select {...register("name")}
                             className="campo_entrada container"

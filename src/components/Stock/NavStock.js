@@ -29,7 +29,7 @@ const NavStock = () => {
     return (
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Gestión de Inventario</p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <Container>

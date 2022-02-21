@@ -22,7 +22,7 @@ const schema = yup.object({
     channelEdit: yup.string(),
     cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
     cat_nameEdit: yup.string(),
-    statusEdit: yup.number().typeError('Se requiere definir el Estado').required()
+    statusEdit: yup.number().typeError('Se requiere definir el Estado')
 });
 
 const AdjustElement = () => {
@@ -128,7 +128,7 @@ const AdjustElement = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Elemento que quieres ajustar</p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -192,7 +192,7 @@ const AdjustElement = () => {
                             <label htmlFor='nameEdit' className='label'>Nombre del elemento que requiere modificación</label>
                             <input {...register("nameEdit")}
                                 className="campo_entrada"
-                                placeholder={toEdit.name}
+                                defaultValue={toEdit.name}
                                 id='nameEdit'
                             />
                             <p className='error'>{errors.nameEdit?.message}</p>
@@ -201,7 +201,7 @@ const AdjustElement = () => {
                             <label htmlFor='channelEdit' className='label'>¿Requiere cambiar ubicacion?</label>
                             <select {...register("channelEdit")}
                                 className="campo_entrada"
-                                placeholder={toEdit.channel}
+                                defaultValue={toEdit.channel}
                                 id='channelEdit'
                             >
                                 <option value=''>{toEdit.channel}</option>
@@ -218,7 +218,7 @@ const AdjustElement = () => {
                             <label htmlFor='cat_nameEdit' className='label'>¿Requiere cambiar categoria?</label>
                             <select {...register("cat_nameEdit")}
                                 className="campo_entrada"
-                                placeholder={toEdit.cat_name}
+                                defaultValue={toEdit.cat_name}
                                 id="cat_nameEdit"
                             >
                                 <option value=''>{toEdit.cat_name}</option>
@@ -234,10 +234,10 @@ const AdjustElement = () => {
                             <label htmlFor='statusEdit' className='label'>Defina el estado</label>
                             <select {...register("statusEdit")}
                                 className="campo_entrada"
-                                placeholder={toEdit.status}
+
                                 id="statusEdit"
                             >
-                                <option value=''>{""}</option>
+                                <option defaultValue={toEdit.status}>{toEdit.status}</option>
                                 <option value='0'>Descontinuar</option>
                                 <option value='1'>Activar</option>
                             </select>
