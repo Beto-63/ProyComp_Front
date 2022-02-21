@@ -59,7 +59,7 @@ const Packet = () => {
             <div className='canvas_claro'>
                 <div>
                     <p className="titulo_oscuro">Tipo y Cantidad de paquetes</p>
-                    <Link to="/" className='inicio'>Inicio</Link>
+                    <Link to="/menu" className='inicio'>Inicio</Link>
                     <Link to="/sell/prodSelectForm" className='volver'>Volver</Link>
 
 

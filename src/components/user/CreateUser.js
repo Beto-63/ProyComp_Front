@@ -19,7 +19,7 @@ const schema = yup.object({
     password: yup.string().trim().min(6, 'Minimo 6 caracteres').required('Se requiere password'),
     password2: yup.string().oneOf([yup.ref('password')], 'No coincide con el ingresado').required(),
     personal_email: yup.string().email(),
-    phone_number: yup.string().trim(),
+    phone_number: yup.number().typeError('Numeros Unicamente: nacional 60+Cod+número / intl +Cod país+Cod+número ').required(),
     channel: yup.string().trim().required('Aqui debe ir el canal que atiende el usuario'),
     user_cat: yup.string().trim().required('Aqui va el nombre del rol'),
     // status:va por defecto en 2
@@ -79,7 +79,7 @@ const CreateUser = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Creación de usuario</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/user" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -115,6 +115,7 @@ const CreateUser = () => {
                     </Row>
                     <Row>
                         <input {...register("password")}
+                            type='password'
                             className="campo_entrada"
                             placeholder="Password temporal (será cambiado por el usuario al ingresar)"
                         />
@@ -124,6 +125,7 @@ const CreateUser = () => {
                     </Row>
                     <Row>
                         <input {...register("password2")}
+                            type='password'
                             className="campo_entrada"
                             placeholder="Validación del password temporal"
                         />

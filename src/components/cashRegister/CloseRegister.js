@@ -260,7 +260,7 @@ const CloseRegister = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Vas a cerrar ya?</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

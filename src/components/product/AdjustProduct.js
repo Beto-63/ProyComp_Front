@@ -206,7 +206,7 @@ const AdjustProduct = () => {
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Ajuste Datos de Producto</p>
-      <Link to="/" className='inicio'>Inicio</Link>
+      <Link to="/menu" className='inicio'>Inicio</Link>
       <Link to="/product" className='volver'>Volver</Link>
       <Container >
         <form className='container' onSubmit={handleSubmit(onSubmit)}>

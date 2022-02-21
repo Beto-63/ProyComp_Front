@@ -58,7 +58,7 @@ const ClientForm = () => {
         <div className='canvas_oscuro'>
             <h4 className="titulo_claro">¡Bien hecho!</h4>
             <h4 className="titulo_claro">¿Quien es tu cliente?</h4>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -91,6 +91,15 @@ const ClientForm = () => {
                             id={`inline-radio-2`}
                             value={"M"}
                         />
+                        <Form.Check
+                            onClick={handleForm}
+                            inline
+                            label="Otro"
+                            name="gender"
+                            type='radio'
+                            id={`inline-radio-3`}
+                            value={"Otro"}
+                        />
                     </div>
                     <Form.Label>Edad:</Form.Label>
                     <div className="mb-3">
@@ -118,7 +127,7 @@ const ClientForm = () => {
                             label="20-29"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-3`}
                             value={'20-29'}
                         />
                         <Form.Check
@@ -127,7 +136,7 @@ const ClientForm = () => {
                             label="30-40"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-4`}
                             value={'30-40'}
                         />
                         <Form.Check
@@ -136,7 +145,7 @@ const ClientForm = () => {
                             label="41-60"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-5`}
                             value={'41-60'}
                         />
                         <Form.Check
@@ -145,7 +154,7 @@ const ClientForm = () => {
                             label="61-80"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-6`}
                             value={'61-80'}
                         />
                         <Form.Check
@@ -154,7 +163,7 @@ const ClientForm = () => {
                             label="Mayor"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-7`}
                             value={'81-100'}
                         />
                     </div>

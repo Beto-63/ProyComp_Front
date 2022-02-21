@@ -64,7 +64,7 @@ const NavCashRegister = () => {
 
     return (
         <div className='canvas_oscuro'>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestiona tu caja</p>
