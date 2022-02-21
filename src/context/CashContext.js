@@ -11,16 +11,16 @@ const CashProvider = ({ children }) => {
     const [canClose, setCanClose] = useState(false)
     const [confirmacion, setConfirmacion] = useState('')
     const [channel, setChannel] = useState("Arsenal")   //tomarlo del Token
-    const [userName, sesUserName] = useState("temporal")    //tomarlo del token
+    const [userName, setUserName] = useState("temporal")    //tomarlo del token
 
     const data = {
-        channel,
+        channel, setChannel,
         canOpen, setCanOpen,
         canClose, setCanClose,
         confirmacion, setConfirmacion,
         lastOpen, setLastOpen,
         lastClose, setLastClose,
-        userName, sesUserName
+        userName, setUserName
     }
     return (
         <CashContext.Provider value={data}>

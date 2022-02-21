@@ -35,7 +35,7 @@ const schema = yup.object({
   stock_nameEdit: yup.string(),
   stock_qty: yup.number().typeError('Dejar en Ingresa el precio de venta'),
   stock_qtyEdit: yup.number().typeError('Dejar en Ingresa el precio de venta'),
-  statusEdit: yup.number().typeError('Se requiere definir el Estado').required()
+  statusEdit: yup.number().typeError('Se requiere definir el Estado')
 })
 
 
@@ -251,7 +251,7 @@ const AdjustProduct = () => {
             <label htmlFor='nameEdit' className='label'>Nombre</label>
             <input  {...register("nameEdit")}
               className="campo_entrada"
-              placeholder={toEdit.name}
+              defaultValue={toEdit.name}
               name="nameEdit"
               id="nameEdit"
               type="text"
@@ -263,7 +263,7 @@ const AdjustProduct = () => {
             <input  {...register("product_idEdit")}
               className="campo_entrada"
               id='product_idEdit'
-              placeholder={toEdit.product_id}
+              defaultValue={toEdit.product_id}
             />
             <p className='error'>{errors.product_idEdit?.message}</p>
           </Row>
@@ -271,7 +271,7 @@ const AdjustProduct = () => {
             <label htmlFor='descriptionEdit' className='label'>Descripcion</label>
             <textarea  {...register("descriptionEdit")}
               className="campo_entrada"
-              placeholder={toEdit.description}
+              defaultValue={toEdit.description}
               id='descriptioEdit'
             />
             <p className='error'>{errors.cat_descriptionEdit?.message}</p>
@@ -280,7 +280,7 @@ const AdjustProduct = () => {
             <label htmlFor='priceEdit' className='label'>Precio</label>
             <input  {...register("priceEdit")}
               className="campo_entrada"
-              placeholder={toEdit.price}
+              defaultValue={toEdit.price}
               id='priceEdit'
               defaultValue={toEdit.price}
             />
@@ -291,10 +291,10 @@ const AdjustProduct = () => {
             <label htmlFor='cat_nameEdit' className='label'>Categoría</label>
             <select  {...register("cat_nameEdit")}
               className="campo_entrada"
-              placeholder={toEdit.cat_name}
+              defaultValue={toEdit.cat_name}
               id='cat_nameEdit' onChange={handleCatEdit}
             >
-              <option value=''>Seleccione la categoría del Elemento</option>
+
               {categories.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -307,23 +307,21 @@ const AdjustProduct = () => {
             <label htmlFor='fillEdit' className='label'>Si es un Paquete defina si es de Té o Infusión</label>
             <select  {...register("fillEdit")}
               className="campo_entrada"
-              placeholder={toEdit.fill}
               id='fillEdit'
             >
-              <option value={toEdit.fill}>{toEdit.fill}</option>
+              <option defaultValue={toEdit.fill}>{toEdit.fill}</option>
               <option value='Té'>Té</option>
               <option value='Infusión'>Infusión</option>
             </select>
-            <p className='error'>{errors.temperature?.message}</p>
+            <p className='error'>{errors.fillEdit?.message}</p>
           </Row>
           <Row>
             <label htmlFor='temperatureEdit' className='label'>Si es una bebida defina la temperatura</label>
             <select  {...register("temperatureEdit")}
               className="campo_entrada"
-              placeholder={toEdit.temperature}
               id='temperatureEdit'
             >
-              <option value={toEdit.temeprature}>{toEdit.temeprature}</option>
+              <option defaultValue={toEdit.temperature}>{toEdit.temperature}</option>
               <option value='caliente'>Caliente</option>
               <option value='frio'>Frio</option>
             </select>
@@ -333,7 +331,7 @@ const AdjustProduct = () => {
             <label htmlFor='img_urlEdit' className='label'>Link a nueva imagen</label>
             <input {...register("img_urlEdit")}
               className="campo_entrada"
-              placeholder={toEdit.img_url}
+              defaultValue={toEdit.img_url}
               id='img_urlEdit'
             />
             <p className='error'>{errors.img_url?.message}</p>
@@ -342,10 +340,10 @@ const AdjustProduct = () => {
             <label htmlFor='stock_nameEdit' className='label'>Elemento de descontar de Inventario</label>
             <select  {...register("stock_nameEdit")}
               className="campo_entrada"
-              placeholder={toEdit.stock_name}
+              defaultValue={toEdit.stock_name}
               id='stock_nameEdit'
             >
-              <option value=''>Para ver opciones selecciona nuevamente la categoria</option>
+              <option defaultValue={toEdit.stock_name} >{toEdit.stock_name}</option>
               {selectedNamesEdit.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -358,7 +356,6 @@ const AdjustProduct = () => {
             <label htmlFor='stock_qtyEdit' className='label'>Cantidad adescontar del inventario (si aplica)</label>
             <input  {...register("stock_qtyEdit")}
               className="campo_entrada"
-              placeholder={toEdit.stock_qty}
               id='stock_qtyEdit'
               defaultValue={toEdit.stock_qty}
             />
@@ -368,10 +365,10 @@ const AdjustProduct = () => {
             <label htmlFor='statusEdit' className='label'>Defina el estado</label>
             <select {...register("statusEdit")}
               className="campo_entrada"
-              placeholder={toEdit.status}
+
               id="statusEdit"
             >
-              <option value=''>{""}</option>
+              <option defaultValue={toEdit.status}>{toEdit.status}</option>
               <option value='0'>Descontinuar</option>
               <option value='1'>Activar</option>
             </select>

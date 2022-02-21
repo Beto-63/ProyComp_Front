@@ -102,10 +102,10 @@ const ItemsByName = () => {
                             placeholder="Escoja el Item"
                             id='name'
                         >
-                            <option value=''>Elemento a adicionar</option>
+                            <option value=''>Selecciona el Elemento</option>
                             {selectedNames.map((e, index) => {
                                 return (
-                                    <option key={index} value={e.name} >{`El producto ${e.name} / ${e.channel}`}</option>
+                                    <option key={index} value={e.name} >{`${e.name} / ${e.channel}`}</option>
                                 )
                             })}
                         </select>

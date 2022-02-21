@@ -60,7 +60,8 @@ const CreateCombo = () => {
                 <p className="titulo_oscuro">Nombre del conjunto</p>
                 <Link to="/menu" className='inicio'>Inicio</Link>
                 <Link to="/product" className='volver'>Volver</Link>
-                <label htmlFor='name'>Este se usa en la creación del "Producto"</label>
+                <p>La creacióndel producto usa este "Nombre" en la posicion de "Elemento a descontar del Inventario" </p>
+                <label htmlFor='name'>Nombre :</label>
                 <input
                     id='name'
                     onBlur={handleName}
