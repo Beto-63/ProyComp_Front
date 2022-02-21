@@ -97,7 +97,7 @@ const ClientForm = () => {
                             label="Otro"
                             name="gender"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-3`}
                             value={"Otro"}
                         />
                     </div>
@@ -127,7 +127,7 @@ const ClientForm = () => {
                             label="20-29"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-3`}
                             value={'20-29'}
                         />
                         <Form.Check
@@ -136,7 +136,7 @@ const ClientForm = () => {
                             label="30-40"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-4`}
                             value={'30-40'}
                         />
                         <Form.Check
@@ -145,7 +145,7 @@ const ClientForm = () => {
                             label="41-60"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-5`}
                             value={'41-60'}
                         />
                         <Form.Check
@@ -154,7 +154,7 @@ const ClientForm = () => {
                             label="61-80"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-6`}
                             value={'61-80'}
                         />
                         <Form.Check
@@ -163,7 +163,7 @@ const ClientForm = () => {
                             label="Mayor"
                             name="age_group"
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`inline-radio-7`}
                             value={'81-100'}
                         />
                     </div>
