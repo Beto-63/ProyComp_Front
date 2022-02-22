@@ -43,21 +43,17 @@ const FilterPacket = () => {
 
     const handleCat = (e) => {
         setPacketCat(e.target.value)
-        console.log('tipo de paquete', (e.target.value))
     }
 
     const handleWeight = (e) => {
         setPacketWeight(parseInt(e.target.value))
-        console.log('peso de paquete', (e.target.value))
     }
 
     const onSubmit = () => {
         let array, array2 = []
         array = selectedProducts.filter((item) => (item.fill === packetCat))
-        console.log('Primer filtro', array)
         array2 = array.filter((item) => (item.stock_qty === packetWeight))
         setSelectedProducts(array2)
-        console.log("los que son", array2)
         setShowPacketList(true)
         reset()
     }

@@ -39,7 +39,6 @@ const ItemsByName = () => {
     });
     const onSubmit = (data) => {
         let obj = { name: data.name, channel: data.channel, qty: data.qty }
-        console.log(obj)
         reset();
     };
 

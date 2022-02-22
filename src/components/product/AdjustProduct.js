@@ -21,8 +21,6 @@ const schema = yup.object({
   fillEdit: yup.string(),
   name: yup.string().trim().required("Con el nombre se despliega la Inofrmacion almacenada "),
   nameEdit: yup.string(),
-  product_id: yup.string(),
-  product_idEdit: yup.string(),
   description: yup.string().max(128),
   descriptionEdit: yup.string().max(128),
   price: yup.number(),
@@ -35,9 +33,13 @@ const schema = yup.object({
   stock_nameEdit: yup.string(),
   stock_qty: yup.number().typeError('Dejar en Ingresa el precio de venta'),
   stock_qtyEdit: yup.number().typeError('Dejar en Ingresa el precio de venta'),
-  statusEdit: yup.number().typeError('Se requiere definir el Estado')
+  statusEdit: yup.number().typeError('Se requiere definir el Estado'),
+  combo_nameEdit: yup.string()
 })
 
+let esPaquete = false
+let esBebida = false
+let esCombo = false
 
 const AdjustProduct = () => {
 
@@ -55,19 +57,22 @@ const AdjustProduct = () => {
     status: null
   }
 
-  let esPaquete = false
-  let esBebida = false
-
   const [categories, setCategories] = useState([{}]);
   const [selectedNames, setSelectedNames] = useState([{}]);
-  const [toEdit, setToEdit] = useState(objProduct);
   const [selectedNamesEdit, setSelectedNamesEdit] = useState([{}]);
-
+  const [combos, setCombos] = useState([{}]);
+  const [toEdit, setToEdit] = useState(objProduct);
 
   useEffect(() => {
     fetch(`${server}/product/categories`)
       .then(response => response.json())
       .then(json => setCategories(json));
+  }, [])
+
+  useEffect(() => {
+    fetch(`${server}/product/combo`)
+      .then(response => response.json())
+      .then(json => setCombos(json));
   }, [])
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -86,6 +91,11 @@ const AdjustProduct = () => {
       document.getElementById('cat_name').value === 'Infusión') {
       esBebida = true;
       esPaquete = false
+    }
+    if (document.getElementById('cat_name').value === 'Combo') {
+      esCombo = true
+    } else {
+      esCombo = false
     }
     fetch(`${server}/product/findByCatName`, {
       method: 'POST',
@@ -133,11 +143,7 @@ const AdjustProduct = () => {
   const onSubmit = (data) => {
 
     let newObj = { id: toEdit._id, status: data.statusEdit }
-    if (data.product_idEdit !== '') {
-      newObj = { ...newObj, product_id: data.product_idEdit }
-    } else {
-      newObj = { ...newObj, product_id: toEdit.product_id }
-    }
+
     if (data.nameEdit !== '') {
       newObj = { ...newObj, name: data.nameEdit }
     } else {
@@ -188,6 +194,11 @@ const AdjustProduct = () => {
     } else {
       newObj = { ...newObj, status: toEdit.status }
     }
+    if (data.combo_nameEdit !== '') {
+      newObj = { ...newObj, combo_name: data.combo_nameEdit }
+    } else {
+      newObj = { ...newObj, combo_name: toEdit.combo_name }
+    }
 
     fetch(`${server}/product`, {
       method: 'PUT',
@@ -217,7 +228,7 @@ const AdjustProduct = () => {
               placeholder="Categoria del elemento"
               id="cat_name" onChange={handleCatChange}
             >
-              <option value=''>Seleccione la categoría del elemento</option>
+              <option value=''>Seleccione la categoría del Producto</option>
               {categories.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -233,7 +244,7 @@ const AdjustProduct = () => {
               placeholder="Escoja el Item"
               id='name' onChange={handleEdit}
             >
-              <option value=''>Elemento a adicionar</option>
+              <option value=''>Producto a modificar</option>
               {selectedNames.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{
@@ -259,15 +270,6 @@ const AdjustProduct = () => {
             <p className='error'>{errors.nameEdit?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='product_idEdit' className='label'>Codigo del Producto</label>
-            <input  {...register("product_idEdit")}
-              className="campo_entrada"
-              id='product_idEdit'
-              defaultValue={toEdit.product_id}
-            />
-            <p className='error'>{errors.product_idEdit?.message}</p>
-          </Row>
-          <Row>
             <label htmlFor='descriptionEdit' className='label'>Descripcion</label>
             <textarea  {...register("descriptionEdit")}
               className="campo_entrada"
@@ -287,14 +289,13 @@ const AdjustProduct = () => {
             <p className='error'>{errors.cat_priceEdit?.message}</p>
           </Row>
           <Row>
-
             <label htmlFor='cat_nameEdit' className='label'>Categoría</label>
             <select  {...register("cat_nameEdit")}
               className="campo_entrada"
               defaultValue={toEdit.cat_name}
               id='cat_nameEdit' onChange={handleCatEdit}
             >
-
+              <option defaultValue={toEdit.cat_name}>{toEdit.cat_name}</option>
               {categories.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -337,7 +338,7 @@ const AdjustProduct = () => {
             <p className='error'>{errors.img_url?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='stock_nameEdit' className='label'>Elemento de descontar de Inventario</label>
+            <label htmlFor='stock_nameEdit' className='label'>Elemento a descontar de Inventario (No Combo)</label>
             <select  {...register("stock_nameEdit")}
               className="campo_entrada"
               defaultValue={toEdit.stock_name}
@@ -345,6 +346,21 @@ const AdjustProduct = () => {
             >
               <option defaultValue={toEdit.stock_name} >{toEdit.stock_name}</option>
               {selectedNamesEdit.map((e, index) => {
+                return (
+                  <option key={index} value={e.name} >{e.name}</option>
+                )
+              })}
+            </select>
+            <p className='error'>{errors.stock_name?.message}</p>
+          </Row>
+          <Row>
+            <label htmlFor='stock_nameEdit' className='label'>Agrupacion a descontar de Inventario (Combo)</label>
+            <select {...register("combo_name")}
+              className="campo_entrada"
+              placeholder="Agrupacion Xa Combo "
+            >
+
+              {combos.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
                 )
@@ -361,6 +377,7 @@ const AdjustProduct = () => {
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>
+
           <Row>
             <label htmlFor='statusEdit' className='label'>Defina el estado</label>
             <select {...register("statusEdit")}

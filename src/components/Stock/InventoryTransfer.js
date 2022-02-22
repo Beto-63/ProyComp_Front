@@ -46,7 +46,6 @@ const InventoryTransfer = () => {
         let obj = {
             cat_name: document.getElementById('cat_name').value
         };
-        console.log("categoria", document.getElementById('cat_name').value)
         fetch(`${server}/stock/findByCatName`, {
             method: 'POST',
             headers: {
@@ -66,7 +65,7 @@ const InventoryTransfer = () => {
             qty: data.qty,
             source: data.source
         }
-        console.log("objTraslado", obj)
+
         fetch(`${server}/stock/transfer`, {
             method: 'PUT',
             headers: {

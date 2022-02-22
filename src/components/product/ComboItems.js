@@ -169,7 +169,6 @@ const ComboItems = () => {
         let array = productsArray
         array = [...array, data]
         setProductsArray(array)
-        console.log(array)
         reset();
         setEsTe(false)
         setEsAccesorio(false)

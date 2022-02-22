@@ -24,22 +24,18 @@ const ChooseProductTable = () => {
         if (qty !== NaN || qty !== 0) {
             let array = saleProductTemp.filter((e) => (e._id !== obj._id))
             let newObj = { ...obj, ...{ quantity: qty } }
-            console.log('Objeto con Cantidad', newObj)
             if (qty !== 0) {
                 array = [...array, newObj]
             }
             setSaleProductTemp(array)
-            console.log('arreglo con cantidades', array)
         } else {
-            console.log("valor de la linea en cero o inexistente")
+            // do nothing
         }
     }
     //TODO evitar que entre NaN a la seleccion puede ser con Yup
     const handleAddToSale = () => {
         let array = saleSummary
-        console.log('Antes de "Agregar"', array)
         array = [...array, ...saleProductTemp]
-        console.log('Despues de "Agregar"', array)
         setSaleSummary(array)
         setSaleProductTemp([])
         navigate('/sell/catTempSelection')

@@ -138,9 +138,6 @@ const CloseRegister = () => {
         setExpectedCashOnHand(lastOpen[0].change_amount + lastOpen[0].amount_to_deposit + cashSales - totalDeposits - totalExpenses)
         setCountedCash(document.getElementById('cash_on_hand').value)
         presentClose(document.getElementById('cash_on_hand').value);
-        console.log("se puede cerrar", showClosure)
-        console.log("expected", expectedCashOnHand)
-        console.log("counted", countedCash)
     }
 
     const onSubmit = (data) => {

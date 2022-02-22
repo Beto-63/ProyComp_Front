@@ -95,10 +95,7 @@ const ProductSelectForm = () => {
         handleProduct()
         setCat(objCat)
         setTemp(objTemp)
-        console.log(selectedProducts)
         let test = cat.cat_name
-        console.log("Objeto de categoria", test)
-
         switch (cat.cat_name) {
             case
                 'Té': navigate('/sell/chooseProductTable');
