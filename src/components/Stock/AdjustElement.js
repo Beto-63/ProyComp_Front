@@ -22,7 +22,7 @@ const schema = yup.object({
     channelEdit: yup.string(),
     cat_name: yup.string().required('La categoria sirve para hacer mas cortas las selecciones'),
     cat_nameEdit: yup.string(),
-    statusEdit: yup.number().typeError('Se requiere definir el Estado')
+    statusEdit: yup.number()
 });
 
 const AdjustElement = () => {

@@ -13,6 +13,7 @@ import CashContext from "../../context/CashContext";
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
+import ClosureDetails from "./ClosureDetails";
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
@@ -25,21 +26,28 @@ const CloseRegister = () => {
 
     let navigate = useNavigate();
 
-    const { setConfirmacion, lastOpen, lastClose, canClose, setCanClose, channel } = useContext(CashContext)
+    const {
+        channel, setChannel,
+        canClose, setCanClose,
+        confirmacion, setConfirmacion,
+        lastOpen, setLastOpen,
+        lastClose, setLastClose,
+        userName, setUserName,
+        showClosure, setShowClosure,
+        sellTickets, setSellTickets,
+        totalSales, setTotalSales,
+        deposits, setDeposits,
+        totalDeposits, setTotalDeposits,
+        expenses, setExpenses,
+        totalExpenses, setTotalExpenses,
+        newAmountToDeposit, setNewAmountToDeposit,
+        cashSales, setCashSales,
+        nonCashSales, setNonCashSales,
+        countedCash, setCountedCash,
+        expectedCashOnHand, setExpectedCashOnHand,
+        paymentMethods, setPaymentMethods
+    } = useContext(CashContext)
 
-    const [showClosure, setShowClosure] = useState(false)
-    const [sellTickets, setSellTickets] = useState([{}]);
-    const [totalSales, setTotalSales] = useState(0);
-    const [deposits, setDeposits] = useState([{}]);
-    const [totalDeposits, setTotalDeposits] = useState(0)
-    const [expenses, setExpenses] = useState([{}]);
-    const [totalExpenses, setTotalExpenses] = useState(0)
-    const [newAmountToDeposit, setNewAmountToDeposit] = useState(0);
-    const [cashSales, setCashSales] = useState(0)
-    const [nonCashSales, setNonCashSales] = useState(0)
-    const [countedCash, setCountedCash] = useState(0)
-    const [expectedCashOnHand, setExpectedCashOnHand] = useState(0)
-    const [paymentMethods, setPaymentMethods] = useState([{}])
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
@@ -127,34 +135,12 @@ const CloseRegister = () => {
 
     const handleCountedCash = () => {
 
-        setExpectedCashOnHand(
-            lastOpen[0].change_amount +
-            lastOpen[0].amount_to_deposit +
-            cashSales -
-            totalDeposits -
-            totalExpenses
-        )
+        setExpectedCashOnHand(lastOpen[0].change_amount + lastOpen[0].amount_to_deposit + cashSales - totalDeposits - totalExpenses)
         setCountedCash(document.getElementById('cash_on_hand').value)
         presentClose(document.getElementById('cash_on_hand').value);
         console.log("se puede cerrar", showClosure)
         console.log("expected", expectedCashOnHand)
         console.log("counted", countedCash)
-    }
-
-    const handleNewChangeAmount = () => {
-        if ((expectedCashOnHand - countedCash) === 0) {
-            setCanClose(true)
-        } else {
-            setCanClose(false)
-        }
-        console.log("medios de pago", paymentMethods)
-        setNewAmountToDeposit(
-            lastOpen[0].change_amount +
-            lastOpen[0].amount_to_deposit +
-            cashSales -
-            totalDeposits -
-            totalExpenses - document.getElementById('change_amount').value
-        )
     }
 
     const onSubmit = (data) => {
@@ -281,34 +267,7 @@ const CloseRegister = () => {
                         </Col>
                     </Row>
                     {showClosure ?
-                        <div>
-                            <p className="label">{`Las ventas en efectivo del dia HOY_______$${cashSales}`}</p>
-                            <p className="label">{`Desde el ultimo cierre consigné__________$${totalDeposits},`}</p>
-                            <p className="label">{`Desde el ultimo cierre tuve gastos por___$${totalExpenses}`}</p>
-                            <hr />
-                            <p className="label">{`Se espera tener en efectivo a mano_______$${expectedCashOnHand},`}</p>
-                            <hr />
-
-                            <p p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
-                            <p className={(expectedCashOnHand - countedCash === 0) ? "perfect" : "result"}>{(expectedCashOnHand - countedCash === 0) ? `Puede cerrar` : (expectedCashOnHand - countedCash > 0) ? `Hay un faltante` : `Hay un excedente`}</p>
-                            <Row>
-                                <Col>
-                                    <label htmlFor='change_amount' className='label'>Cual sera la base de cambio manana?</label>
-                                </Col>
-                                <Col>
-                                    <input {...register("change_amount")}
-                                        className="campo_entrada"
-                                        placeholder="Cambio para Manana"
-                                        id='change_amount' onChange={handleNewChangeAmount}
-                                    // onChange={handleOpen}
-                                    />
-                                    <p className='error'>{errors.change_amount?.message}</p>
-                                </Col>
-                            </Row>
-                            <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
-                            <p className="label">{`Las Ventas totales han sido de___________$${totalSales},`}</p>
-                            <p className="result">{`Por tanto debo consignar_________________$${newAmountToDeposit}`}</p>
-                        </div>
+                        <ClosureDetails />
                         :
                         ''
                     }

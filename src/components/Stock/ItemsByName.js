@@ -111,30 +111,30 @@ const ItemsByName = () => {
                         </select>
                         <p className='error'>{errors.qty?.name}</p>
                     </Row>
-                    <Row>
-                        <Table responsive="sm" >
-                            <thead>
-                                <tr>
 
-                                    <th>Nombre</th>
-                                    <th>Ubicación</th>
-                                    <th>Cantidad</th>
-                                </tr>
-                            </thead>
-                            {selectedItems.map((c, index) => {
-                                return (
-                                    <tbody key={index}>
-                                        <tr>
-                                            <td>{c.name}</td>
-                                            <td>{c.channel}</td>
-                                            <td>{c.quantity}</td>
-                                        </tr>
-                                    </tbody>
-                                )
-                            })}
+                    <table table className='center' >
+                        <thead>
+                            <tr>
 
-                        </Table>
-                    </Row>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        {selectedItems.map((c, index) => {
+                            return (
+                                <tbody key={index}>
+                                    <tr>
+                                        <td>{c.name}</td>
+                                        <td>{c.channel}</td>
+                                        <td>{c.quantity}</td>
+                                    </tr>
+                                </tbody>
+                            )
+                        })}
+
+                    </table>
+
 
                 </form>
             </Container>

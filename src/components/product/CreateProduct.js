@@ -24,16 +24,19 @@ const schema = yup.object({
   temperature: yup.string(),
   img_url: yup.string('Solo se aceptan caracteres'),
   stock_name: yup.string(),
+  combo_name: yup.string(),
   stock_qty: yup.number().typeError('Dejar en 0 | Cambiar para deecontar del inventario')
 })
 
 let esPaquete = false
 let esBebida = false
+let esCombo = false
 
 const CreateProduct = () => {
 
-  const [categories, setCategories] = useState([{}]);
 
+  const [categories, setCategories] = useState([{}]);
+  const [combos, setCombos] = useState([{}]);
   const [selectedItems, setSelectedItems] = useState([{}]);
 
   useEffect(() => {
@@ -42,21 +45,15 @@ const CreateProduct = () => {
       .then(json => setCategories(json));
   }, [])
 
+  useEffect(() => {
+    fetch(`${server}/product/combo`)
+      .then(response => response.json())
+      .then(json => setCombos(json));
+  }, [])
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
-  const onSubmit = (data) => {
-    fetch(`${server}/product`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(json => window.alert(JSON.stringify(json)))
-    reset();
-  };
 
   const handleCatChange = () => {
     let obj = { cat_name: document.getElementById('cat_name').value };
@@ -69,6 +66,12 @@ const CreateProduct = () => {
       esBebida = true;
       esPaquete = false
     }
+    if (document.getElementById('cat_name').value === 'Combo') {
+      esCombo = true
+    } else {
+      esCombo = false
+    }
+
     fetch(`${server}/stock/findByCatName`, {
       method: 'POST',
       headers: {
@@ -78,9 +81,20 @@ const CreateProduct = () => {
     })
       .then(response => response.json())
       .then(json => setSelectedItems(json));
-
-
   }
+
+  const onSubmit = (data) => {
+    fetch(`${server}/product`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(json => window.alert(JSON.stringify(json)))
+    reset();
+  };
 
   return (
     <div className='canvas_claro'>
@@ -176,27 +190,49 @@ const CreateProduct = () => {
           </Row>
           <Row>
             <label htmlFor='stock_name' className='label'>Elemento a descontar del inventario</label>
-            <select {...register("stock_name")}
-              className="campo_entrada"
-              placeholder="Nombre a descontar"
+            {esCombo ?
+              ''
+              :
+              <select {...register("stock_name")}
+                className="campo_entrada"
+                placeholder="Nombre a descontar"
 
-            >
-              <option value=''>Selecciona X nombre</option>
+              >
+                <option value=''>Selecciona X nombre</option>
 
-              {selectedItems.map((e, index) => {
-                return (
-                  <option key={index} value={e.name} >{e.name}</option>
-                )
-              })}
-            </select>
+                {selectedItems.map((e, index) => {
+                  return (
+                    <option key={index} value={e.name} >{e.name}</option>
+                  )
+                })}
+              </select>
+            }
+            {esCombo ?
+              <select {...register("combo_name")}
+                className="campo_entrada"
+                placeholder="Agrupacion Xa Combo "
+              >
+
+                {combos.map((e, index) => {
+                  return (
+                    <option key={index} value={e.name} >{e.name}</option>
+                  )
+                })}
+              </select>
+              :
+              ""
+            }
+
+
             <p className='error'>{errors.stock_name?.message}</p>
+
           </Row>
           <Row>
             <label htmlFor='stock_qty' className='label'>Cantidad a descontar del inventario (si aplica)</label>
             <input {...register("stock_qty")}
               className="campo_entrada"
               placeholder="Cantidad a descontar (gr - unidades)"
-              defaultValue={0}
+
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>
