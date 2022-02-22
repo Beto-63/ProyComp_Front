@@ -45,7 +45,7 @@ const ComboItems = () => {
 
 
     //este arreglo contrndra los items que van en el combo
-    const { productsArray, setProductsArray } = useContext(ProductContext)
+    const { setShowSummaryCombo, productsArray, setProductsArray } = useContext(ProductContext)
 
 
     useEffect(() => {
@@ -173,6 +173,7 @@ const ComboItems = () => {
         setEsTe(false)
         setEsAccesorio(false)
         setEsLarge(false)
+        setShowSummaryCombo(true)
     };
 
     return (

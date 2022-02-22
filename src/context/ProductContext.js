@@ -9,12 +9,12 @@ const ProductProvider = ({ children }) => {
 
     const [productsArray, setProductsArray] = useState([])
     const [name, setName] = useState('')
-
+    const [showSummaryCombo, setShowSummaryCombo] = useState(false)
 
 
     const data = {
         name, setName,
-
+        showSummaryCombo, setShowSummaryCombo,
         productsArray, setProductsArray
     }
 
