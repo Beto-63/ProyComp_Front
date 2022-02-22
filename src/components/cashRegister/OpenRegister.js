@@ -24,7 +24,7 @@ const OpenRegister = () => {
 
     let navigate = useNavigate();
 
-    const { setConfirmacion, lastClose, channel } = useContext(CashContext)
+    const { setConfirmacion, lastClose, channel, userEmail } = useContext(CashContext)
 
     useEffect(() => {
         setConfirmacion('')
@@ -50,6 +50,7 @@ const OpenRegister = () => {
                 cash_on_hand: data.change_amount + newAmountToDeposit,
                 change_amount: data.change_amount,
                 channel: channel, //del token
+                user_email: userEmail, //del token
                 status: 1
             }
             // fetch de apertura

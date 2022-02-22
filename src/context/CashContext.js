@@ -11,7 +11,7 @@ const CashProvider = ({ children }) => {
     const [canClose, setCanClose] = useState(false)
     const [confirmacion, setConfirmacion] = useState('')
     const [channel, setChannel] = useState("Arsenal")   //tomarlo del Token
-    const [userName, setUserName] = useState("temporal")    //tomarlo del token
+    const [userEmail, SetUserEmail] = useState("temporal")    //tomarlo del token
     const [showClosure, setShowClosure] = useState(false)
     const [sellTickets, setSellTickets] = useState([{}]);
     const [totalSales, setTotalSales] = useState(0);
@@ -32,7 +32,7 @@ const CashProvider = ({ children }) => {
         confirmacion, setConfirmacion,
         lastOpen, setLastOpen,
         lastClose, setLastClose,
-        userName, setUserName,
+        userEmail, SetUserEmail,
         showClosure, setShowClosure,
         sellTickets, setSellTickets,
         totalSales, setTotalSales,

@@ -28,7 +28,7 @@ const SaleSummary = () => {
         setClientId
 
     } = useContext(SellTicketContext)
-    const { channel, userName } = useContext(CashContext)
+    const { channel, userEmail } = useContext(CashContext)
 
     const handleEliminate = (e) => {
         let array = saleSummary.filter((item) => (item._id !== e._id))
@@ -45,7 +45,7 @@ const SaleSummary = () => {
                 amount_sold: saleTotal,
                 channel: channel,
                 payment_method: document.getElementById('payment_method').value,
-                user_name: userName,
+                user_name: userEmail,
                 sale_origin: document.getElementById('origin').value,
                 status: 1
             }

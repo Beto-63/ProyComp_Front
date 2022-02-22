@@ -32,7 +32,7 @@ const CloseRegister = () => {
         confirmacion, setConfirmacion,
         lastOpen, setLastOpen,
         lastClose, setLastClose,
-        userName, setUserName,
+        userEmail, SetUserEmail,
         showClosure, setShowClosure,
         sellTickets, setSellTickets,
         totalSales, setTotalSales,
