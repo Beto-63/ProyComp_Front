@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, Row, Col } from 'react-bootstrap'
+import { Form, Row } from 'react-bootstrap'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
-import CashContext from '../../context/CashContext'
+
 import ProductContext from '../../context/ProductContext'
-import { Link } from 'react-router-dom';
 import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
@@ -34,9 +33,6 @@ const ComboItems = () => {
     const [infPacketsSmall, setInfPacketsSmall] = useState([])
     const [Accesorios, setAccesorios] = useState([])
 
-    //objeto {name, quantity} que se adiciona al "productsArray" del contexto para configurar el combo
-    const [objItem, setObjItem] = useState({})
-
     //booleanas para definir cual de las 5 listas debo deplegar 
     const [esAccesorio, setEsAccesorio] = useState(false)
     const [esTe, setEsTe] = useState(false)
@@ -45,7 +41,7 @@ const ComboItems = () => {
 
 
     //este arreglo contrndra los items que van en el combo
-    const { productsArray, setProductsArray } = useContext(ProductContext)
+    const { setShowSummaryCombo, productsArray, setProductsArray } = useContext(ProductContext)
 
 
     useEffect(() => {
@@ -152,7 +148,6 @@ const ComboItems = () => {
 
     }
 
-
     const handleStockQty = (valor) => {
         if (valor === 50) {
             setEsLarge(true)
@@ -165,7 +160,6 @@ const ComboItems = () => {
 
 
     const onSubmit = (data) => {
-        setObjItem(data)
         let array = productsArray
         array = [...array, data]
         setProductsArray(array)
@@ -173,6 +167,7 @@ const ComboItems = () => {
         setEsTe(false)
         setEsAccesorio(false)
         setEsLarge(false)
+        setShowSummaryCombo(true)
     };
 
     return (

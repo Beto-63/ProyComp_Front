@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap'
+import React, { useContext } from 'react';
 
 /**********************Importacion de Componentes**************************/
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductContext from '../../context/ProductContext'
 import { server } from '../../context/Api'
 
@@ -14,16 +13,11 @@ import ComboSummary from './ComboSummary';
 
 const CreateCombo = () => {
 
+
     let navigate = useNavigate()
 
-    let products = []
-    let objProduct = {
-        name: '',
-        quantity: 0
-    }
-
     const {
-
+        showSummaryCombo,
         productsArray, setProductsArray,
         name, setName
     } = useContext(ProductContext);
@@ -69,8 +63,11 @@ const CreateCombo = () => {
 
             </div>
             <ComboItems />
-            <ComboSummary />
-
+            {showSummaryCombo ?
+                <ComboSummary />
+                :
+                ""
+            }
             <br />
             <button className='btn-light-bkg' onClick={handleCreateCombo}>Crear Combo</button>
 

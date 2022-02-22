@@ -26,8 +26,7 @@ const schema = yup.object({
 const FilterPacket = () => {
     // selectedProducts: en este caso son los productos tipificados como paquetes
     const { selectedProducts, setSelectedProducts,
-        showPacketList, setShowPacketList
-
+        setShowPacketList
     } = useContext(SellTicketContext)
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
