@@ -144,7 +144,7 @@ const AdjustQuantity = () => {
             .then(json => window.alert(JSON.stringify(json)))
         reset();
     };
-    //TODO revisar el correo de la persona y timestamp en las razones de ajuse 
+    //TODO revisar el correo de la persona y timestamp en las razones de ajuste 
     return (
         <div className='canvas_claro'>
             <p className="titulo_oscuro">Ajuste mayor de cantidad</p>
