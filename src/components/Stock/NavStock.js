@@ -47,10 +47,10 @@ const NavStock = () => {
                         <button className='btn-dark-bkg' onClick={goToTransfer} >Traslado cantidad</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
+                        <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste info elemento</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste a elemento</button>
+                        <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
                     </Col>
                 </Row>
             </Container>

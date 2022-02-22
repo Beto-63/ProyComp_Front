@@ -77,7 +77,11 @@ const AdjustElement = () => {
         } else {
             newObj = { ...newObj, cat_name: toEdit.cat_name }
         }
-
+        if (data.statusEdit !== '') {
+            newObj = { ...newObj, status: data.statusEdit }
+        } else {
+            newObj = { ...newObj, status: toEdit.status }
+        }
         fetch(`${server}/stock/adjust`, {
             method: 'PUT',
             headers: {
