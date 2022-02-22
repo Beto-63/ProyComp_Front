@@ -30,6 +30,7 @@ const Expenses = () => {
 
     const onSubmit = (data) => {
         let objExpense = { ...data, ...{ channel: channel, user_email: userEmail } }
+        console.log("Validacion", objExpense)
         const answer = window.confirm(`Estas registrando un gasto\npor: ${data.expense_amount} \n¿Estas segur@?`);
         if (answer) {
             // Save it!

@@ -31,8 +31,8 @@ const schema = yup.object({
   img_urlEdit: yup.string(),
   stock_name: yup.string(),
   stock_nameEdit: yup.string(),
-  stock_qty: yup.number().typeError('Dejar en Ingresa el precio de venta'),
-  stock_qtyEdit: yup.number().typeError('Dejar en Ingresa el precio de venta'),
+  stock_qty: yup.number().typeError('Ingresa el precio de venta'),
+  stock_qtyEdit: yup.number().typeError('Ingresa el precio de venta'),
   statusEdit: yup.number().typeError('Se requiere definir el Estado'),
   combo_nameEdit: yup.string()
 })
