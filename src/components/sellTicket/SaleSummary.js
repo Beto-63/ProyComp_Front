@@ -33,7 +33,6 @@ const SaleSummary = () => {
     const handleEliminate = (e) => {
         let array = saleSummary.filter((item) => (item._id !== e._id))
         setSaleSummary(array)
-        console.log("sin eliminado", array)
     }
 
     const handleSale = (e) => {
@@ -50,7 +49,6 @@ const SaleSummary = () => {
                 sale_origin: document.getElementById('origin').value,
                 status: 1
             }
-            console.log('Para la bese de datos va sell ticket', obj)
 
             fetch(`${server}/sell_ticket`, {
                 method: 'POST',

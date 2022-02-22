@@ -15,7 +15,6 @@ import '../generic/Light-bkg.css'
 
 
 const schema = yup.object({
-  product_id: yup.string('Solo se aceptan caracteres').required('Este campo es necesrio para sincronizar con Wix').trim('No dejar espacios antes o al final'),
   name: yup.string().trim().required('Ingresa el nombre comercial del producto'),
   description: yup.string().max(128),
   price: yup.number().typeError('Ingresa el precio de venta').moreThan(0, 'El valor debe ser positivo').required(),
@@ -24,8 +23,8 @@ const schema = yup.object({
   temperature: yup.string(),
   img_url: yup.string('Solo se aceptan caracteres'),
   stock_name: yup.string(),
-  combo_name: yup.string(),
-  stock_qty: yup.number().typeError('Dejar en 0 | Cambiar para deecontar del inventario')
+  stock_qty: yup.number().typeError('Dejar en 0 | Cambiar para deecontar del inventario'),
+  combo_name: yup.string()
 })
 
 let esPaquete = false
@@ -34,10 +33,9 @@ let esCombo = false
 
 const CreateProduct = () => {
 
-
   const [categories, setCategories] = useState([{}]);
-  const [combos, setCombos] = useState([{}]);
   const [selectedItems, setSelectedItems] = useState([{}]);
+  const [combos, setCombos] = useState([{}]);
 
   useEffect(() => {
     fetch(`${server}/product/categories`)
@@ -103,14 +101,6 @@ const CreateProduct = () => {
       <Link to="/product" className='volver'>Volver</Link>
       <Container >
         <form className='container' onSubmit={handleSubmit(onSubmit)}>
-          <Row>
-            <input {...register("product_id")}
-              className="campo_entrada"
-              placeholder="Codigo interno del Producto"
-
-            />
-            <p className='error'>{errors.product_id?.message}</p>
-          </Row>
           <Row>
             <input {...register("name")}
               className="campo_entrada"

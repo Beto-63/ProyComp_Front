@@ -32,7 +32,6 @@ const CreateCombo = () => {
 
     const handleName = () => {
         setName(document.getElementById('name').value)
-        console.log(document.getElementById('name').value)
     }
     //TODO validar que no se haga el click si falta valores verificar con yup
     const handleCreateCombo = () => {

@@ -29,7 +29,6 @@ const ClientForm = () => {
     }
 
     const handleClient = (objClient) => {
-        console.log(objClient)
         fetch(`${server}/client`, {
             method: 'POST',
             headers: {
