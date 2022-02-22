@@ -22,13 +22,13 @@ function App() {
 
     <div className='App'>
 
-      <SellTicketProvider>
-        <CashProvider>
+      <CashProvider>
+        <SellTicketProvider>
           <ProductProvider>
             {auth ? <AppRouter /> : <UnauthRouter />}
           </ProductProvider>
-        </CashProvider>
-      </SellTicketProvider>
+        </SellTicketProvider>
+      </CashProvider>
 
     </div >
   );

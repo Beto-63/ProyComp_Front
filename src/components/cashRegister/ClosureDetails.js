@@ -36,12 +36,7 @@ const ClosureDetails = () => {
 
 
     const handleNewChangeAmount = () => {
-        if ((expectedCashOnHand - countedCash) === 0) {
-            setCanClose(true)
-        } else {
-            setCanClose(false)
-        }
-        console.log("medios de pago", paymentMethods)
+
         setNewAmountToDeposit(
             lastOpen[0].change_amount +
             lastOpen[0].amount_to_deposit +
