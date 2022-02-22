@@ -16,21 +16,20 @@ import '../generic/Light-bkg.css'
 const schema = yup.object({
     description: yup.string().trim().required('Ingresa en que se gastó el dinero'),
     expense_amount: yup.number().typeError('Aqui va la cantidad gastada').required(),
-    //channel: yup.string().trim().required('Por ser inventariable debe asignarsele un lugar físico'),
 });
 
 const Expenses = () => {
 
     let navigate = useNavigate();
 
-    const { channel } = useContext(CashContext) //la propiedad de channel debe venir del token y viene del cash context
+    const { channel, userEmail } = useContext(CashContext) //la propiedad de channel debe venir del token y viene del cash context
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
     const onSubmit = (data) => {
-        let objExpense = { ...data, ...{ channel: channel } }
+        let objExpense = { ...data, ...{ channel: channel, user_email: userEmail } }
         const answer = window.confirm(`Estas registrando un gasto\npor: ${data.expense_amount} \n¿Estas segur@?`);
         if (answer) {
             // Save it!

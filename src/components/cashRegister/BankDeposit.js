@@ -24,14 +24,14 @@ const BankDeposit = () => {
 
     let navigate = useNavigate();
 
-    const { channel } = useContext(CashContext)    //la propiedad de channel debe venir del token por el cash context
+    const { channel, userEmail } = useContext(CashContext)    //la propiedad de channel debe venir del token por el cash context
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
     const onSubmit = (data) => {
-        let objDeposit = { ...data, ...{ channel: channel } }
+        let objDeposit = { ...data, ...{ channel: channel, user_email: userEmail } }
         const answer = window.confirm(`Estas registrando una consignacion\npor: ${data.amount} \n¿Estas segur@?`);
         if (answer) {
             // Save it!
