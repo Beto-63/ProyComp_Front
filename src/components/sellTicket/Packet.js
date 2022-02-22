@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
@@ -22,7 +22,7 @@ const Packet = () => {
 
     const { selectedProducts,
         saleSummary, setSaleSummary,
-        showPacketList, setShowPacketList
+        showPacketList
     } = useContext(SellTicketContext)
 
 

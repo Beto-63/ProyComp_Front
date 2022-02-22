@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -23,20 +23,18 @@ const ProductSelectForm = () => {
 
     const navigate = useNavigate()
 
-    const { categories, selectedProducts,
-        keepSelecting, setKeepSelecting,
-        setSelectedProducts, setSelectedCategory,
-        saleSummary, summary, setSummary
+    const { keepSelecting, setKeepSelecting,
+
+        categories,
+        setSelectedProducts,
+        setSelectedCategory,
+        summary, setSummary,
     } = useContext(SellTicketContext)
 
     const [drink, setDrink] = useState(false);
     const [cat, setCat] = useState(objCat)
     const [temp, setTemp] = useState(objTemp)
 
-    useEffect(() => {
-        if (saleSummary.length > 0) { setSummary(true) }
-
-    }, [])
 
     const handleCat = (e) => {
         let obj = { ...cat, [e.target.name]: e.target.value }
@@ -93,6 +91,7 @@ const ProductSelectForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         handleProduct()
+        setSummary(true)
         setCat(objCat)
         setTemp(objTemp)
         let test = cat.cat_name
@@ -118,6 +117,8 @@ const ProductSelectForm = () => {
             case
                 'no inventariable': navigate("/sell/catTempSelection");
                 break;
+            default:
+            //do nothing
 
         }
     }

@@ -37,10 +37,6 @@ const schema = yup.object({
   combo_nameEdit: yup.string()
 })
 
-let esPaquete = false
-let esBebida = false
-let esCombo = false
-
 const AdjustProduct = () => {
 
   const objProduct = {
@@ -80,23 +76,8 @@ const AdjustProduct = () => {
   });
 
   const handleCatChange = () => {
-    let obj = {
-      cat_name: document.getElementById('cat_name').value,
-    };
-    if (document.getElementById('cat_name').value === 'Paquete') {
-      esPaquete = true;
-      esBebida = false
-    }
-    if (document.getElementById('cat_name').value === 'Té' ||
-      document.getElementById('cat_name').value === 'Infusión') {
-      esBebida = true;
-      esPaquete = false
-    }
-    if (document.getElementById('cat_name').value === 'Combo') {
-      esCombo = true
-    } else {
-      esCombo = false
-    }
+    let obj = { cat_name: document.getElementById('cat_name').value };
+
     fetch(`${server}/product/findByCatName`, {
       method: 'POST',
       headers: {
@@ -284,7 +265,6 @@ const AdjustProduct = () => {
               className="campo_entrada"
               defaultValue={toEdit.price}
               id='priceEdit'
-              defaultValue={toEdit.price}
             />
             <p className='error'>{errors.cat_priceEdit?.message}</p>
           </Row>

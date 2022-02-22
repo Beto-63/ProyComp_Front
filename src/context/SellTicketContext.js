@@ -20,7 +20,6 @@ const SellTicketProvider = ({ children }) => {
     const [packsToFill, setPacksToFill] = useState([])
     const [allPackets, setAllPackets] = useState([])
 
-
     const data = {
         keepSelecting, setKeepSelecting,
         origins, setOrigins,
