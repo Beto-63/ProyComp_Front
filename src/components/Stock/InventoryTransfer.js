@@ -58,7 +58,6 @@ const InventoryTransfer = () => {
     }
 
     const onSubmit = (data) => {
-        let output = {}
         let obj = {
             destination: data.destination,
             name: data.name,

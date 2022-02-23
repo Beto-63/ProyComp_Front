@@ -94,7 +94,7 @@ const ProductSelectForm = () => {
         setSummary(true)
         setCat(objCat)
         setTemp(objTemp)
-        let test = cat.cat_name
+
         switch (cat.cat_name) {
             case
                 'Té': navigate('/sell/chooseProductTable');

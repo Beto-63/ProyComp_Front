@@ -1,8 +1,8 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -28,29 +28,15 @@ const CloseRegister = () => {
     let navigate = useNavigate();
 
     const {
-        channel, setChannel,
-        canClose, setCanClose,
-        confirmacion, setConfirmacion,
-        lastOpen, setLastOpen,
-        lastClose, setLastClose,
-        userEmail, SetUserEmail,
-        showClosure, setShowClosure,
-        sellTickets, setSellTickets,
-        totalSales, setTotalSales,
-        deposits, setDeposits,
-        totalDeposits, setTotalDeposits,
-        expenses, setExpenses,
-        totalExpenses, setTotalExpenses,
-        newAmountToDeposit, setNewAmountToDeposit,
-        cashSales, setCashSales,
-        nonCashSales, setNonCashSales,
-        countedCash, setCountedCash,
-        expectedCashOnHand, setExpectedCashOnHand,
-        paymentMethods, setPaymentMethods
+        channel, canClose,
+        lastOpen, showClosure, sellTickets,
+        deposits, expenses,
+        newAmountToDeposit,
+        paymentMethods
     } = useContext(CashContext)
 
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { handleSubmit, reset } = useForm({
         resolver: yupResolver(schema)
     });
 
