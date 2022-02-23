@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import { Row, Container, Table } from 'react-bootstrap';
+import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -38,7 +38,6 @@ const ItemsByName = () => {
         resolver: yupResolver(schema)
     });
     const onSubmit = (data) => {
-        let obj = { name: data.name, channel: data.channel, qty: data.qty }
         reset();
     };
 

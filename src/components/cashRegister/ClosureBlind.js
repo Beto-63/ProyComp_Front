@@ -1,19 +1,17 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext } from "react";
 import { Row, Col, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
-import { server } from '../../context/Api'
 import CashContext from "../../context/CashContext";
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
-import ClosureDetails from "./ClosureDetails";
+
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
@@ -24,31 +22,13 @@ const schema = yup.object({
 
 const ClosureBlind = () => {
 
-    let navigate = useNavigate();
-
     const {
-        channel, setChannel,
-        canClose, setCanClose,
-        confirmacion, setConfirmacion,
-        lastOpen, setLastOpen,
-        lastClose, setLastClose,
-        userEmail, SetUserEmail,
-        showClosure, setShowClosure,
-        sellTickets, setSellTickets,
-        totalSales, setTotalSales,
-        deposits, setDeposits,
-        totalDeposits, setTotalDeposits,
-        expenses, setExpenses,
-        totalExpenses, setTotalExpenses,
-        newAmountToDeposit, setNewAmountToDeposit,
-        cashSales, setCashSales,
-        nonCashSales, setNonCashSales,
-        countedCash, setCountedCash,
-        expectedCashOnHand, setExpectedCashOnHand,
-        paymentMethods, setPaymentMethods
+        setShowClosure,
+        setCountedCash,
+        expectedCashOnHand
     } = useContext(CashContext)
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 

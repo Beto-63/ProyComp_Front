@@ -42,11 +42,11 @@ const CashProvider = ({ children }) => {
         } else {
             setCanClose(false)
         }
-    }, [countedCash])
+    }, [countedCash, expectedCashOnHand])
 
     useEffect(() => {
         setExpectedCashOnHand(lastOpen[0].change_amount + lastOpen[0].amount_to_deposit + cashSales - totalDeposits - totalExpenses)
-    }, [lastOpen[0].change_amount, lastOpen[0].amount_to_deposit, cashSales, totalDeposits, totalExpenses])
+    }, [lastOpen, cashSales, totalDeposits, totalExpenses])
 
     useEffect(() => {
         // TODO filtrar por los del channel que viene del contexto y del token
@@ -67,7 +67,7 @@ const CashProvider = ({ children }) => {
         })
             .then(response => response.json())
             .then(json => setExpenses(json));
-    }, [])
+    }, [channel])
 
     useEffect(() => {
         //trae los depositos no cerrados del canal actual

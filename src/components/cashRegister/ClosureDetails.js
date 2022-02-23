@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
-import React, { useEffect, useState, useContext } from "react";
-import { Row, Col, Container } from 'react-bootstrap';
+import React, { useContext } from "react";
+import { Row, Col } from 'react-bootstrap';
 
 
 /**********************Importacion de Componentes**************************/
@@ -12,26 +12,11 @@ import '../generic/Light-bkg.css'
 const ClosureDetails = () => {
 
     const {
-        channel, setChannel,
-
-        canClose, setCanClose,
-
-        lastOpen, setLastOpen,
-
-
-
-
-        totalSales,
-
-        totalDeposits,
-        expenses, setExpenses,
-        totalExpenses, setTotalExpenses,
+        lastOpen, totalSales,
+        totalDeposits, totalExpenses,
         newAmountToDeposit, setNewAmountToDeposit,
-        cashSales, setCashSales,
-        nonCashSales, setNonCashSales,
-        countedCash, setCountedCash,
-        expectedCashOnHand, setExpectedCashOnHand,
-        paymentMethods, setPaymentMethods
+        cashSales, nonCashSales,
+        countedCash, expectedCashOnHand
     } = useContext(CashContext)
 
 

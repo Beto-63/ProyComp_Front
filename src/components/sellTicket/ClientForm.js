@@ -1,6 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
 import { server } from '../../context/Api'
@@ -8,24 +11,32 @@ import { server } from '../../context/Api'
 import '../generic/Nav.css'
 
 
+const schema = yup.object({
+    /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
+    name: yup.string(),
+    email: yup.string(),
+    gender: yup.string().required().typeError('La información demográfica es importante'),
+    age_group: yup.string().required().typeError('La información demográfica es importante')
+});
+
 
 const ClientForm = () => {
-    const objForm = {
-        name: '',
-        email: '',
-        gender: '',
-        age_group: ''
-    }
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
 
     const { setClientId } = useContext(SellTicketContext)
     const navigate = useNavigate();
 
 
-    const [form, setForm] = useState(objForm);
 
-    const handleForm = (e) => {
-        let obj = { ...form, [e.target.name]: e.target.value }
-        setForm(obj)
+    const onSubmit = (data) => {
+        handleClient(data)
+        reset()
+        console.log(data)
+        //TODO condicionar el navigate al response.status 201
+        navigate('/sell/catTempSelection')
     }
 
     const handleClient = (objClient) => {
@@ -42,15 +53,13 @@ const ClientForm = () => {
 
 
     }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        handleClient(form); //estas son las props de Client
-        setForm(objForm) //limpia los campos del formulario
-        e.target.reset() //limpia la selección de los botones
-        //TODO condicionar el navigate al response.status 201
-        navigate('/sell/catTempSelection')
-    }
+    //Incluir en On submit
+    // const handleSubmit = (e) => {
+    //    
+    //    
+    //     //TODO condicionar el navigate al response.status 201
+    //     navigate('/sell/catTempSelection')
+    // }
 
 
     return (
@@ -60,20 +69,29 @@ const ClientForm = () => {
             <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             <Container>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="registerName">
-                        <Form.Control value={form.name} onChange={handleForm} name='name' type="name" placeholder="Nombre (opcional)" />
-                    </Form.Group>
+                <form className='container' onSubmit={handleSubmit(onSubmit)}>
 
-                    <Form.Group className="mb-3" controlId="registerEmail">
-                        <Form.Control value={form.email} onChange={handleForm} name='email' type="email" placeholder="Correo Electrónico (opcional)" />
-                    </Form.Group>
+                    <input {...register("name")}
+                        className="campo_entrada"
+                        name='name'
+                        type="name"
+                        placeholder="Nombre (opcional)"
+                    />
+
+                    <input {...register("email")}
+                        className="campo_entrada"
+                        name='email'
+                        type="email"
+                        placeholder="Correo Electrónico (opcional)"
+                    />
+                    <br />
+
 
                     <Form.Label>Género:</Form.Label>
 
                     <div className="mb-3">
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("gender")}
+
                             inline
                             label="F"
                             name="gender"
@@ -81,8 +99,8 @@ const ClientForm = () => {
                             id={`inline-radio-1`}
                             value={"F"}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("gender")}
+
                             inline
                             label="M"
                             name="gender"
@@ -90,8 +108,8 @@ const ClientForm = () => {
                             id={`inline-radio-2`}
                             value={"M"}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("gender")}
+
                             inline
                             label="Otro"
                             name="gender"
@@ -99,11 +117,12 @@ const ClientForm = () => {
                             id={`inline-radio-3`}
                             value={"Otro"}
                         />
+                        <p className='error'>{errors.gender?.message}</p>
                     </div>
                     <Form.Label>Edad:</Form.Label>
                     <div className="mb-3">
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="0-11"
                             name="age_group"
@@ -111,8 +130,8 @@ const ClientForm = () => {
                             id={`inline-radio-1`}
                             value={'0-11'}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="12-19"
                             name="age_group"
@@ -120,8 +139,8 @@ const ClientForm = () => {
                             id={`inline-radio-2`}
                             value={'12-19'}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="20-29"
                             name="age_group"
@@ -129,8 +148,8 @@ const ClientForm = () => {
                             id={`inline-radio-3`}
                             value={'20-29'}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="30-40"
                             name="age_group"
@@ -138,8 +157,8 @@ const ClientForm = () => {
                             id={`inline-radio-4`}
                             value={'30-40'}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="41-60"
                             name="age_group"
@@ -147,8 +166,8 @@ const ClientForm = () => {
                             id={`inline-radio-5`}
                             value={'41-60'}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="61-80"
                             name="age_group"
@@ -156,8 +175,8 @@ const ClientForm = () => {
                             id={`inline-radio-6`}
                             value={'61-80'}
                         />
-                        <Form.Check
-                            onClick={handleForm}
+                        <Form.Check {...register("age_group")}
+
                             inline
                             label="Mayor"
                             name="age_group"
@@ -165,10 +184,11 @@ const ClientForm = () => {
                             id={`inline-radio-7`}
                             value={'81-100'}
                         />
+                        <p className='error'>{errors.age_group?.message}</p>
                     </div>
 
                     <button type="submit" className='btn-dark-bkg-small'>Continuar</button>
-                </Form>
+                </form>
             </Container>
 
         </div>
