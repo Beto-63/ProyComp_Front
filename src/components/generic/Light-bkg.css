@@ -22,6 +22,16 @@
     margin-right: 0.4em;
 }
 
+.campo_entrada_cliente {
+    width: 80%;
+    color: #8EA7A9;
+    background-color: #F1F0E8;
+    border: 1px solid #8EA7A9;
+    border-radius: 0.5em;
+    margin-bottom: 0.2em;
+    margin-right: 0.4em;
+}
+
 .error{
     color:red;
     font-style:italic;

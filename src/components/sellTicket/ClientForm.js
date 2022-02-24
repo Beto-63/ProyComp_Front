@@ -53,13 +53,7 @@ const ClientForm = () => {
 
 
     }
-    //Incluir en On submit
-    // const handleSubmit = (e) => {
-    //    
-    //    
-    //     //TODO condicionar el navigate al response.status 201
-    //     navigate('/sell/catTempSelection')
-    // }
+
 
 
     return (
@@ -72,14 +66,14 @@ const ClientForm = () => {
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
 
                     <input {...register("name")}
-                        className="campo_entrada"
+                        className="campo_entrada_cliente"
                         name='name'
                         type="name"
                         placeholder="Nombre (opcional)"
                     />
 
                     <input {...register("email")}
-                        className="campo_entrada"
+                        className="campo_entrada_cliente"
                         name='email'
                         type="email"
                         placeholder="Correo Electrónico (opcional)"

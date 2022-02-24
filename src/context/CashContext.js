@@ -36,6 +36,7 @@ const CashProvider = ({ children }) => {
     const [expectedCashOnHand, setExpectedCashOnHand] = useState(0)
     const [newAmountToDeposit, setNewAmountToDeposit] = useState(0);
 
+
     useEffect(() => {
         if ((expectedCashOnHand - countedCash) === 0) {
             setCanClose(true)
@@ -44,9 +45,7 @@ const CashProvider = ({ children }) => {
         }
     }, [countedCash, expectedCashOnHand])
 
-    useEffect(() => {
-        setExpectedCashOnHand(lastOpen[0].change_amount + lastOpen[0].amount_to_deposit + cashSales - totalDeposits - totalExpenses)
-    }, [lastOpen, cashSales, totalDeposits, totalExpenses])
+
 
     useEffect(() => {
         // TODO filtrar por los del channel que viene del contexto y del token
@@ -133,6 +132,7 @@ const CashProvider = ({ children }) => {
         countedCash, setCountedCash,
         expectedCashOnHand, setExpectedCashOnHand,
         paymentMethods, setPaymentMethods
+
     }
     return (
         <CashContext.Provider value={data}>
