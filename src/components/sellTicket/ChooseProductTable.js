@@ -4,6 +4,7 @@ import React, { useState, useContext } from 'react';
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { server } from '../../context/Api'
 
 
 /**********************Importacion de Estilos******************************/
@@ -17,17 +18,52 @@ const ChooseProductTable = () => {
     } = useContext(SellTicketContext)
 
     const [saleProductTemp, setSaleProductTemp] = useState([])
+    const [objCombo, setObjCombo] = useState({})
+
+    const getProductsForCombo = (objName) => {
+        fetch(`${server}/product/combo/findByName`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objName)
+        })
+            .then(response => response.json())
+            .then(json => setObjCombo(json));
+
+    }
 
     const navigate = useNavigate()
 
     const handleAddQty = (obj, qty) => {
         if (qty !== NaN || qty !== 0) {
+            let newObj = {}
+            let arrayCombo = []
+            let arrayQuantitiesCombo = []
             let array = saleProductTemp.filter((e) => (e._id !== obj._id))
-            let newObj = { ...obj, ...{ quantity: qty } }
+            if (obj.cat_name !== "Combo") {
+                newObj = { ...obj, ...{ quantity: qty } }
+                if (qty !== 0) {
+
+                    array = [...array, newObj]
+                }
+                setSaleProductTemp(array)
+            } else {
+                getProductsForCombo({ name: obj.cat_name })
+
+                console.log("voy a meter los articulos del combo", obj, qty)
+                arrayCombo = objCombo.products
+
+
+            }
+            console.log("lo que esta en la coleccion de Combo", arrayCombo)
+            console.log("Lo que queda en lo escogido", arrayQuantitiesCombo)
             if (qty !== 0) {
-                array = [...array, newObj]
+
+                array = [...array, ...arrayQuantitiesCombo]
             }
             setSaleProductTemp(array)
+            console.log("el definitivo", array)
         } else {
             // do nothing
         }

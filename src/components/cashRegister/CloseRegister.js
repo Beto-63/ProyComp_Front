@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -28,9 +28,10 @@ const CloseRegister = () => {
     let navigate = useNavigate();
 
     const {
+        cashSales, totalDeposits, totalExpenses,
         channel, canClose,
         lastOpen, showClosure, sellTickets,
-        deposits, expenses,
+        deposits, expenses, setExpectedCashOnHand,
         newAmountToDeposit,
         paymentMethods
     } = useContext(CashContext)
@@ -40,6 +41,9 @@ const CloseRegister = () => {
         resolver: yupResolver(schema)
     });
 
+    useEffect(() => {
+        setExpectedCashOnHand(lastOpen[0].change_amount + lastOpen[0].amount_to_deposit + cashSales - totalDeposits - totalExpenses)
+    }, [lastOpen, cashSales, totalDeposits, totalExpenses])
 
     const onSubmit = (data) => {
         const answer = window.confirm(`Estas a pundo de hacer el cierre...\n¿Segur@?`);

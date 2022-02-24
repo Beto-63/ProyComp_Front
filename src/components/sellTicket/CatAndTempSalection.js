@@ -124,7 +124,7 @@ const ProductSelectForm = () => {
     }
     return (
         <div className='canvas_claro'>
-            <p className="titulo_oscuro">Proceso de Venta</p>
+            <p className="titulo_oscuro">Selecciona los productos</p>
             <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/sell" className='volver'>Volver</Link>
             <Container >
@@ -178,7 +178,7 @@ const ProductSelectForm = () => {
 
                             <div><button className='btn-light-bkg' onClick={handleSubmit}>Escoger</button></div>
                             <br />
-                            <div><button className='btn-light-bkg' onClick={handleCloseSale}>Terminar</button></div>
+                            <div><button className='btn-light-bkg' type='button' onClick={handleCloseSale}>Terminar</button></div>
                         </div>
                         :
                         ''

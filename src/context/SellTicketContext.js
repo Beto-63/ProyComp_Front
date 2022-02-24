@@ -19,6 +19,9 @@ const SellTicketProvider = ({ children }) => {
     const [saleSummary, setSaleSummary] = useState([])
     const [packsToFill, setPacksToFill] = useState([])
     const [allPackets, setAllPackets] = useState([])
+    //La venta fue en efectivo?
+    const [finalSale, setFinalSale] = useState(0)
+    const [isCash, setIsCash] = useState(false)
 
     const data = {
         keepSelecting, setKeepSelecting,
@@ -32,7 +35,9 @@ const SellTicketProvider = ({ children }) => {
         summary, setSummary,
         packsToFill, setPacksToFill,
         allPackets, setAllPackets,
-        showPacketList, setShowPacketList
+        showPacketList, setShowPacketList,
+        finalSale, setFinalSale,
+        isCash, setIsCash
 
     };
 
