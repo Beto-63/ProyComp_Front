@@ -1,8 +1,8 @@
 /**********************Importacion de Librerias****************************/
 
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -13,149 +13,37 @@ import CashContext from "../../context/CashContext";
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
+import ClosureDetails from "./ClosureDetails";
+import ClosureBlind from "./ClosureBlind";
 
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
-    cash_on_hand: yup.number().typeError('Aqui va lo que tienes en efectivo').required(),
+
     amount_to_deposit: yup.number(),
-    change_amount: yup.number().typeError('Este dato se usa para calcular lo que debes consignar').required(),
+    change_amount: yup.number().typeError('Este dato se usa para calcular lo que debes consignar')
 });
 
 const CloseRegister = () => {
 
     let navigate = useNavigate();
 
-    const { setConfirmacion, lastOpen, lastClose, canClose, setCanClose, channel } = useContext(CashContext)
+    const {
+        cashSales, totalDeposits, totalExpenses,
+        channel, canClose,
+        lastOpen, showClosure, sellTickets,
+        deposits, expenses, setExpectedCashOnHand,
+        newAmountToDeposit,
+        paymentMethods
+    } = useContext(CashContext)
 
-    const [willClose, setWillClose] = useState("none")
-    const [sellTickets, setSellTickets] = useState([{}]);
-    const [totalSales, setTotalSales] = useState(0);
-    const [deposits, setDeposits] = useState([{}]);
-    const [totalDeposits, setTotalDeposits] = useState(0)
-    const [expenses, setExpenses] = useState([{}]);
-    const [totalExpenses, setTotalExpenses] = useState(0)
-    const [newAmountToDeposit, setNewAmountToDeposit] = useState(0);
-    const [cashSales, setCashSales] = useState(0)
-    const [nonCashSales, setNonCashSales] = useState(0)
-    const [countedCash, setCountedCash] = useState(0)
-    const [expectedCashOnHand, setExpectedCashOnHand] = useState(0)
-    const [paymentMethods, setPaymentMethods] = useState([{}])
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { handleSubmit, reset } = useForm({
         resolver: yupResolver(schema)
     });
 
     useEffect(() => {
-        // resetea la advertencia de apertura/cierre
-        setConfirmacion('')
-    }, [setConfirmacion]);
-
-    useEffect(() => {
-        //trae los metodos de pago para la clasificacion de las ventas por medio de pago
-        fetch(`${server}/paymentMethods`)
-            .then(response => response.json())
-            .then(json => setPaymentMethods(json));
-    }, [])
-
-    useEffect(() => {
-        //trae los gastos no cerrados del canal actual
-        fetch(`${server}/cash/expense/unaccounted`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ channel: channel })
-        })
-            .then(response => response.json())
-            .then(json => setExpenses(json));
-    }, [])
-
-    useEffect(() => {
-        //trae los depositos no cerrados del canal actual
-        fetch(`${server}/cash/deposit/unaccounted`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ channel: channel })
-        })
-            .then(response => response.json())
-            .then(json => setDeposits(json));
-    }, [channel])
-
-    useEffect(() => {
-        // TODO filtrar por los del channel que viene del contexto y del token
-        //una vez se ajuste la estructura del sell ticket
-        fetch(`${server}/cash/sellTickets/unaccounted`)
-            .then(response => response.json())
-            .then(json => setSellTickets(json));
-    }, [])
-
-    useEffect(() => {
-        // totaliza los depositos, los gastos las ventas totales/efectivo/otros medios
-        let temp = 0
-        deposits.forEach(element => { temp = temp + element.amount });
-        setTotalDeposits(temp)
-        temp = 0
-        expenses.forEach(element => { temp = temp + element.expense_amount });
-        setTotalExpenses(temp)
-        let tempCash = 0
-        let tempNonCash = 0
-        let tempTotal = 0
-        sellTickets.forEach(element => {
-            tempTotal = tempTotal + element.amount_sold;
-            if (element.payment_method === 'Cash') {
-                tempCash = tempCash + element.amount_sold
-            } else {
-                tempNonCash = tempNonCash + element.amount_sold
-            }
-        });
-        setTotalSales(tempTotal)
-        setNonCashSales(tempNonCash)
-        setCashSales(tempCash)
-    }, [deposits, expenses, sellTickets, lastClose, lastOpen]);
-
-    useEffect(() => {
-        //Estabiliza la presentacion de las variables del segundo parametro
-    }, [countedCash, expectedCashOnHand]);
-
-    const presentClose = () => {
-        if ((countedCash - expectedCashOnHand < 10000) || (expectedCashOnHand - countedCash < 10000)) {
-            setWillClose('block')
-        }
-    }
-
-    const handleCountedCash = () => {
-
-        setExpectedCashOnHand(
-            lastOpen[0].change_amount +
-            lastOpen[0].amount_to_deposit +
-            cashSales -
-            totalDeposits -
-            totalExpenses
-        )
-        setCountedCash(document.getElementById('cash_on_hand').value)
-        presentClose();
-        console.log("se puede cerrar", willClose)
-        console.log("expected", expectedCashOnHand)
-        console.log("counted", countedCash)
-    }
-
-    const handleNewChangeAmount = () => {
-        if ((expectedCashOnHand - countedCash) === 0) {
-            setCanClose(true)
-        } else {
-            setCanClose(false)
-        }
-        console.log("medios de pago", paymentMethods)
-        setNewAmountToDeposit(
-            lastOpen[0].change_amount +
-            lastOpen[0].amount_to_deposit +
-            cashSales -
-            totalDeposits -
-            totalExpenses - document.getElementById('change_amount').value
-        )
-    }
+        setExpectedCashOnHand(lastOpen[0].change_amount + lastOpen[0].amount_to_deposit + cashSales - totalDeposits - totalExpenses)
+    }, [lastOpen, cashSales, totalDeposits, totalExpenses])
 
     const onSubmit = (data) => {
         const answer = window.confirm(`Estas a pundo de hacer el cierre...\n¿Segur@?`);
@@ -166,7 +54,7 @@ const CloseRegister = () => {
                     amount_to_deposit: newAmountToDeposit,
                     cash_on_hand: data.change_amount + newAmountToDeposit,
                     change_amount: data.change_amount,
-                    channel: 'Arsenal', //del token
+                    channel: channel,
                     status: 1
                 }
                 // fetch de cierre
@@ -260,55 +148,19 @@ const CloseRegister = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Vas a cerrar ya?</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
                     <p className="label">{`La ultima apertura se hizo con una base  _______$${lastOpen[0].change_amount}`}</p>
                     <p className="label">{`y tenias por consignar _________________________$${lastOpen[0].amount_to_deposit},`}</p>
-                    <Row>
-                        <Col>
-                            <label htmlFor='cash_on_hand' className='label'>Cuenta e ingresa el efectivo que tienes en caja</label>
-                        </Col>
-                        <Col>
-                            <input {...register("cash_on_hand")}
-                                className="campo_entrada"
-                                placeholder="Efectivo en caja Ahora"
-                                id='cash_on_hand' onBlur={handleCountedCash}
-
-                            />
-                            <p className='error'>{errors.cash_on_hand?.message}</p>
-                        </Col>
-                    </Row>
-                    <div style={{ display: willClose }}>
-                        <p className="label">{`Las ventas en efectivo del dia HOY_______$${cashSales}`}</p>
-                        <p className="label">{`Desde el ultimo cierre consigné__________$${totalDeposits},`}</p>
-                        <p className="label">{`Desde el ultimo cierre tuve gastos por___$${totalExpenses}`}</p>
-                        <hr />
-                        <p className="label">{`Se espera tener en efectivo a mano_______$${expectedCashOnHand},`}</p>
-                        <hr />
-
-                        <p p className="result">{`La diferencia en la caja_________________$${expectedCashOnHand - countedCash}`}</p>
-                        <p className={(expectedCashOnHand - countedCash === 0) ? "perfect" : "result"}>{(expectedCashOnHand - countedCash === 0) ? `Puede cerrar` : (expectedCashOnHand - countedCash > 0) ? `Hay un faltante` : `Hay un excedente`}</p>
-                        <Row>
-                            <Col>
-                                <label htmlFor='change_amount' className='label'>Cual sera la base de cambio manana?</label>
-                            </Col>
-                            <Col>
-                                <input {...register("change_amount")}
-                                    className="campo_entrada"
-                                    placeholder="Cambio para Manana"
-                                    id='change_amount' onChange={handleNewChangeAmount}
-                                // onChange={handleOpen}
-                                />
-                                <p className='error'>{errors.change_amount?.message}</p>
-                            </Col>
-                        </Row>
-                        <p className="label">{`Las ventas en medios electronicos________$${nonCashSales},`}</p>
-                        <p className="label">{`Las Ventas totales han sido de___________$${totalSales},`}</p>
-                        <p className="result">{`Por tanto debo consignar_________________$${newAmountToDeposit}`}</p>
-                        <button className='btn-light-bkg' type="submit">Cerrar</button>
-                    </div>
+                    <ClosureBlind />
+                    {showClosure ?
+                        <ClosureDetails />
+                        :
+                        ''
+                    }
+                    <button className='btn-light-bkg' type="submit" >Cerrar</button>
                 </form>
             </Container>
         </div >

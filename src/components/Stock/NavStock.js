@@ -29,7 +29,7 @@ const NavStock = () => {
     return (
         <div className='canvas_oscuro'>
             <p className="titulo_claro">Gestión de Inventario</p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <Container>
@@ -47,10 +47,10 @@ const NavStock = () => {
                         <button className='btn-dark-bkg' onClick={goToTransfer} >Traslado cantidad</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
+                        <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste info elemento</button>
                     </Col>
                     <Col>
-                        <button className='btn-dark-bkg' onClick={goToAdjustE} >Ajuste a elemento</button>
+                        <button className='btn-dark-bkg' onClick={goToAdjustQ} >Ajuste cantidad</button>
                     </Col>
                 </Row>
             </Container>

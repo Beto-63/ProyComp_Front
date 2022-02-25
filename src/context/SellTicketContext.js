@@ -5,19 +5,41 @@ const SellTicketContext = createContext();
 
 //se crea el proveedor de contexto (es el que agrupa el arbol de elementos)
 const SellTicketProvider = ({ children }) => {
-    const [origins, setOrigins] = useState([{}]);
-    const [paymentMethods, setPaymentMethods] = useState([{}]);
-    const [categories, setCategories] = useState([{}]);
-    const [selectedProducts, setSelectedProducts] = useState([{}])
-    const [client, setClient] = useState({})
+    const [keepSelecting, setKeepSelecting] = useState(true)        //Se usa para predentar las variables de categoria a
+    const [summary, setSummary] = useState(false)                 // se usa para esconder el resumen antes de que exista
+    const [showPacketList, setShowPacketList] = useState(false)
+
+
+    const [origins, setOrigins] = useState([{}]);                   // Describe los origenes de la venta
+    const [paymentMethods, setPaymentMethods] = useState([{}]);     // Tipo de pago recibido
+    const [categories, setCategories] = useState([{}]);             // Categorias de producto para poderlas seleccionar  
+    const [selectedProducts, setSelectedProducts] = useState([{}])  // Son la ista corta de productos por cat y temp(si aplica)
+    const [clientId, setClientId] = useState({})                    // Es el Objeto cliente al que se refiere la venta, para armar el sell ticket
+    const [saleSummary, setSaleSummary] = useState([])
+    const [packsToFill, setPacksToFill] = useState([])
+    const [allPackets, setAllPackets] = useState([])
+    //La venta fue en efectivo?
+    const [finalSale, setFinalSale] = useState(0)
+    const [isCash, setIsCash] = useState(true)
+    //contiene los combos que se vendan
+    const [objCombo, setObjCombo] = useState([])
 
     const data = {
-        //handleClientRegister, //getProductByCatName,
+        keepSelecting, setKeepSelecting,
         origins, setOrigins,
         paymentMethods, setPaymentMethods,
         categories, setCategories,
         selectedProducts, setSelectedProducts,
-        client, setClient
+        clientId, setClientId,
+        saleSummary, setSaleSummary,
+        summary, setSummary,
+        packsToFill, setPacksToFill,
+        allPackets, setAllPackets,
+        showPacketList, setShowPacketList,
+        finalSale, setFinalSale,
+        isCash, setIsCash,
+        objCombo, setObjCombo
+
     };
 
     return <SellTicketContext.Provider value={data}>{children}</SellTicketContext.Provider>

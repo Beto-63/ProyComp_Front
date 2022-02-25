@@ -17,10 +17,10 @@ import '../generic/Light-bkg.css';
 const schema = yup.object({
   cat_name: yup.string().trim().required("Se requiere para agilizar la seleccion"),
   cat_nameEdit: yup.string(),
+  fill: yup.string(),
+  fillEdit: yup.string(),
   name: yup.string().trim().required("Con el nombre se despliega la Inofrmacion almacenada "),
   nameEdit: yup.string(),
-  product_id: yup.string(),
-  product_idEdit: yup.string(),
   description: yup.string().max(128),
   descriptionEdit: yup.string().max(128),
   price: yup.number(),
@@ -31,11 +31,11 @@ const schema = yup.object({
   img_urlEdit: yup.string(),
   stock_name: yup.string(),
   stock_nameEdit: yup.string(),
-  stock_qty: yup.number().typeError('Dejar en Ingresa el precio de venta'),
-  stock_qtyEdit: yup.number().typeError('Dejar en Ingresa el precio de venta'),
-  statusEdit: yup.number().typeError('Se requiere definir el Estado').required()
+  stock_qty: yup.number().typeError('Ingresa el precio de venta'),
+  stock_qtyEdit: yup.number().typeError('Ingresa el precio de venta'),
+  statusEdit: yup.number().typeError('Se requiere definir el Estado'),
+  combo_nameEdit: yup.string()
 })
-
 
 const AdjustProduct = () => {
 
@@ -45,6 +45,7 @@ const AdjustProduct = () => {
     description: '',
     price: null,
     cat_name: '',
+    fill: '',
     temperature: '',
     img_url: '',
     stock_name: '',
@@ -54,9 +55,9 @@ const AdjustProduct = () => {
 
   const [categories, setCategories] = useState([{}]);
   const [selectedNames, setSelectedNames] = useState([{}]);
-  const [toEdit, setToEdit] = useState(objProduct);
   const [selectedNamesEdit, setSelectedNamesEdit] = useState([{}]);
-
+  const [combos, setCombos] = useState([{}]);
+  const [toEdit, setToEdit] = useState(objProduct);
 
   useEffect(() => {
     fetch(`${server}/product/categories`)
@@ -64,81 +65,18 @@ const AdjustProduct = () => {
       .then(json => setCategories(json));
   }, [])
 
+  useEffect(() => {
+    fetch(`${server}/product/combo`)
+      .then(response => response.json())
+      .then(json => setCombos(json));
+  }, [])
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
-  const onSubmit = (data) => {
-
-    let newObj = { id: toEdit._id, status: data.statusEdit }
-    if (data.product_idEdit !== '') {
-      newObj = { ...newObj, product_id: data.product_idEdit }
-    } else {
-      newObj = { ...newObj, product_id: toEdit.product_id }
-    }
-    if (data.nameEdit !== '') {
-      newObj = { ...newObj, name: data.nameEdit }
-    } else {
-      newObj = { ...newObj, name: toEdit.name }
-    }
-    if (data.descriptionEdit !== '') {
-      newObj = { ...newObj, description: data.descriptionEdit }
-    } else {
-      newObj = { ...newObj, description: toEdit.description }
-    }
-    if (data.priceEdit !== '') {
-      newObj = { ...newObj, price: data.priceEdit }
-    } else {
-      newObj = { ...newObj, price: toEdit.price }
-    }
-    if (data.cat_nameEdit !== '') {
-      newObj = { ...newObj, cat_name: data.cat_nameEdit }
-    } else {
-      newObj = { ...newObj, cat_name: toEdit.cat_name }
-    }
-    if (data.temperatureEdit !== '') {
-      newObj = { ...newObj, temperature: data.temperatureEdit.trim() }
-    } else {
-      newObj = { ...newObj, temperature: toEdit.temperature.trim() }
-    }
-    if (data.img_urlEdit !== '') {
-      newObj = { ...newObj, img_url: data.img_urlEdit.trim() }
-    } else {
-      newObj = { ...newObj, img_url: toEdit.img_url.trim() }
-    }
-    if (data.stock_nameEdit !== '') {
-      newObj = { ...newObj, stock_name: data.stock_nameEdit.trim() }
-    } else {
-      newObj = { ...newObj, stock_name: toEdit.stock_name.trim() }
-    }
-    if (data.stock_qtyEdit !== '') {
-      newObj = { ...newObj, stock_qty: data.stock_qtyEdit }
-    } else {
-      newObj = { ...newObj, stock_qty: toEdit.stock_qty }
-    }
-    if (data.statusEdit !== '') {
-      newObj = { ...newObj, status: data.statusEdit }
-    } else {
-      newObj = { ...newObj, status: toEdit.status }
-    }
-
-    fetch(`${server}/product`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      //enviamos los datos por body y se debe convertir el objeto en JSON
-      body: JSON.stringify(newObj)
-    })
-      .then(response => response.json())
-      .then(json => window.alert(JSON.stringify(json)))
-    reset();
-    setToEdit(objProduct);
-  };
 
   const handleCatChange = () => {
-    let obj = {
-      cat_name: document.getElementById('cat_name').value,
-    };
+    let obj = { cat_name: document.getElementById('cat_name').value };
 
     fetch(`${server}/product/findByCatName`, {
       method: 'POST',
@@ -183,15 +121,84 @@ const AdjustProduct = () => {
       .then(json => setToEdit(json));
   }
 
+  const onSubmit = (data) => {
 
+    let newObj = { id: toEdit._id, status: data.statusEdit }
 
+    if (data.nameEdit !== '') {
+      newObj = { ...newObj, name: data.nameEdit }
+    } else {
+      newObj = { ...newObj, name: toEdit.name }
+    }
+    if (data.descriptionEdit !== '') {
+      newObj = { ...newObj, description: data.descriptionEdit }
+    } else {
+      newObj = { ...newObj, description: toEdit.description }
+    }
+    if (data.priceEdit !== '') {
+      newObj = { ...newObj, price: data.priceEdit }
+    } else {
+      newObj = { ...newObj, price: toEdit.price }
+    }
+    if (data.cat_nameEdit !== '') {
+      newObj = { ...newObj, cat_name: data.cat_nameEdit }
+    } else {
+      newObj = { ...newObj, cat_name: toEdit.cat_name }
+    }
+    if (data.fillEdit !== '') {
+      newObj = { ...newObj, fill: data.fillEdit }
+    } else {
+      newObj = { ...newObj, fill: toEdit.fill }
+    }
+    if (data.temperatureEdit !== '') {
+      newObj = { ...newObj, temperature: data.temperatureEdit.trim() }
+    } else {
+      newObj = { ...newObj, temperature: toEdit.temperature.trim() }
+    }
+    if (data.img_urlEdit !== '') {
+      newObj = { ...newObj, img_url: data.img_urlEdit.trim() }
+    } else {
+      newObj = { ...newObj, img_url: toEdit.img_url.trim() }
+    }
+    if (data.stock_nameEdit !== '') {
+      newObj = { ...newObj, stock_name: data.stock_nameEdit.trim() }
+    } else {
+      newObj = { ...newObj, stock_name: toEdit.stock_name.trim() }
+    }
+    if (data.stock_qtyEdit !== '') {
+      newObj = { ...newObj, stock_qty: data.stock_qtyEdit }
+    } else {
+      newObj = { ...newObj, stock_qty: toEdit.stock_qty }
+    }
+    if (data.statusEdit !== '') {
+      newObj = { ...newObj, status: data.statusEdit }
+    } else {
+      newObj = { ...newObj, status: toEdit.status }
+    }
+    if (data.combo_nameEdit !== '') {
+      newObj = { ...newObj, combo_name: data.combo_nameEdit }
+    } else {
+      newObj = { ...newObj, combo_name: toEdit.combo_name }
+    }
 
-
+    fetch(`${server}/product`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      //enviamos los datos por body y se debe convertir el objeto en JSON
+      body: JSON.stringify(newObj)
+    })
+      .then(response => response.json())
+      .then(json => window.alert(JSON.stringify(json)))
+    reset();
+    setToEdit(objProduct);
+  };
 
   return (
     <div className='canvas_claro'>
       <p className="titulo_oscuro">Ajuste Datos de Producto</p>
-      <Link to="/" className='inicio'>Inicio</Link>
+      <Link to="/menu" className='inicio'>Inicio</Link>
       <Link to="/product" className='volver'>Volver</Link>
       <Container >
         <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -202,7 +209,7 @@ const AdjustProduct = () => {
               placeholder="Categoria del elemento"
               id="cat_name" onChange={handleCatChange}
             >
-              <option value=''>Seleccione la categoría del elemento</option>
+              <option value=''>Seleccione la categoría del Producto</option>
               {categories.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -218,7 +225,7 @@ const AdjustProduct = () => {
               placeholder="Escoja el Item"
               id='name' onChange={handleEdit}
             >
-              <option value=''>Elemento a adicionar</option>
+              <option value=''>Producto a modificar</option>
               {selectedNames.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{
@@ -236,7 +243,7 @@ const AdjustProduct = () => {
             <label htmlFor='nameEdit' className='label'>Nombre</label>
             <input  {...register("nameEdit")}
               className="campo_entrada"
-              placeholder={toEdit.name}
+              defaultValue={toEdit.name}
               name="nameEdit"
               id="nameEdit"
               type="text"
@@ -244,19 +251,10 @@ const AdjustProduct = () => {
             <p className='error'>{errors.nameEdit?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='product_idEdit' className='label'>Codigo del Producto</label>
-            <input  {...register("product_idEdit")}
-              className="campo_entrada"
-              id='product_idEdit'
-              placeholder={toEdit.product_id}
-            />
-            <p className='error'>{errors.product_idEdit?.message}</p>
-          </Row>
-          <Row>
             <label htmlFor='descriptionEdit' className='label'>Descripcion</label>
             <textarea  {...register("descriptionEdit")}
               className="campo_entrada"
-              placeholder={toEdit.description}
+              defaultValue={toEdit.description}
               id='descriptioEdit'
             />
             <p className='error'>{errors.cat_descriptionEdit?.message}</p>
@@ -265,21 +263,19 @@ const AdjustProduct = () => {
             <label htmlFor='priceEdit' className='label'>Precio</label>
             <input  {...register("priceEdit")}
               className="campo_entrada"
-              placeholder={toEdit.price}
-              id='priceEdit'
               defaultValue={toEdit.price}
+              id='priceEdit'
             />
             <p className='error'>{errors.cat_priceEdit?.message}</p>
           </Row>
           <Row>
-
             <label htmlFor='cat_nameEdit' className='label'>Categoría</label>
             <select  {...register("cat_nameEdit")}
               className="campo_entrada"
-              placeholder={toEdit.cat_name}
+              defaultValue={toEdit.cat_name}
               id='cat_nameEdit' onChange={handleCatEdit}
             >
-              <option value=''>Seleccione la categoría del Elemento</option>
+              <option defaultValue={toEdit.cat_name}>{toEdit.cat_name}</option>
               {categories.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
@@ -289,13 +285,24 @@ const AdjustProduct = () => {
             <p className='error'>{errors.cat_nameEdit?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='temperatureEdit' className='label'>Temperatura</label>
+            <label htmlFor='fillEdit' className='label'>Si es un Paquete defina si es de Té o Infusión</label>
+            <select  {...register("fillEdit")}
+              className="campo_entrada"
+              id='fillEdit'
+            >
+              <option defaultValue={toEdit.fill}>{toEdit.fill}</option>
+              <option value='Té'>Té</option>
+              <option value='Infusión'>Infusión</option>
+            </select>
+            <p className='error'>{errors.fillEdit?.message}</p>
+          </Row>
+          <Row>
+            <label htmlFor='temperatureEdit' className='label'>Si es una bebida defina la temperatura</label>
             <select  {...register("temperatureEdit")}
               className="campo_entrada"
-              placeholder={toEdit.temperature}
               id='temperatureEdit'
             >
-              <option value={toEdit.temeprature}>{toEdit.temeprature}</option>
+              <option defaultValue={toEdit.temperature}>{toEdit.temperature}</option>
               <option value='caliente'>Caliente</option>
               <option value='frio'>Frio</option>
             </select>
@@ -305,20 +312,35 @@ const AdjustProduct = () => {
             <label htmlFor='img_urlEdit' className='label'>Link a nueva imagen</label>
             <input {...register("img_urlEdit")}
               className="campo_entrada"
-              placeholder={toEdit.img_url}
+              defaultValue={toEdit.img_url}
               id='img_urlEdit'
             />
             <p className='error'>{errors.img_url?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='stock_nameEdit' className='label'>Elemento de descontar de Inventario</label>
+            <label htmlFor='stock_nameEdit' className='label'>Elemento a descontar de Inventario (No Combo)</label>
             <select  {...register("stock_nameEdit")}
               className="campo_entrada"
-              placeholder={toEdit.stock_name}
+              defaultValue={toEdit.stock_name}
               id='stock_nameEdit'
             >
-              <option value=''>Para ver opciones selecciona nuevamente la categoria</option>
+              <option defaultValue={toEdit.stock_name} >{toEdit.stock_name}</option>
               {selectedNamesEdit.map((e, index) => {
+                return (
+                  <option key={index} value={e.name} >{e.name}</option>
+                )
+              })}
+            </select>
+            <p className='error'>{errors.stock_name?.message}</p>
+          </Row>
+          <Row>
+            <label htmlFor='stock_nameEdit' className='label'>Agrupacion a descontar de Inventario (Combo)</label>
+            <select {...register("combo_name")}
+              className="campo_entrada"
+              placeholder="Agrupacion Xa Combo "
+            >
+
+              {combos.map((e, index) => {
                 return (
                   <option key={index} value={e.name} >{e.name}</option>
                 )
@@ -330,20 +352,20 @@ const AdjustProduct = () => {
             <label htmlFor='stock_qtyEdit' className='label'>Cantidad adescontar del inventario (si aplica)</label>
             <input  {...register("stock_qtyEdit")}
               className="campo_entrada"
-              placeholder={toEdit.stock_qty}
               id='stock_qtyEdit'
               defaultValue={toEdit.stock_qty}
             />
             <p className='error'>{errors.stock_qty?.message}</p>
           </Row>
+
           <Row>
             <label htmlFor='statusEdit' className='label'>Defina el estado</label>
             <select {...register("statusEdit")}
               className="campo_entrada"
-              placeholder={toEdit.status}
+
               id="statusEdit"
             >
-              <option value=''>{""}</option>
+              <option defaultValue={toEdit.status}>{toEdit.status}</option>
               <option value='0'>Descontinuar</option>
               <option value='1'>Activar</option>
             </select>

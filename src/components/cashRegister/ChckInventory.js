@@ -37,7 +37,6 @@ const ChckInventory = () => {
         let termino = true
         items.map((e) => {
             let data = { ...e, ...{ id: e._id } }
-            console.log('data modificado', data)
             fetch(`${server}/stock/adjust`, {
                 method: 'PUT',
                 headers: {
@@ -62,9 +61,8 @@ const ChckInventory = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">{`Ajuste general de Inventario en ${channel}`}</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
-            {console.log('lista', stockItems)}
             {createItemsCopy()}
             <Container >
                 <form onSubmit={handleSubmit}>
@@ -86,8 +84,7 @@ const ChckInventory = () => {
                                         <td>{e.quantity}</td>
                                         <td>
                                             <input defaultValue={e.quantity}
-                                                // onChange={(event) => console.log(event.target.value)}
-                                                onChange={(event) => { items[index].quantity = parseInt(event.target.value); console.log(items[index].quantity) }}
+                                                onChange={(event) => { items[index].quantity = parseInt(event.target.value) }}
                                             />
 
                                         </td>

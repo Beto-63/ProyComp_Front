@@ -15,7 +15,7 @@ const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
     name: yup.string().trim(),
     personal_email: yup.string().email(),
-    phone_number: yup.string().trim(),
+    phone_number: yup.number().typeError('Numeros Unicamente: nacional 60+Cod+número / intl +Cod país+Cod+número '),
     channel: yup.string().trim(),
     user_cat: yup.string().trim(),
     status: yup.number(),
@@ -132,7 +132,7 @@ const AdjustUser = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Ajuste a datos de usuario</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/user" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

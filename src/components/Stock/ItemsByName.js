@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import { Row, Container, Table } from 'react-bootstrap';
+import { Row, Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -38,8 +38,6 @@ const ItemsByName = () => {
         resolver: yupResolver(schema)
     });
     const onSubmit = (data) => {
-        let obj = { name: data.name, channel: data.channel, qty: data.qty }
-        console.log(obj)
         reset();
     };
 
@@ -75,7 +73,7 @@ const ItemsByName = () => {
     return (
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Consulta por nombre</p>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/stock" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>
@@ -102,39 +100,39 @@ const ItemsByName = () => {
                             placeholder="Escoja el Item"
                             id='name'
                         >
-                            <option value=''>Elemento a adicionar</option>
+                            <option value=''>Selecciona el Elemento</option>
                             {selectedNames.map((e, index) => {
                                 return (
-                                    <option key={index} value={e.name} >{`El producto ${e.name} / ${e.channel}`}</option>
+                                    <option key={index} value={e.name} >{`${e.name} / ${e.channel}`}</option>
                                 )
                             })}
                         </select>
                         <p className='error'>{errors.qty?.name}</p>
                     </Row>
-                    <Row>
-                        <Table responsive="sm" >
-                            <thead>
-                                <tr>
 
-                                    <th>Nombre</th>
-                                    <th>Ubicación</th>
-                                    <th>Cantidad</th>
-                                </tr>
-                            </thead>
-                            {selectedItems.map((c, index) => {
-                                return (
-                                    <tbody key={index}>
-                                        <tr>
-                                            <td>{c.name}</td>
-                                            <td>{c.channel}</td>
-                                            <td>{c.quantity}</td>
-                                        </tr>
-                                    </tbody>
-                                )
-                            })}
+                    <table table className='center' >
+                        <thead>
+                            <tr>
 
-                        </Table>
-                    </Row>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        {selectedItems.map((c, index) => {
+                            return (
+                                <tbody key={index}>
+                                    <tr>
+                                        <td>{c.name}</td>
+                                        <td>{c.channel}</td>
+                                        <td>{c.quantity}</td>
+                                    </tr>
+                                </tbody>
+                            )
+                        })}
+
+                    </table>
+
 
                 </form>
             </Container>

@@ -24,7 +24,7 @@ const OpenRegister = () => {
 
     let navigate = useNavigate();
 
-    const { setConfirmacion, lastClose, channel } = useContext(CashContext)
+    const { setConfirmacion, lastClose, channel, userEmail } = useContext(CashContext)
 
     useEffect(() => {
         setConfirmacion('')
@@ -50,6 +50,7 @@ const OpenRegister = () => {
                 cash_on_hand: data.change_amount + newAmountToDeposit,
                 change_amount: data.change_amount,
                 channel: channel, //del token
+                user_email: userEmail, //del token
                 status: 1
             }
             // fetch de apertura
@@ -86,7 +87,7 @@ const OpenRegister = () => {
         <div className='canvas_claro' >
             <p className="titulo_oscuro">Abre tu caja</p>
             {/* Se insertan los links de navegacion general */}
-            <Link to="/" className='inicio'>Inicio</Link>
+            <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/cash" className='volver'>Volver</Link>
             <Container >
                 <form className='container' onSubmit={handleSubmit(onSubmit)}>

@@ -12,9 +12,12 @@ const NavStock = () => {
     const goToAdjust = () => {
         navigate('/product/adjust');
     }
+    const goToCombo = () => {
+        navigate('/product/combo');
+    }
     return (
         <div className='canvas_oscuro'>
-            <Link to="/" className='inicio' >Inicio</Link>
+            <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             {/* revisar a donde regresa la linea anterior */}
             <p className="titulo_claro">Gestión de Productos</p>
@@ -25,6 +28,9 @@ const NavStock = () => {
                     </Col>
                     <Col>
                         <button className='btn-dark-bkg' onClick={goToAdjust} >Ajuste a Producto</button>
+                    </Col>
+                    <Col>
+                        <button className='btn-dark-bkg' onClick={goToCombo} >Agrupación Xa Combo</button>
                     </Col>
                 </Row>
             </Container>

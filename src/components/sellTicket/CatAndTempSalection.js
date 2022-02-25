@@ -1,30 +1,40 @@
 import React, { useContext, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Container, Form } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
 import { server } from '../../context/Api'
+import SaleSummary from './SaleSummary';
+
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
 
 
 const ProductSelectForm = () => {
+
     const objCat = {
         cat_name: ''
     }
 
     const objTemp = {
-        temp: ''
+        temperature: ''
     }
 
     const navigate = useNavigate()
 
-    const { categories, selectedProducts, setSelectedProducts } = useContext(SellTicketContext)
+    const { keepSelecting, setKeepSelecting,
+
+        categories,
+        setSelectedProducts,
+        objCombo, setObjCombo,
+        summary, setSummary,
+    } = useContext(SellTicketContext)
 
     const [drink, setDrink] = useState(false);
     const [cat, setCat] = useState(objCat)
     const [temp, setTemp] = useState(objTemp)
+
 
     const handleCat = (e) => {
         let obj = { ...cat, [e.target.name]: e.target.value }
@@ -41,8 +51,8 @@ const ProductSelectForm = () => {
     }
 
 
-    const handleProduct = (objProduct) => {
-        if (temp.temp === '') {
+    const handleProduct = () => {
+        if (!drink) {
             let obj = {
                 cat_name: cat.cat_name
             };
@@ -57,9 +67,9 @@ const ProductSelectForm = () => {
                 .then(response => response.json())
                 .then(json => setSelectedProducts(json));
         } else {
-            let obj = {
+            let obj2 = {
                 cat_name: cat.cat_name,
-                temperature: temp.temp
+                temperature: temp.temperature
             };
 
             fetch(`${server}/product/selectCatTemp`, {
@@ -67,74 +77,121 @@ const ProductSelectForm = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(obj)
+                body: JSON.stringify(obj2)
             })
                 .then(response => response.json())
                 .then(json => setSelectedProducts(json));
         }
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+
+
+    const handleCloseSale = () => {
+        setKeepSelecting(false)
+    }
+
+    const handleAddItems = (e) => {
         handleProduct()
+        setSummary(true)
         setCat(objCat)
         setTemp(objTemp)
-        console.log(selectedProducts)
-        navigate('/sell/chooseProductTable');
+
+        switch (cat.cat_name) {
+            case
+                'Té': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Infusión': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Evento': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Accesorios': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Combo': navigate('/sell/chooseProductTable');
+                break;
+            case
+                'Paquete': navigate("/sell/packet");
+                break;
+            case
+                'no inventariable': navigate("/sell/catTempSelection");
+                break;
+            default:
+            //do nothing
+
+        }
     }
     return (
-        <div>
-            <Form onSubmit={handleSubmit}>
-                <Form.Label>Tipo de Producto:</Form.Label>
-                <div className="mb-3">
-                    {categories.map((e, index) => (
-                        <Form.Check
-                            key={index}
-                            onClick={handleCat}
-                            inline
-                            label={e.name}
-                            name="cat_name"
-                            type='radio'
-                            id={`inline-radio-1`}
-                            value={e.name}
-                        />
+        <div className='canvas_claro'>
+            <p className="titulo_oscuro">Selecciona los productos</p>
+            <Link to="/menu" className='inicio'>Inicio</Link>
+            <Link to="/sell" className='volver'>Volver</Link>
+            <Container >
+                <div >
+                    {keepSelecting ?
+                        <div>
+                            <Form.Label>Tipo de Producto:</Form.Label>
+                            <div className="mb-3">
+                                {categories.map((e, index) => (
+                                    <Form.Check
+                                        key={index}
+                                        onClick={handleCat}
+                                        inline
+                                        label={e.name}
+                                        name="cat_name"
+                                        type='radio'
+                                        id={`inline-radio-1`}
+                                        value={e.name}
+                                    />
 
-                    ))}
-                </div>
-                {drink ?
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Label>Temperatira de las bebidas:</Form.Label>
-                        <div className="mb-3" >
+                                ))}
+                            </div>
+                            {drink ?
+                                <div>
+                                    <Form.Label>Temperatira de las bebidas:</Form.Label>
+                                    <div className="mb-3" >
 
-                            <Form.Check
-                                onClick={handleTemp}
-                                inline
-                                label='Caliente'
-                                name="temperature"
-                                type='radio'
-                                id={`inline-radio-1`}
-                                value='Caliente'
-                            />
-                            <Form.Check
-                                onClick={handleTemp}
-                                inline
-                                label='Frío'
-                                name="temperature"
-                                type='radio'
-                                id={`inline-radio-1`}
-                                value='Frío'
-                            />
+                                        <Form.Check
+                                            onClick={handleTemp}
+                                            inline
+                                            label='Caliente'
+                                            name="temperature"
+                                            type='radio'
+                                            id={`inline-radio-1`}
+                                            value='Caliente'
+                                        />
+                                        <Form.Check
+                                            onClick={handleTemp}
+                                            inline
+                                            label='Frío'
+                                            name="temperature"
+                                            type='radio'
+                                            id={`inline-radio-1`}
+                                            value='Frío'
+                                        />
+                                    </div>
+                                </div>
+                                :
+                                ''}
+
+                            <div><button className='btn-light-bkg' type='button' onClick={handleAddItems}>Escoger</button></div>
+                            <br />
+                            <div><button className='btn-light-bkg' type='button' onClick={handleCloseSale}>Terminar</button></div>
                         </div>
-                    </Form>
-                    :
-                    ''}
-
-
-
-                <Button variant='secondary' type="submit">Escoge el Producto</Button>
-            </Form>
-
+                        :
+                        ''
+                    }
+                </div>
+            </Container>
+            {summary ?
+                <SaleSummary />
+                :
+                ''
+            }
         </div>
+
     );
 };
 
