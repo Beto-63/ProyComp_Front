@@ -27,7 +27,7 @@ const ProductSelectForm = () => {
 
         categories,
         setSelectedProducts,
-        setSelectedCategory,
+        objCombo, setObjCombo,
         summary, setSummary,
     } = useContext(SellTicketContext)
 
@@ -51,7 +51,7 @@ const ProductSelectForm = () => {
     }
 
 
-    const handleProduct = (objProduct) => {
+    const handleProduct = () => {
         if (!drink) {
             let obj = {
                 cat_name: cat.cat_name
@@ -71,7 +71,7 @@ const ProductSelectForm = () => {
                 cat_name: cat.cat_name,
                 temperature: temp.temperature
             };
-            setSelectedCategory(cat.cat_name)
+
             fetch(`${server}/product/selectCatTemp`, {
                 method: 'POST',
                 headers: {
@@ -84,12 +84,13 @@ const ProductSelectForm = () => {
         }
     }
 
+
+
     const handleCloseSale = () => {
         setKeepSelecting(false)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleAddItems = (e) => {
         handleProduct()
         setSummary(true)
         setCat(objCat)
@@ -128,9 +129,8 @@ const ProductSelectForm = () => {
             <Link to="/menu" className='inicio'>Inicio</Link>
             <Link to="/sell" className='volver'>Volver</Link>
             <Container >
-                <Form >
+                <div >
                     {keepSelecting ?
-
                         <div>
                             <Form.Label>Tipo de Producto:</Form.Label>
                             <div className="mb-3">
@@ -176,14 +176,14 @@ const ProductSelectForm = () => {
                                 :
                                 ''}
 
-                            <div><button className='btn-light-bkg' onClick={handleSubmit}>Escoger</button></div>
+                            <div><button className='btn-light-bkg' type='button' onClick={handleAddItems}>Escoger</button></div>
                             <br />
                             <div><button className='btn-light-bkg' type='button' onClick={handleCloseSale}>Terminar</button></div>
                         </div>
                         :
                         ''
                     }
-                </Form>
+                </div>
             </Container>
             {summary ?
                 <SaleSummary />

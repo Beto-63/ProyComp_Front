@@ -111,7 +111,7 @@ const ClientForm = () => {
                             id={`inline-radio-3`}
                             value={"Otro"}
                         />
-                        <p className='error'>{errors.gender?.message}</p>
+                        <p className='error-drk-bkg'>{errors.gender?.message}</p>
                     </div>
                     <Form.Label>Edad:</Form.Label>
                     <div className="mb-3">
@@ -178,7 +178,7 @@ const ClientForm = () => {
                             id={`inline-radio-7`}
                             value={'81-100'}
                         />
-                        <p className='error'>{errors.age_group?.message}</p>
+                        <p className='error-drk-bkg'>{errors.age_group?.message}</p>
                     </div>
 
                     <button type="submit" className='btn-dark-bkg-small'>Continuar</button>

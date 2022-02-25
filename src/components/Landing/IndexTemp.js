@@ -28,12 +28,12 @@ const IndexTemp = () => {
             <br /><br />
             <a href="https://www.eldoko.com/">Visita Nuestra tienda virtual</a>
             <br /><br />
-            <form className='container'>
 
 
-                <button className='btn-light-bkg' onClick={goToLogin}>Soy empleado!</button>
-                <br /><br />
-            </form>
+
+            <button className='btn-light-bkg' onClick={goToLogin}>Soy empleado!</button>
+            <br /><br />
+
         </div>
     )
 }

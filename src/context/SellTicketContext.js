@@ -13,7 +13,6 @@ const SellTicketProvider = ({ children }) => {
     const [origins, setOrigins] = useState([{}]);                   // Describe los origenes de la venta
     const [paymentMethods, setPaymentMethods] = useState([{}]);     // Tipo de pago recibido
     const [categories, setCategories] = useState([{}]);             // Categorias de producto para poderlas seleccionar  
-    const [selectedCategory, setSelectedCategory] = useState('')     // Categoria de producto de la cual hacer la seleccion --clave para manejo de Combos
     const [selectedProducts, setSelectedProducts] = useState([{}])  // Son la ista corta de productos por cat y temp(si aplica)
     const [clientId, setClientId] = useState({})                    // Es el Objeto cliente al que se refiere la venta, para armar el sell ticket
     const [saleSummary, setSaleSummary] = useState([])
@@ -21,7 +20,9 @@ const SellTicketProvider = ({ children }) => {
     const [allPackets, setAllPackets] = useState([])
     //La venta fue en efectivo?
     const [finalSale, setFinalSale] = useState(0)
-    const [isCash, setIsCash] = useState(false)
+    const [isCash, setIsCash] = useState(true)
+    //contiene los combos que se vendan
+    const [objCombo, setObjCombo] = useState([])
 
     const data = {
         keepSelecting, setKeepSelecting,
@@ -30,14 +31,14 @@ const SellTicketProvider = ({ children }) => {
         categories, setCategories,
         selectedProducts, setSelectedProducts,
         clientId, setClientId,
-        selectedCategory, setSelectedCategory,
         saleSummary, setSaleSummary,
         summary, setSummary,
         packsToFill, setPacksToFill,
         allPackets, setAllPackets,
         showPacketList, setShowPacketList,
         finalSale, setFinalSale,
-        isCash, setIsCash
+        isCash, setIsCash,
+        objCombo, setObjCombo
 
     };
 

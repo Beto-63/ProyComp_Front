@@ -25,7 +25,8 @@ const SaleSummary = () => {
     const { saleSummary, setSaleSummary,
         keepSelecting, clientId,
         paymentMethods, origins,
-        setClientId
+        setClientId, setFinalSale,
+        objCombo
 
     } = useContext(SellTicketContext)
     const { channel, userEmail } = useContext(CashContext)
@@ -36,9 +37,10 @@ const SaleSummary = () => {
     }
 
     const handleSale = (e) => {
-        e.preventDefault();
+
         const answer = window.confirm('Estas confirmando la venta?')
         if (answer) {
+            setFinalSale(saleTotal)
             let obj = {
                 client_id: clientId._id,
                 products_sold: saleSummary,
@@ -149,6 +151,7 @@ const SaleSummary = () => {
                         </form>
                     </div>
                 }
+                "el contenido de objCombo es" {JSON.stringify(objCombo)}
             </div>
         </>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 
 /**********************Importacion de Componentes**************************/
@@ -13,57 +13,50 @@ import '../generic/Light-bkg.css'
 
 const ChooseProductTable = () => {
 
-    const { selectedProducts,
+    const { selectedProducts, objCombo, setObjCombo,
         saleSummary, setSaleSummary
     } = useContext(SellTicketContext)
-
+    let combos = [{}]
     const [saleProductTemp, setSaleProductTemp] = useState([])
-    const [objCombo, setObjCombo] = useState({})
+    const [newCombo, setNewCombo] = useState({})
+
+    useEffect(() => {
+        setObjCombo([...objCombo, newCombo])
+    }, [newCombo])
+
 
     const getProductsForCombo = (objName) => {
+        const { name } = objName.name
+        let comboName = { name: name }
         fetch(`${server}/product/combo/findByName`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(objName)
+            body: JSON.stringify(comboName)
         })
             .then(response => response.json())
-            .then(json => setObjCombo(json));
+            .then(json => setNewCombo(json));
 
+        // se toma el combo de la definicion del prodcto y 
+        // se adiciona al del contexto que tiene los combos incluidos en la venta
     }
-
     const navigate = useNavigate()
 
     const handleAddQty = (obj, qty) => {
+        console.log("objeto", obj, "cantidad", qty)
         if (qty !== NaN || qty !== 0) {
             let newObj = {}
-            let arrayCombo = []
-            let arrayQuantitiesCombo = []
             let array = saleProductTemp.filter((e) => (e._id !== obj._id))
-            if (obj.cat_name !== "Combo") {
-                newObj = { ...obj, ...{ quantity: qty } }
-                if (qty !== 0) {
-
-                    array = [...array, newObj]
-                }
-                setSaleProductTemp(array)
-            } else {
-                getProductsForCombo({ name: obj.cat_name })
-
-                console.log("voy a meter los articulos del combo", obj, qty)
-                arrayCombo = objCombo.products
-
-
-            }
-            console.log("lo que esta en la coleccion de Combo", arrayCombo)
-            console.log("Lo que queda en lo escogido", arrayQuantitiesCombo)
+            newObj = { ...obj, ...{ quantity: qty } }
             if (qty !== 0) {
-
-                array = [...array, ...arrayQuantitiesCombo]
+                array = [...array, newObj]
             }
             setSaleProductTemp(array)
             console.log("el definitivo", array)
+            if (obj.cat_name === "Combo") {
+                getProductsForCombo({ name: obj.combo_name })
+            }
         } else {
             // do nothing
         }
@@ -117,6 +110,7 @@ const ChooseProductTable = () => {
                     <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
                 </div>
             </form>
+            {JSON.stringify(objCombo)}
         </div>
 
     );

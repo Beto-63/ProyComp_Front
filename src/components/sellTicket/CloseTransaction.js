@@ -1,6 +1,6 @@
 /**********************Importacion de Librerias****************************/
-import React, { useContext } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Row, Container } from 'react-bootstrap';
 
 
@@ -13,10 +13,34 @@ import '../generic/Light-bkg.css'
 
 
 const CloseTransaction = () => {
-
+    const navigate = useNavigate()
+    const [changeAmount, setChangeAmount] = useState(0)
     const { selectedProducts,
-        saleSummary, setSaleSummary, isCash, finalSale
+        saleSummary, setSaleSummary, isCash, finalSale,
+        setKeepSelecting, setSelectedProducts, setClientId,
+        setSummary, setPacksToFill, setAllPackets, setShowPacketList,
+        setFinalSale, setIsCash, setObjCombo
     } = useContext(SellTicketContext)
+
+    const change = () => {
+        setChangeAmount(document.getElementById('amountReceived').value - finalSale)
+    }
+
+    const close = () => {
+        setKeepSelecting(true)
+        setSelectedProducts([{}])
+        setClientId({})
+        setSaleSummary([])
+        setSummary(false)
+        setPacksToFill([])
+        setAllPackets([])
+        setShowPacketList(false)
+        setFinalSale(0)
+        setIsCash(true)
+        setObjCombo([])
+        navigate('/sell')
+
+    }
 
 
     return (
@@ -51,18 +75,23 @@ const CloseTransaction = () => {
                                 )
                             })}
                         </tbody>
-                        <p>{`Has vendido un monto de ${finalSale}`}</p>
-                        {isCash ?
-                            <div>
-                                <label htmlFor='cash' className='label'>{`Recibes`}</label>
-                                <input className="campo_entrada" type='number' id="cash" />
-                                <p className='label'>{`Vas a dar ${document.getElementById('cash').value - finalSale} de Vueltos `}</p>
-                            </div>
-                            :
-                            <label className='label'>La venta se hizo con medio electronico</label>
-                        }
                     </table>
-                    <button className='btn-light-bkg' type="submit">Ir a vender</button>
+                    <p>{`Has vendido un monto de ${finalSale}`}</p>
+                    {isCash ?
+                        <div>
+                            <label htmlFor='amountReceived' className='label'>Recibes</label>
+                            <br />
+                            <input className="campo_entrada" type='number' id="amountReceived" defaultValue={0} onChange={change} />
+
+                            <p className='vueltos'>{`Deber devolver ${changeAmount}`}</p>
+                        </div>
+                        :
+                        <div>
+                            <label className='result'>La venta se hizo con medio electronico, no hay vueltos</label>
+                            <br />
+                        </div>
+                    }
+                    <button className='btn-light-bkg' type="button" onClick={close}>Ir a vender</button>
                 </Container>
             </div>
 
