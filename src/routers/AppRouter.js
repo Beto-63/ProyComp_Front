@@ -1,8 +1,8 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 //Importar componentes o paginas
-import IndexTemp from '../components/Landing/IndexTemp'
+import GeneralMenu from '../components/generic/GeneralMenu';
 import CashRegister from '../pages/CashRegister';
 import Product from '../pages/Product';
 import Sell from '../pages/SellTicket';
@@ -24,21 +24,20 @@ import AdjustQuantity from '../components/Stock/AdjustQuantity';
 import AdjustElement from '../components/Stock/AdjustElement';
 import CreateUser from '../components/user/CreateUser';
 import AdjustUser from '../components/user/AdjustUser';
-import NotFound from '../components/auth/NotFound';
 import CatAndTempSelction from '../components/sellTicket/CatAndTempSalection';
 import ChooseProductTable from '../components/sellTicket/ChooseProductTable';
-import GeneralMenu from '../components/generic/GeneralMenu';
 import ProductSelectForm from '../components/sellTicket/CatAndTempSalection';
 import CloseTransaction from '../components/sellTicket/CloseTransaction';
 import Packet from '../components/sellTicket/Packet';
 import CreateCombo from '../components/product/CreateCombo';
 
+import Logout from '../components/auth/Logout';
 
 export const AppRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={<IndexTemp />} />
-            <Route path="/menu" element={<GeneralMenu />} />
+
+            <Route path="/" element={<GeneralMenu />} />
 
             <Route path="/cash" element={<CashRegister />} />
             <Route path="/cash/open" element={<OpenRegister />} />
@@ -72,7 +71,10 @@ export const AppRouter = () => {
             <Route path="/user" element={<User />} />
             <Route path="/user/createUser" element={<CreateUser />} />
             <Route path="/user/adjustUser" element={<AdjustUser />} />
-            <Route path="*" element={<NotFound />} />
+            
+            <Route path='/logout' element={<Logout />} />
+            
+            <Route path="*" element={<Navigate replace to="/" />} />
 
 
         </Routes>

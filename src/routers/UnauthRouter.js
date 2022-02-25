@@ -1,8 +1,8 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 //Importar componentes o paginas
-import Auth from '../pages/Auth';
+import IndexLanding from '../components/Landing/Index';
 import Login from '../components/auth/Login';
 import PasswordRecovery1 from '../components/auth/PasswordRecovery1';
 import PasswordRecovery2 from '../components/auth/PasswordRecovery2';
@@ -10,11 +10,11 @@ import PasswordRecovery2 from '../components/auth/PasswordRecovery2';
 export const UnauthRouter = () => {
     return (
         <Routes>
-            <Route path='/' element={<Auth />} />
+            <Route path='/' element={<IndexLanding />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/rec1' element={<PasswordRecovery1 />} />
-            <Route path='/rec2' element={<PasswordRecovery2 />} />
-            <Route path='*' element={<Login />} />
+            <Route path='/lost-password' element={<PasswordRecovery1 />} />
+            <Route path='/recovery/:token' element={<PasswordRecovery2 />} />
+            <Route path='*' element={<Navigate replace to="/"/>} />
         </Routes>
     )
 };
