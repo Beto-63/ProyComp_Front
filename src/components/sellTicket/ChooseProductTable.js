@@ -25,22 +25,22 @@ const ChooseProductTable = () => {
     }, [newCombo])
 
 
-    const getProductsForCombo = (objName) => {
-        const { name } = objName.name
-        let comboName = { name: name }
-        fetch(`${server}/product/combo/findByName`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(comboName)
-        })
-            .then(response => response.json())
-            .then(json => setNewCombo(json));
+    // const getProductsForCombo = (objName) => {
+    //     const { name } = objName.name
+    //     let comboName = { name: name }
+    //     fetch(`${server}/product/combo/findByName`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(comboName)
+    //     })
+    //         .then(response => response.json())
+    //         .then(json => setNewCombo(json));
 
-        // se toma el combo de la definicion del prodcto y 
-        // se adiciona al del contexto que tiene los combos incluidos en la venta
-    }
+    //     // se toma el combo de la definicion del prodcto y 
+    //     // se adiciona al del contexto que tiene los combos incluidos en la venta
+    // }
     const navigate = useNavigate()
 
     const handleAddQty = (obj, qty) => {
@@ -54,9 +54,9 @@ const ChooseProductTable = () => {
             }
             setSaleProductTemp(array)
             console.log("el definitivo", array)
-            if (obj.cat_name === "Combo") {
-                getProductsForCombo({ name: obj.combo_name })
-            }
+            // if (obj.cat_name === "Combo") {
+            //     getProductsForCombo({ name: obj.combo_name })
+            // }
         } else {
             // do nothing
         }
@@ -110,7 +110,7 @@ const ChooseProductTable = () => {
                     <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
                 </div>
             </form>
-            {JSON.stringify(objCombo)}
+            {/* {JSON.stringify(objCombo)} */}
         </div>
 
     );

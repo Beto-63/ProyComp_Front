@@ -25,7 +25,7 @@ const SaleSummary = () => {
     const { saleSummary, setSaleSummary,
         keepSelecting, clientId,
         paymentMethods, origins,
-        setClientId, setFinalSale,
+        setClientId, setFinalSale, setIsCash,
         objCombo
 
     } = useContext(SellTicketContext)
@@ -51,7 +51,7 @@ const SaleSummary = () => {
                 sale_origin: document.getElementById('origin').value,
                 status: 1
             }
-
+            if (document.getElementById('payment_method').value === 'Cash') { setIsCash(true) } else { setIsCash(false) }
             fetch(`${server}/sell_ticket`, {
                 method: 'POST',
                 headers: {
@@ -151,7 +151,7 @@ const SaleSummary = () => {
                         </form>
                     </div>
                 }
-                "el contenido de objCombo es" {JSON.stringify(objCombo)}
+                {/* "el contenido de objCombo es" {JSON.stringify(objCombo)} */}
             </div>
         </>
     )
