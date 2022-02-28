@@ -157,9 +157,6 @@ color: #F58787;
     ;
  }
 
- .radio-wide{
-     margin-right: 5rem;
- } 
 
  .btn-light-bkg-short {
     background-color: #8EA7A9 ;
@@ -186,7 +183,7 @@ color: #F58787;
  .btn-light-bkg-mid-page {
     background-color: #8EA7A9 ;
     border: 2px solid #8EA7A9 ;
-    color: #F1F0E8;
+    color: #f1f0e8;
     
     width:130px;
     height: 35px;
@@ -223,3 +220,58 @@ color: #F58787;
     margin-left: auto; 
     margin-right: auto;
   }
+
+  .radio, .radio-light {
+	
+	padding: 4px;
+	position: relative;
+}
+
+.radio input {
+	width: 7rem;
+	height: 100%;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 4px 8px;
+	background: #f1f0e8;
+	color: #8EA7A9 ;
+	font-size: 14px;
+	margin: 1rem;
+	transition: all 100ms linear;
+    border-radius: 0.5em;
+}
+
+.radio-light input {
+	width: 7rem;
+	height: 100%;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 4px 8px;
+	background: #8EA7A9 ;
+	color:  #f1f0e8;
+	font-size: 14px;
+	margin: 1rem;
+	transition: all 100ms linear;
+    border-radius: 0.5em;
+}
+
+.radio input:checked, 
+.radio-light input:checked
+ {
+	background-color: #F58787;;
+	color: #fff;
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+
+.radio input:before,
+.radio-light input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}

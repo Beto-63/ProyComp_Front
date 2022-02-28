@@ -25,22 +25,7 @@ const ChooseProductTable = () => {
     }, [newCombo])
 
 
-    // const getProductsForCombo = (objName) => {
-    //     const { name } = objName.name
-    //     let comboName = { name: name }
-    //     fetch(`${server}/product/combo/findByName`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(comboName)
-    //     })
-    //         .then(response => response.json())
-    //         .then(json => setNewCombo(json));
 
-    //     // se toma el combo de la definicion del prodcto y 
-    //     // se adiciona al del contexto que tiene los combos incluidos en la venta
-    // }
     const navigate = useNavigate()
 
     const handleAddQty = (obj, qty) => {

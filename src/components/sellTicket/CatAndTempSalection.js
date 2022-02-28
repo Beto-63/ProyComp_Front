@@ -132,14 +132,13 @@ const ProductSelectForm = () => {
                 <div >
                     {keepSelecting ?
                         <div>
-                            <Form.Label>Tipo de Producto:</Form.Label>
-                            <div className="mb-3">
+                            <label>Tipo de Producto:</label>
+                            <div className="radio-light">
                                 {categories.map((e, index) => (
-                                    <Form.Check
+                                    <input
                                         key={index}
                                         onClick={handleCat}
                                         inline
-                                        className='radio-wide'
                                         label={e.name}
                                         name="cat_name"
                                         type='radio'
@@ -151,10 +150,10 @@ const ProductSelectForm = () => {
                             </div>
                             {drink ?
                                 <div>
-                                    <Form.Label>Temperatira de las bebidas:</Form.Label>
-                                    <div className="mb-3" >
+                                    <label>Temperatura de las bebidas:</label>
+                                    <div className='radio-light' >
 
-                                        <Form.Check
+                                        <input
                                             onClick={handleTemp}
                                             inline
                                             label='Caliente'
@@ -163,7 +162,7 @@ const ProductSelectForm = () => {
                                             id={`inline-radio-1`}
                                             value='Caliente'
                                         />
-                                        <Form.Check
+                                        <input
                                             onClick={handleTemp}
                                             inline
                                             label='Frío'

@@ -81,41 +81,39 @@ const ClientForm = () => {
                     <br />
 
 
-                    <Form.Label>Género:</Form.Label>
+                    <label>Género:</label>
 
-                    <div className="mb-3">
-                        <Form.Check {...register("gender")}
+                    <div className="radio">
 
-                            inline
-                            label="F"
-                            name="gender"
+                        <input {...register("gender")}
                             type='radio'
-                            id={`inline-radio-1`}
+                            id={`F`}
+                            name="gender"
                             value={"F"}
+                            label="F"
                         />
-                        <Form.Check {...register("gender")}
 
-                            inline
-                            label="M"
-                            name="gender"
+                        <input {...register("gender")}
                             type='radio'
-                            id={`inline-radio-2`}
+                            id={`M`}
+                            name="gender"
                             value={"M"}
+                            label="M"
                         />
-                        <Form.Check {...register("gender")}
 
-                            inline
-                            label="Otro"
-                            name="gender"
+                        <input {...register("gender")}
                             type='radio'
-                            id={`inline-radio-3`}
+                            id={`Otro`}
+                            name="gender"
                             value={"Otro"}
+                            label="Otro"
                         />
+
                         <p className='error-drk-bkg'>{errors.gender?.message}</p>
                     </div>
                     <Form.Label>Edad:</Form.Label>
-                    <div className="mb-3">
-                        <Form.Check {...register("age_group")}
+                    <div className="radio">
+                        <input {...register("age_group")}
 
                             inline
                             label="0-11"
@@ -124,7 +122,7 @@ const ClientForm = () => {
                             id={`inline-radio-1`}
                             value={'0-11'}
                         />
-                        <Form.Check {...register("age_group")}
+                        <input {...register("age_group")}
 
                             inline
                             label="12-19"
@@ -133,7 +131,7 @@ const ClientForm = () => {
                             id={`inline-radio-2`}
                             value={'12-19'}
                         />
-                        <Form.Check {...register("age_group")}
+                        <input {...register("age_group")}
 
                             inline
                             label="20-29"
@@ -142,7 +140,7 @@ const ClientForm = () => {
                             id={`inline-radio-3`}
                             value={'20-29'}
                         />
-                        <Form.Check {...register("age_group")}
+                        <input {...register("age_group")}
 
                             inline
                             label="30-40"
@@ -151,7 +149,7 @@ const ClientForm = () => {
                             id={`inline-radio-4`}
                             value={'30-40'}
                         />
-                        <Form.Check {...register("age_group")}
+                        <input {...register("age_group")}
 
                             inline
                             label="41-60"
@@ -160,7 +158,7 @@ const ClientForm = () => {
                             id={`inline-radio-5`}
                             value={'41-60'}
                         />
-                        <Form.Check {...register("age_group")}
+                        <input {...register("age_group")}
 
                             inline
                             label="61-80"
@@ -169,7 +167,7 @@ const ClientForm = () => {
                             id={`inline-radio-6`}
                             value={'61-80'}
                         />
-                        <Form.Check {...register("age_group")}
+                        <input {...register("age_group")}
 
                             inline
                             label="Mayor"
