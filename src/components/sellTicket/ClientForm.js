@@ -9,6 +9,7 @@ import SellTicketContext from '../../context/SellTicketContext';
 import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
 import '../generic/Nav.css'
+import '../generic/Light-bkg.css'
 
 
 const schema = yup.object({
@@ -63,7 +64,7 @@ const ClientForm = () => {
             <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             <Container>
-                <form className='container' onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
 
                     <input {...register("name")}
                         className="campo_entrada_cliente"
@@ -81,7 +82,7 @@ const ClientForm = () => {
                     <br />
 
 
-                    <label>Género:</label>
+                    <label className="titulo_claro">Género:</label>
 
                     <div className="radio">
 
@@ -111,7 +112,7 @@ const ClientForm = () => {
 
                         <p className='error-drk-bkg'>{errors.gender?.message}</p>
                     </div>
-                    <Form.Label>Edad:</Form.Label>
+                    <label className="titulo_claro">Edad:</label>
                     <div className="radio">
                         <input {...register("age_group")}
 

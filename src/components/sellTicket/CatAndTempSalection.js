@@ -176,7 +176,10 @@ const ProductSelectForm = () => {
                                 :
                                 ''}
 
-                            <div><button className='btn-light-bkg' type='button' onClick={handleAddItems}>Escoger</button></div>
+                            <div>
+                                <br />
+                                <button className='btn-light-bkg' type='button' onClick={handleAddItems}>Escoger</button>
+                            </div>
 
                             <br />
                             <p>Al terminar de escoger oprime Ya! y procederas al pago</p>
