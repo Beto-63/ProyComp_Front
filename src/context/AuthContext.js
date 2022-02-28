@@ -111,10 +111,10 @@ const AuthProvider = ({ children }) => {
     // }
 
     // const data = {handleRegister, auth, handleLogin}
-    const data = {  
-                    auth, setAuth,
-                    //token, setToken 
-                }
+    const data = {
+        auth, setAuth,
+        //token, setToken 
+    }
 
     return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
 }

@@ -33,15 +33,11 @@ const ClosureBlind = () => {
     });
 
     const presentClose = (cash) => {
-        if ((cash > expectedCashOnHand * 0.95) && (cash < expectedCashOnHand * 1.05)) {
+
+        (Math.abs(cash - expectedCashOnHand) <= 0.05 * Math.abs(expectedCashOnHand)) ?
             setShowClosure(true)
-        } else {
-            setShowClosure(false)
+            :
             alert("El monto ingresado es muy diferente del esperado. \nAsegurate de haber registrado consignaciones y gastos. \nIntentalo nuevamente")
-        }
-        let test = expectedCashOnHand
-        console.log("Limite superior", test * 1.05)
-        console.log("Limite inferior", test * 0.95)
 
     }
 

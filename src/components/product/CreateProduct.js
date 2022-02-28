@@ -144,7 +144,7 @@ const CreateProduct = () => {
             <Row>
               <select {...register("fill")}
                 className="campo_entrada"
-                placeholder="Se requiere solo en Paquetes: Té e Infusión"
+                placeholder="Se requiere solo venta por gramos: Té e Infusión"
               >
 
                 <option value='Té'>de Té</option>

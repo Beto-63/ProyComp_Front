@@ -16,15 +16,15 @@ import '../generic/Light-bkg.css'
 
 const schema = yup.object({
 
-    weight: yup.number().typeError('Ingresa el tamaño del paquete').moreThan(0, 'El valor debe ser positivo').required(),
-    cat_name: yup.string().trim().required('Con que vas a llenar el Paquete: Té o Infusión'),
+    weight: yup.number().typeError('Ingresa gramaje a vender').moreThan(0, 'El valor debe ser positivo').required(),
+    cat_name: yup.string().trim().required('Con que vas a llenar la bolsa: Té o Infusión?'),
 
 })
 
 
 
 const FilterPacket = () => {
-    // selectedProducts: en este caso son los productos tipificados como paquetes
+
     const { selectedProducts, setSelectedProducts,
         setShowPacketList
     } = useContext(SellTicketContext)
@@ -61,7 +61,7 @@ const FilterPacket = () => {
         <>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <Form.Label >Describe el paquete</Form.Label>
+                    <Form.Label >Describe contenido de la venta por gramos</Form.Label>
                     <div className="mb-3" >
 
                         <Form.Check  {...register("cat_name")}
@@ -86,7 +86,7 @@ const FilterPacket = () => {
                     </div>
                 </div>
                 <div>
-                    {/* <Form.Label>¿De cuantos gramos es el paquete?</Form.Label> */}
+
                     <div className="mb-3" >
 
                         <Form.Check  {...register("weight")}

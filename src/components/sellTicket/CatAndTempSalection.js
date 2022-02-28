@@ -25,7 +25,7 @@ const ProductSelectForm = () => {
 
     const { keepSelecting, setKeepSelecting,
 
-        categories,
+        categories, saleSummary,
         setSelectedProducts,
         objCombo, setObjCombo,
         summary, setSummary,
@@ -87,7 +87,7 @@ const ProductSelectForm = () => {
 
 
     const handleCloseSale = () => {
-        setKeepSelecting(false)
+        (saleSummary.length > 0) ? setKeepSelecting(false) : window.alert("No has seleccionado nada")
     }
 
     const handleAddItems = (e) => {
@@ -113,7 +113,7 @@ const ProductSelectForm = () => {
                 'Combo': navigate('/sell/chooseProductTable');
                 break;
             case
-                'Paquete': navigate("/sell/packet");
+                'Por Gramos': navigate("/sell/packet");
                 break;
             case
                 'no inventariable': navigate("/sell/catTempSelection");
@@ -139,6 +139,7 @@ const ProductSelectForm = () => {
                                         key={index}
                                         onClick={handleCat}
                                         inline
+                                        className='radio-wide'
                                         label={e.name}
                                         name="cat_name"
                                         type='radio'
@@ -177,8 +178,10 @@ const ProductSelectForm = () => {
                                 ''}
 
                             <div><button className='btn-light-bkg' type='button' onClick={handleAddItems}>Escoger</button></div>
+
                             <br />
-                            <div><button className='btn-light-bkg' type='button' onClick={handleCloseSale}>Terminar</button></div>
+                            <p>Al terminar de escoger oprime Ya! y procederas al pago</p>
+                            <div><button className='btn-light-bkg' type='button' onClick={handleCloseSale}>Ya!</button></div>
                         </div>
                         :
                         ''

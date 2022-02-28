@@ -91,7 +91,7 @@ const CloseTransaction = () => {
                             <br />
                         </div>
                     }
-                    <button className='btn-light-bkg' type="button" onClick={close}>Ir a vender</button>
+                    <button className='btn-light-bkg' type="button" onClick={close}>Terminar</button>
                 </Container>
             </div>
 

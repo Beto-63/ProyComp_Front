@@ -285,7 +285,7 @@ const AdjustProduct = () => {
             <p className='error'>{errors.cat_nameEdit?.message}</p>
           </Row>
           <Row>
-            <label htmlFor='fillEdit' className='label'>Si es un Paquete defina si es de Té o Infusión</label>
+            <label htmlFor='fillEdit' className='label'>Si es por gramos defina si es de Té o Infusión</label>
             <select  {...register("fillEdit")}
               className="campo_entrada"
               id='fillEdit'
@@ -366,8 +366,8 @@ const AdjustProduct = () => {
               id="statusEdit"
             >
               <option defaultValue={toEdit.status}>{toEdit.status}</option>
-              <option value='0'>Descontinuar</option>
-              <option value='1'>Activar</option>
+              <option value='0'>0 = Descontinuar</option>
+              <option value='1'>1= Activar</option>
             </select>
             <p className='error'>{errors.statusEdit?.message}</p>
           </Row>
