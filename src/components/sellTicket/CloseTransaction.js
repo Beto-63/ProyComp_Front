@@ -1,7 +1,7 @@
 /**********************Importacion de Librerias****************************/
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { Row, Container } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 
 /**********************Importacion de Componentes**************************/
@@ -15,7 +15,7 @@ import '../generic/Light-bkg.css'
 const CloseTransaction = () => {
     const navigate = useNavigate()
     const [changeAmount, setChangeAmount] = useState(0)
-    const { selectedProducts,
+    const {
         saleSummary, setSaleSummary, isCash, finalSale,
         setKeepSelecting, setSelectedProducts, setClientId,
         setSummary, setPacksToFill, setAllPackets, setShowPacketList,
@@ -94,8 +94,6 @@ const CloseTransaction = () => {
                     <button className='btn-light-bkg' type="button" onClick={close}>Terminar</button>
                 </Container>
             </div>
-
-            <p>Ver figma</p>
         </>
     )
 }

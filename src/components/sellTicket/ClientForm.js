@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, Form } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -52,7 +52,7 @@ const ClientForm = () => {
     return (
         <div className='canvas_oscuro'>
             <h4 className="titulo_claro">¡Bien hecho!</h4>
-            <h4 className="titulo_claro">¿Quien es tu cliente?</h4>
+            <h4 className="titulo-claro-medio">¿Quien es tu cliente?</h4>
             <Link to="/menu" className='inicio' >Inicio</Link>
             <Link to="/menu" className='volver'>Volver</Link>
             <Container>
@@ -70,11 +70,9 @@ const ClientForm = () => {
                         name='email'
                         type="email"
                         placeholder="Correo Electrónico (opcional)"
-                    />
-                    <br />
+                    /><br />
 
-
-                    <label className="titulo_claro">Género:</label>
+                    <label className="titulo-claro-medio">Género:</label>
 
                     <div className="radio">
 
@@ -104,7 +102,7 @@ const ClientForm = () => {
 
                         <p className='error-drk-bkg'>{errors.gender?.message}</p>
                     </div>
-                    <label className="titulo_claro">Edad:</label>
+                    <label className="titulo-claro-medio">Edad:</label>
                     <div className="radio">
                         <input {...register("age_group")}
 
@@ -171,8 +169,8 @@ const ClientForm = () => {
                         />
                         <p className='error-drk-bkg'>{errors.age_group?.message}</p>
                     </div>
-
                     <button type="submit" className='btn-dark-bkg-small'>Continuar</button>
+
                 </form>
             </Container>
 

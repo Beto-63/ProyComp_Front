@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Table } from 'react-bootstrap';
 
 /**********************Importacion de Componentes**************************/
@@ -14,6 +14,7 @@ const ChckInventory = () => {
     let items = [];
     const [stockItems, setStockItems] = useState([{}]);
     const { channel } = useContext(CashContext)
+    let navigate = useNavigate();
 
     useEffect(() => {
         let data = { channel: channel }
@@ -52,6 +53,7 @@ const ChckInventory = () => {
 
         })
         console.log("termino", termino)
+        navigate('/cash')
     }
 
 
@@ -62,7 +64,7 @@ const ChckInventory = () => {
             <p className="titulo_oscuro">{`Ajuste general de Inventario en ${channel}`}</p>
             {/* Se insertan los links de navegacion general */}
             <Link to="/menu" className='inicio'>Inicio</Link>
-            <Link to="/stock" className='volver'>Volver</Link>
+            <Link to="/cash" className='volver'>Volver</Link>
             {createItemsCopy()}
             <Container >
                 <form onSubmit={handleSubmit}>

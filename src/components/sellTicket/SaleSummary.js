@@ -26,8 +26,6 @@ const SaleSummary = () => {
         keepSelecting, clientId,
         paymentMethods, origins,
         setClientId, setFinalSale, setIsCash,
-        objCombo
-
     } = useContext(SellTicketContext)
     const { channel, userEmail } = useContext(CashContext)
 
