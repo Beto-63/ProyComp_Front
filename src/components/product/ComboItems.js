@@ -22,7 +22,7 @@ const schema = yup.object({
 
 const ComboItems = () => {
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset } = useForm({
         resolver: yupResolver(schema)
     });
 

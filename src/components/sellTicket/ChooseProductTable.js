@@ -4,7 +4,6 @@ import React, { useEffect, useState, useContext } from 'react';
 /**********************Importacion de Componentes**************************/
 import SellTicketContext from '../../context/SellTicketContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { server } from '../../context/Api'
 
 
 /**********************Importacion de Estilos******************************/
@@ -16,7 +15,6 @@ const ChooseProductTable = () => {
     const { selectedProducts, objCombo, setObjCombo,
         saleSummary, setSaleSummary
     } = useContext(SellTicketContext)
-    let combos = [{}]
     const [saleProductTemp, setSaleProductTemp] = useState([])
     const [newCombo, setNewCombo] = useState({})
 

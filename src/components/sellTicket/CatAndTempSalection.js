@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Container, Form } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 /**********************Importacion de Componentes**************************/
@@ -27,7 +27,6 @@ const ProductSelectForm = () => {
 
         categories, saleSummary,
         setSelectedProducts,
-        objCombo, setObjCombo,
         summary, setSummary,
     } = useContext(SellTicketContext)
 

@@ -31,15 +31,6 @@ const AdjustQuantity = () => {
         cat_name: '',
 
     }
-    const objAdjust = {
-        name: '',
-        channel: '',
-        cat_name: '',
-        difference: '',
-        reason: '',
-        user_mail: '',
-
-    }
 
     const { userEmail } = useContext(CashContext)
 

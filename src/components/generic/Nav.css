@@ -1,6 +1,6 @@
 .canvas_oscuro{
     background-color:#8EA7A9 ;
-    height: 100vh;
+    height:100vmax
     
 }
 .footer {
@@ -13,13 +13,26 @@
 }
 .titulo_claro{
     
-    padding-top: 20px;
+    padding-top: 40px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 21px;
-    color:#F1F0E8
+    color:#F1F0E8;
+    
+}
+
+.titulo-claro-medio{
+    
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    color:#F1F0E8;
+    
 }
 
 .btn-dark-bkg {
