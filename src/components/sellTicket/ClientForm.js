@@ -11,7 +11,6 @@ import { server } from '../../context/Api'
 import '../generic/Nav.css'
 import '../generic/Light-bkg.css'
 
-
 const schema = yup.object({
     /*El primero debe ser el tipo de dato y el ultimo debe ser el required*/
     name: yup.string(),
@@ -19,7 +18,6 @@ const schema = yup.object({
     gender: yup.string().required().typeError('La información demográfica es importante'),
     age_group: yup.string().required().typeError('La información demográfica es importante')
 });
-
 
 const ClientForm = () => {
 
@@ -29,16 +27,6 @@ const ClientForm = () => {
 
     const { setClientId } = useContext(SellTicketContext)
     const navigate = useNavigate();
-
-
-
-    const onSubmit = (data) => {
-        handleClient(data)
-        reset()
-        console.log(data)
-        //TODO condicionar el navigate al response.status 201
-        navigate('/sell/catTempSelection')
-    }
 
     const handleClient = (objClient) => {
         fetch(`${server}/client`, {
@@ -51,11 +39,15 @@ const ClientForm = () => {
         })
             .then(response => response.json())
             .then(json => setClientId(json))
-
-
     }
 
-
+    const onSubmit = (data) => {
+        handleClient(data)
+        reset()
+        console.log(data)
+        //TODO condicionar el navigate al response.status 201
+        navigate('/sell/catTempSelection')
+    }
 
     return (
         <div className='canvas_oscuro'>
