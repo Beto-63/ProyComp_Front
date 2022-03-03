@@ -25,7 +25,7 @@ const SaleSummary = () => {
     const { saleSummary, setSaleSummary,
         keepSelecting, clientId,
         paymentMethods, origins,
-        setClientId, setFinalSale, setIsCash,
+        setFinalSale, setIsCash,
     } = useContext(SellTicketContext)
     const { channel, userEmail } = useContext(CashContext)
 
@@ -50,6 +50,7 @@ const SaleSummary = () => {
                 status: 1
             }
             if (document.getElementById('payment_method').value === 'Cash') { setIsCash(true) } else { setIsCash(false) }
+            //Se guarda la venta
             fetch(`${server}/sell_ticket`, {
                 method: 'POST',
                 headers: {
@@ -59,14 +60,29 @@ const SaleSummary = () => {
             })
                 .then(response => response.json())
                 .then(json => window.alert(JSON.stringify(json)))
-            setClientId({})
+            //Se descuenta del Inventario
+            let objDiscount = {
+                channel: channel,
+                products: saleSummary
+            }
+            fetch(`${server}/stock`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(objDiscount)
+            })
+                .then(response => response.json())
+                .then(json => window.alert(JSON.stringify(json)))
+
+
             navigate('/sell/deliver')
+
         } else {
             //do nothing
         }
-
-        //Armar el Objeto de venta hacer el fetch a la base de datos
-        //presentar el resumen de lo vendido para la entrega
+        //mandar a descontar del inventario con el salesummary,
+        // armar objeto con Channel: channel y products: salesummary
     }
 
     return (
