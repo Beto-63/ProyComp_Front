@@ -83,7 +83,7 @@ const CloseTransaction = () => {
                             <br />
                             <input className="campo_entrada" type='number' id="amountReceived" defaultValue={0} onChange={change} />
 
-                            <p className='vueltos'>{`Deber devolver ${changeAmount}`}</p>
+                            <p className='vueltos'>{`Debes devolver ${changeAmount}`}</p>
                         </div>
                         :
                         <div>
