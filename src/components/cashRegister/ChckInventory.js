@@ -21,7 +21,8 @@ const ChckInventory = () => {
         fetch(`${server}/stock/findByChannel`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(data)
         })
@@ -41,7 +42,8 @@ const ChckInventory = () => {
             fetch(`${server}/stock/adjust`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(data)
             })

@@ -51,7 +51,8 @@ const ComboItems = () => {
         fetch(`${server}/product/selectCat`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })
@@ -68,7 +69,8 @@ const ComboItems = () => {
         fetch(`${server}/product/selectPacketAndFill`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })
@@ -85,7 +87,8 @@ const ComboItems = () => {
         fetch(`${server}/product/selectPacketAndFill`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })
@@ -102,7 +105,8 @@ const ComboItems = () => {
         fetch(`${server}/product/selectPacketAndFill`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })
@@ -119,7 +123,8 @@ const ComboItems = () => {
         fetch(`${server}/product/selectPacketAndFill`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })

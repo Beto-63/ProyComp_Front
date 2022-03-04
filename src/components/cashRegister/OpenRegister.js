@@ -58,7 +58,8 @@ const OpenRegister = () => {
             fetch(`${server}/cash/last/transaction`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(obj)
             })
@@ -68,7 +69,8 @@ const OpenRegister = () => {
             fetch(`${server}/cash/lastClose/account`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify({ id: lastClose[0]._id })
             })

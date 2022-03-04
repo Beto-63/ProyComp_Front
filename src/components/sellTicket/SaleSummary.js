@@ -54,7 +54,8 @@ const SaleSummary = () => {
             fetch(`${server}/sell_ticket`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(obj)
             })
@@ -68,7 +69,8 @@ const SaleSummary = () => {
             fetch(`${server}/stock`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(objDiscount)
             })

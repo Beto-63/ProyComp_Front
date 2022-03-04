@@ -38,7 +38,8 @@ const BankDeposit = () => {
             fetch(`${server}/cash/deposit`, {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(objDeposit)
             })

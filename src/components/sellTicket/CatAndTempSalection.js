@@ -59,7 +59,8 @@ const ProductSelectForm = () => {
             fetch(`${server}/product/findByCatName`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(obj)
             })
@@ -74,7 +75,8 @@ const ProductSelectForm = () => {
             fetch(`${server}/product/selectCatTemp`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(obj2)
             })

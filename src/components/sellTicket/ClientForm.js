@@ -32,7 +32,8 @@ const ClientForm = () => {
         fetch(`${server}/client`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             //enviamos los datos por body y se debe convertir el objeto en JSON
             body: JSON.stringify(objClient)
