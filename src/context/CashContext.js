@@ -116,7 +116,14 @@ const CashProvider = ({ children }) => {
 
     useEffect(() => {
         //trae los metodos de pago para la clasificacion de las ventas por medio de pago
-        fetch(`${server}/paymentMethods`)
+        fetch(`${server}/paymentMethods`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setPaymentMethods(json));
     }, [])
