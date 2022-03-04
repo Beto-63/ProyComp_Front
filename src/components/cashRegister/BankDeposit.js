@@ -7,11 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
-import { server } from '../../context/Api'
+import { server } from '../../context/Api';
+import CashContext from "../../context/CashContext";
+import AuthContext from "../../context/AuthContext";
 
 /**********************Importacion de Estilos******************************/
 import '../generic/Light-bkg.css'
-import CashContext from "../../context/CashContext";
+
 
 const schema = yup.object({
 
@@ -21,6 +23,8 @@ const schema = yup.object({
 
 
 const BankDeposit = () => {
+
+    const { setAuth } = useContext(AuthContext);
 
     let navigate = useNavigate();
 
@@ -43,8 +47,104 @@ const BankDeposit = () => {
                 },
                 body: JSON.stringify(objDeposit)
             })
-                .then(response => response.json())
-                .then(json => window.alert(JSON.stringify(json)))
+            //.then(response => response.json()) (anterior primer .then)
+            //.then(json => window.alert(JSON.stringify(json))) (anterior segundo .then)
+            
+            .then(async (resp)=>{ // (primer .then)
+            
+                switch (resp.status) {
+
+                    // Middleware - Inicio
+                    
+                    case 401:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("Intente autenticarse nuevamente");
+                        navigate("/login");
+                        break;
+
+                    case 404:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("404");
+                        navigate("/login");
+                        break;
+
+                    case 403:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("403");
+                        navigate("/");
+                        break;
+                    
+                    // Middleware - Fin
+
+                    // Códigos del backend - Inicio
+
+                    case 201:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+
+                        // Se retorna el json con la información
+                        let json = await resp.json();
+
+                        //setEjemplo(json); // Recibo de información del backend en json (Segundo .then)
+                        window.alert(json);
+                        navigate("/");
+                        break;
+
+                    case 500:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("500");
+                        navigate("/");
+                        break;
+
+                    // Códigos del backend - Fin
+                
+                    default:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("default case");
+                        navigate("/");
+                        break;
+                }
+
+                /* if(resp.status === 400){
+                    //console.log('Status 400: Usuario y/o contraseña invalido');
+                    localStorage.removeItem("token");
+                    setAuth(false);
+    
+                    // Cuando halla terminado de guardar
+                    setLoading(false);
+    
+                    navigate("/login");
+                }
+    
+                if(resp.status === 201){
+                    // Se retorna el json con la información
+                    let json = await resp.json();
+    
+                    // Cuando halla terminado de guardar
+                    setLoading(false);
+    
+                    //console.log('Login correcto, se recibe el token');
+                    //console.log(json.token);
+                    // Guardar el token en el localStorage
+                    localStorage.setItem('token', json.token);
+                    setAuth(true);
+                    // Hacer la redirección, usando la función navigate
+                    navigate("/");
+                } */
+
+
+            }).catch(error=>{
+                console.error(error);
+            })
+            
+            
+            
+            
             reset();
             navigate('/cash')
         } else {

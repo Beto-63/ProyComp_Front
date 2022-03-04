@@ -33,50 +33,64 @@ import CreateCombo from '../components/product/CreateCombo';
 
 import Logout from '../components/auth/Logout';
 
+// Context Providers
+import { CashProvider } from '../context/CashContext';
+import { SellTicketProvider } from '../context/SellTicketContext';
+import { ProductProvider } from '../context/ProductContext';
+
 export const AppRouter = () => {
     return (
-        <Routes>
 
-            <Route path="/" element={<GeneralMenu />} />
+        <CashProvider>
+            <SellTicketProvider>
+                <ProductProvider>
 
-            <Route path="/cash" element={<CashRegister />} />
-            <Route path="/cash/open" element={<OpenRegister />} />
-            <Route path="/cash/checkinventory" element={<CheckInventory />} />
-            <Route path="/cash/deposit" element={<BankDeposit />} />
-            <Route path="/cash/expenses" element={<Expenses />} />
-            <Route path="/cash/close" element={<CloseRegister />} />
+                    <Routes>
 
-            <Route path="/product" element={<Product />} />
-            <Route path="/product/create" element={<CreateProduct />} />
-            <Route path="/product/adjust" element={<AdjustProduct />} />
-            <Route path="/product/combo" element={<CreateCombo />} />
+                        <Route path="/" element={<GeneralMenu />} />
 
-            <Route path="/sell" element={<Sell />} />
-            <Route path="/sell/prodSelectForm" element={<ProductSelectForm />} />
-            <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
-            <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
-            <Route path="/sell/packet" element={<Packet />} />
-            <Route path="/sell/deliver" element={<CloseTransaction />} />
+                        <Route path="/cash" element={<CashRegister />} />
+                        <Route path="/cash/open" element={<OpenRegister />} />
+                        <Route path="/cash/checkinventory" element={<CheckInventory />} />
+                        <Route path="/cash/deposit" element={<BankDeposit />} />
+                        <Route path="/cash/expenses" element={<Expenses />} />
+                        <Route path="/cash/close" element={<CloseRegister />} />
 
-            <Route path="/stock" element={<Stock />} />
-            <Route path="/stock/create" element={<CreateStockItem />} />
-            <Route path="/stock/getbyname" element={<ItemsByName />} />
-            <Route path="/stock/getbynameandchannel" element={<ItemByNameAndChannel />} />
-            <Route path="/stock/add" element={<AddQuantity />} />
-            <Route path="/stock/transfer" element={<InventoryTransfer />} />
-            <Route path="/stock/adjustquantity" element={<AdjustQuantity />} />
-            <Route path="/stock/adjustelement" element={<AdjustElement />} />
+                        <Route path="/product" element={<Product />} />
+                        <Route path="/product/create" element={<CreateProduct />} />
+                        <Route path="/product/adjust" element={<AdjustProduct />} />
+                        <Route path="/product/combo" element={<CreateCombo />} />
 
+                        <Route path="/sell" element={<Sell />} />
+                        <Route path="/sell/prodSelectForm" element={<ProductSelectForm />} />
+                        <Route path="/sell/catTempSelection" element={<CatAndTempSelction />} />
+                        <Route path="/sell/chooseProductTable" element={<ChooseProductTable />} />
+                        <Route path="/sell/packet" element={<Packet />} />
+                        <Route path="/sell/deliver" element={<CloseTransaction />} />
 
-            <Route path="/user" element={<User />} />
-            <Route path="/user/createUser" element={<CreateUser />} />
-            <Route path="/user/adjustUser" element={<AdjustUser />} />
-            
-            <Route path='/logout' element={<Logout />} />
-            
-            <Route path="*" element={<Navigate replace to="/" />} />
+                        <Route path="/stock" element={<Stock />} />
+                        <Route path="/stock/create" element={<CreateStockItem />} />
+                        <Route path="/stock/getbyname" element={<ItemsByName />} />
+                        <Route path="/stock/getbynameandchannel" element={<ItemByNameAndChannel />} />
+                        <Route path="/stock/add" element={<AddQuantity />} />
+                        <Route path="/stock/transfer" element={<InventoryTransfer />} />
+                        <Route path="/stock/adjustquantity" element={<AdjustQuantity />} />
+                        <Route path="/stock/adjustelement" element={<AdjustElement />} />
 
 
-        </Routes>
+                        <Route path="/user" element={<User />} />
+                        <Route path="/user/createUser" element={<CreateUser />} />
+                        <Route path="/user/adjustUser" element={<AdjustUser />} />
+                        
+                        <Route path='/logout' element={<Logout />} />
+                        
+                        <Route path="*" element={<Navigate replace to="/" />} />
+
+                    </Routes>
+
+                </ProductProvider>
+            </SellTicketProvider>
+        </CashProvider>
+
     )
 }
