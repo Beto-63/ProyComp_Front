@@ -179,7 +179,7 @@ const CreateProduct = () => {
               >
                 <option value=''>Selecciona la Temperatura</option>
                 <option value='Caliente'>Caliente</option>
-                <option value='Frio'>Frio</option>
+                <option value='Frío'>Frío</option>
               </select>
               <p className='error'>{errors.temperature?.message}</p>
             </Row>

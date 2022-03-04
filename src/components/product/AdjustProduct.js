@@ -322,7 +322,7 @@ const AdjustProduct = () => {
             >
               <option defaultValue={toEdit.temperature}>{toEdit.temperature}</option>
               <option value='caliente'>Caliente</option>
-              <option value='frio'>Frio</option>
+              <option value='frío'>Frío</option>
             </select>
             <p className='error'>{errors.temperature?.message}</p>
           </Row>
