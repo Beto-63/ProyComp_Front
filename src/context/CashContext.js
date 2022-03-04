@@ -50,7 +50,14 @@ const CashProvider = ({ children }) => {
     useEffect(() => {
         // TODO filtrar por los del channel que viene del contexto y del token
         //una vez se ajuste la estructura del sell ticket
-        fetch(`${server}/cash/sellTickets/unaccounted`)
+        fetch(`${server}/cash/sellTickets/unaccounted`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setSellTickets(json));
     }, [])
@@ -60,7 +67,8 @@ const CashProvider = ({ children }) => {
         fetch(`${server}/cash/expense/unaccounted`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify({ channel: channel })
         })
@@ -73,7 +81,8 @@ const CashProvider = ({ children }) => {
         fetch(`${server}/cash/deposit/unaccounted`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify({ channel: channel })
         })
