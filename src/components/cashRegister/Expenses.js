@@ -37,7 +37,8 @@ const Expenses = () => {
             fetch(`${server}/cash/expense`, {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(objExpense)
             })

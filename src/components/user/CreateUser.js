@@ -34,13 +34,27 @@ const CreateUser = () => {
     const [roles, setRoles] = useState([{}]);
 
     useEffect(() => {
-        fetch(`${server}/stock/channels`)
+        fetch(`${server}/stock/channels`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setUbicaciones(json));
     }, [])
 
     useEffect(() => {
-        fetch(`${server}/user/cats`)
+        fetch(`${server}/user/cats`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setRoles(json));
     }, [])
@@ -65,7 +79,8 @@ const CreateUser = () => {
         fetch(`${server}/users`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(objUser)
         })

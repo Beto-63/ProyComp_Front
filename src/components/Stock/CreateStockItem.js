@@ -30,14 +30,28 @@ const CreateStockItem = () => {
 
     // Se usa para obtener las ubicaciones validas y evitar entrada erronea de datos
     useEffect(() => {
-        fetch(`${server}/stock/channels`)
+        fetch(`${server}/stock/channels`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setUbicaciones(json));
     }, [])
 
     // Se usa para obtener las categorias validas y evitar entrada erronea de datos
     useEffect(() => {
-        fetch(`${server}/product/categories`)
+        fetch(`${server}/product/categories`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setCategories(json));
 
@@ -57,7 +71,8 @@ const CreateStockItem = () => {
         fetch(`${server}/stock`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             //enviamos los datos por body y se debe convertir el objeto en JSON
             body: JSON.stringify(data)

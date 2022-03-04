@@ -38,13 +38,27 @@ const CreateProduct = () => {
   const [combos, setCombos] = useState([{}]);
 
   useEffect(() => {
-    fetch(`${server}/product/categories`)
+    fetch(`${server}/product/categories`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify()
+    })
       .then(response => response.json())
       .then(json => setCategories(json));
   }, [])
 
   useEffect(() => {
-    fetch(`${server}/product/combo`)
+    fetch(`${server}/product/combo`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify()
+    })
       .then(response => response.json())
       .then(json => setCombos(json));
   }, [])
@@ -73,7 +87,8 @@ const CreateProduct = () => {
     fetch(`${server}/stock/findByCatName`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify(obj)
     })
@@ -85,7 +100,8 @@ const CreateProduct = () => {
     fetch(`${server}/product`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify(data)
     })

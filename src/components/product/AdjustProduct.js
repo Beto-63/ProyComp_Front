@@ -60,13 +60,27 @@ const AdjustProduct = () => {
   const [toEdit, setToEdit] = useState(objProduct);
 
   useEffect(() => {
-    fetch(`${server}/product/categories`)
+    fetch(`${server}/product/categories`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify()
+    })
       .then(response => response.json())
       .then(json => setCategories(json));
   }, [])
 
   useEffect(() => {
-    fetch(`${server}/product/combo`)
+    fetch(`${server}/product/combo`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify()
+    })
       .then(response => response.json())
       .then(json => setCombos(json));
   }, [])
@@ -81,7 +95,8 @@ const AdjustProduct = () => {
     fetch(`${server}/product/findByCatName`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify(obj)
     })
@@ -97,7 +112,8 @@ const AdjustProduct = () => {
     fetch(`${server}/product/findByCatName`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify(obj)
     })
@@ -113,7 +129,8 @@ const AdjustProduct = () => {
     fetch(`${server}/product/info`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify(obj)
     })
@@ -184,7 +201,8 @@ const AdjustProduct = () => {
     fetch(`${server}/product`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       //enviamos los datos por body y se debe convertir el objeto en JSON
       body: JSON.stringify(newObj)

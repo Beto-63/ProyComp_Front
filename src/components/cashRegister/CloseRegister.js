@@ -61,7 +61,8 @@ const CloseRegister = () => {
                 fetch(`${server}/cash/last/transaction`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     body: JSON.stringify(objClose)
                 })
@@ -78,7 +79,8 @@ const CloseRegister = () => {
                 fetch(`${server}/sales/byMethod`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     body: JSON.stringify(objSalesToday)
                 })
@@ -91,7 +93,8 @@ const CloseRegister = () => {
                     fetch(`${server}/cash/expense/account`, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
                         },
                         body: JSON.stringify({ id: element._id })
                     })
@@ -103,7 +106,8 @@ const CloseRegister = () => {
                     fetch(`${server}/cash/deposit/account`, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
                         },
                         body: JSON.stringify({ id: element._id })
                     })
@@ -115,7 +119,8 @@ const CloseRegister = () => {
                     fetch(`${server}/cash/sellTicket/account`, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
                         },
                         body: JSON.stringify({ id: element._id })
                     })
@@ -125,7 +130,8 @@ const CloseRegister = () => {
                 fetch(`${server}/cash/lastOpen/account`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     body: JSON.stringify({ id: lastOpen[0]._id })
                 })

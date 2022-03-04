@@ -18,10 +18,12 @@ function CashRegister() {
         fetch(`${server}/cash/lastOpen`,
             {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
                 body: JSON.stringify({ channel: channel })
-            }
-        )
+            })
             .then(response => response.json())
             .then(json => setLastOpen(json));
     }, [setLastOpen, channel])
@@ -30,10 +32,12 @@ function CashRegister() {
         fetch(`${server}/cash/lastClose`,
             {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
                 body: JSON.stringify({ channel: channel })
-            }
-        )
+            })
 
             .then(response => response.json())
             .then(json => setLastClose(json));

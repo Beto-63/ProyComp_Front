@@ -28,13 +28,27 @@ const InventoryTransfer = () => {
 
 
     useEffect(() => {
-        fetch(`${server}/stock/channels`)
+        fetch(`${server}/stock/channels`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setUbicaciones(json));
     }, [])
 
     useEffect(() => {
-        fetch(`${server}/product/categories`)
+        fetch(`${server}/product/categories`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify()
+        })
             .then(response => response.json())
             .then(json => setCategories(json));
     }, [])
@@ -49,7 +63,8 @@ const InventoryTransfer = () => {
         fetch(`${server}/stock/findByCatName`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })
@@ -68,7 +83,8 @@ const InventoryTransfer = () => {
         fetch(`${server}/stock/transfer`, {
             method: 'PUT',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(obj)
         })
