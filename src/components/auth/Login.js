@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button, Spinner } from 'react-bootstrap';
+import { Container, Form, Button, Spinner, Row } from 'react-bootstrap';
 
 /**********************Importacion de Componentes**************************/
 import { server } from '../../context/Api';
@@ -41,14 +41,14 @@ const Login = () => {
 
         await fetch(`${server}/login`, {
             method: 'POST',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json',
                 //'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(login)
-        }).then(async (resp)=>{ 
-            
-            if(resp.status === 400){
+        }).then(async (resp) => {
+
+            if (resp.status === 400) {
                 //console.log('Status 400: Usuario y/o contraseña invalido');
                 localStorage.removeItem("token");
                 setAuth(false);
@@ -59,7 +59,7 @@ const Login = () => {
                 navigate("/login");
             }
 
-            if(resp.status === 201){
+            if (resp.status === 201) {
                 // Se retorna el json con la información
                 let json = await resp.json();
 
@@ -74,7 +74,7 @@ const Login = () => {
                 // Hacer la redirección, usando la función navigate
                 navigate("/");
             }
-        }).catch(error=>{
+        }).catch(error => {
             console.error(error);
         })
 
@@ -90,58 +90,59 @@ const Login = () => {
 
     return (
 
-    <Container fluid="md">
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control 
-                    name="email"
-                    type="email" 
-                    placeholder="Enter email"
-                    onChange={handleChange}
-                />
-                <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
+        <div className='canvas_claro' >
+            <p className="titulo_oscuro">Bienvenido a El Doko</p>
+            <form className='container' onSubmit={handleSubmit}>
+                <Container>
+                    <form controlId="formBasicEmail">
+                        <label>Email</label><br />
+                        <Row>
+                            <input
+                                className="campo_entrada_cliente"
+                                name="email"
+                                type="email"
+                                placeholder="eMail"
+                                onChange={handleChange}
+                            />
+                        </Row>
+                    </form>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    name="password"
-                    type="password" 
-                    placeholder="Enter Password"
-                    onChange={handleChange}
-                />
-            </Form.Group>
+                    <form controlId="formBasicPassword">
+                        <label>Password</label><br />
+                        <Row>
+                            <input
+                                className="campo_entrada_cliente"
+                                name="password"
+                                type="password"
+                                placeholder="Enter Password"
+                                onChange={handleChange}
+                            />
+                        </Row>
+                    </form>
 
 
-            { loading ?
+                    {loading ?
+                        <button className='btn-light-bkg' type="submit" disabled>
+                            <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                            <span style={{ margin: '0', paddingLeft: '5px' }} >
+                                Loading...
+                            </span>
+                        </button>
+                        :
+                        <button className='btn-light-bkg' type="submit" disabled={!login.email || !login.password}>
+                            Iniciar sesión
+                        </button>
+                    }
+                </Container>
+            </form>
 
-                <Button variant="primary" type="submit" disabled>
-                    <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                    />
-                    
-                    <span style={{ margin: '0', paddingLeft: '5px' }} > 
-                        Loading...
-                    </span>
-                </Button>
-
-            : 
-
-                <Button variant="primary" type="submit" disabled={ !login.email || !login.password }>
-                    Iniciar sesión
-                </Button>
-
-            }
-
-        </Form>
-    </Container>
+        </div>
 
     );
 };

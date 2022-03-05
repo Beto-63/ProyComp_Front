@@ -87,11 +87,11 @@ const Packet = () => {
                                     })}
                                 </tbody>
                             </table>
+                            <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
                         </div>
                         :
                         ''
                     }
-                    <button className='btn-light-bkg' onClick={handleAddToSale}>Agregar</button>
                 </div>
                 <br />
             </div>
