@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CashContext from "../../context/CashContext";
 
 import logo from '../generic/LogoDOKO.svg';
-import '../generic/Nav.css'
+import '../generic/Light-bkg.css'
 
 const NavCashRegister = () => {
 

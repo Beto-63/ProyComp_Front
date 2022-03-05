@@ -3,7 +3,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 import logo from '../generic/LogoDOKO.svg';
-import '../generic/Nav.css'
+import '../generic/Light-bkg.css'
 
 const NavUsers = () => {
     let navigate = useNavigate();

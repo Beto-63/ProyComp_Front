@@ -8,7 +8,7 @@ import * as yup from "yup";
 import SellTicketContext from '../../context/SellTicketContext';
 import { server } from '../../context/Api'
 /**********************Importacion de Estilos******************************/
-import '../generic/Nav.css'
+import '../generic/Light-bkg.css'
 import '../generic/Light-bkg.css'
 
 const schema = yup.object({

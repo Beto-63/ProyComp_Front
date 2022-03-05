@@ -8,6 +8,11 @@
     border-bottom-right-radius: 10px;
 }
 
+.canvas_oscuro{
+    background-color:#8EA7A9 ;
+    height:100vmax
+}
+
 .container {
     padding-right: 50px;
     padding-left: 50px;
@@ -32,6 +37,44 @@
     margin-right: 0.4em;
 }
 
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0.5em;
+    width: 100%;
+    height: 10vh;
+}
+
+.titulo_oscuro{
+    color: #8EA7A9;
+    padding-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight:normal;
+    font-size: 20px;
+    line-height: 21px;
+}
+
+.titulo_claro{   
+    padding-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 21px;
+    color:#F1F0E8; 
+}
+
+.titulo-claro-medio{   
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    color:#F1F0E8;
+    
+}
+
 .error{
     color:red;
     font-style:italic;
@@ -53,16 +96,6 @@
     font-weight:bold;
     font-size:large;
     text-align:center;
-}
-
-.titulo_oscuro{
-    color: #8EA7A9;
-    padding-top: 40px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight:normal;
-    font-size: 20px;
-    line-height: 21px;
 }
 
 input, select {
@@ -125,11 +158,11 @@ color: #F58787;
     border: 1px solid;
     border-color:#F1F0E8 ;
     color: #F1F0E8;
-    width:100px;
-    height: 60px;
+    width:120px;
+    height: 80px;
     border-radius: 0.5em;
-    padding:1em;
-    margin:1em
+    padding:0.5em;
+    margin:0.5em
  }
 
  .btn-dark-bkg-small {
@@ -228,34 +261,32 @@ color: #F58787;
 }
 
 .radio input {
-	width: 6rem;
-	height: 100%;
+	width: 5rem;
+	height: 1.5rem;
 	appearance: none;
 	outline: none;
 	cursor: pointer;
 	border-radius: 2px;
-    margin: 2px 4px;
-	
+    margin: 2px 2px;
 	background: #f1f0e8;
 	color: #8EA7A9 ;
 	font-size: 14px;
-	margin: 1rem;
+	margin: 0.7rem;
 	transition: all 300ms linear;
     border-radius: 0.5em;
 }
 
 .radio-light input {
-	width: 6rem;
-	height: 100%;
+	width: 5rem;
+	height: 1.5rem;
 	appearance: none;
 	outline: none;
 	cursor: pointer;
 	border-radius: 2px;
-
-    margin: 8px 8px;
 	background: #8EA7A9 ;
 	color:  #f1f0e8;
 	font-size: 14px;
+    margin: 0.7rem;
 	transition: all 300ms linear;
     border-radius: 0.5em;
 }
@@ -277,3 +308,6 @@ color: #F58787;
 	width: 100%;
 }
 
+.openclose {
+    color: rgb(125, 26, 26);
+     }

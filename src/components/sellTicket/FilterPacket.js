@@ -59,12 +59,11 @@ const FilterPacket = () => {
     //TODO Hacer que se filtre la seleccion antes de poner la cantidad
     return (
         <>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <Form.Label >Describe contenido de la venta por gramos</Form.Label>
-                    <div className="mb-3" >
-
-                        <Form.Check  {...register("cat_name")}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label >Describe contenido de la venta por gramos</label>
+                <div className="radio-light">
+                    <div>
+                        <input  {...register("cat_name")}
                             onClick={handleCat}
                             inline
                             label='Té'
@@ -73,7 +72,7 @@ const FilterPacket = () => {
                             id={`inline-radio-1`}
                             value='Té'
                         />
-                        <Form.Check  {...register("cat_name")}
+                        <input  {...register("cat_name")}
                             onClick={handleCat}
                             inline
                             label='Infusión'
@@ -84,12 +83,8 @@ const FilterPacket = () => {
                         />
                         <p className='cat_name'>{errors.product_id?.message}</p>
                     </div>
-                </div>
-                <div>
-
-                    <div className="mb-3" >
-
-                        <Form.Check  {...register("weight")}
+                    <div>
+                        <input  {...register("weight")}
                             onClick={handleWeight}
                             inline
                             label='20 gr.'
@@ -98,7 +93,7 @@ const FilterPacket = () => {
                             id={`inline-radio-1`}
                             value={20}
                         />
-                        <Form.Check {...register("weight")}
+                        <input {...register("weight")}
                             onClick={handleWeight}
                             inline
                             label='50 gr.'
@@ -108,10 +103,11 @@ const FilterPacket = () => {
                             value={50}
                         />
                         <p className='weight'>{errors.product_id?.message}</p>
+
                     </div>
                 </div>
                 <button className='btn-light-bkg' type='submit'>Seleccionar</button>
-            </Form>
+            </form>
         </>
     )
 }
