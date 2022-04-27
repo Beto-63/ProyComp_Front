@@ -145,8 +145,8 @@ const BankDeposit = () => {
             
             
             
-            reset();
-            navigate('/cash')
+            //reset();
+            //navigate('/cash')
         } else {
             // Do nothing!
         }
