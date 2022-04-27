@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, Row } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom';
+import { Form, Row } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 /**********************Importacion de Componentes**************************/
+import { server } from '../../context/Api';
+import ProductContext from '../../context/ProductContext';
+import AuthContext from "../../context/AuthContext";
 
-import ProductContext from '../../context/ProductContext'
-import { server } from '../../context/Api'
 
 /**********************Importacion de Estilos******************************/
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import '../generic/Light-bkg.css'
+import '../generic/Light-bkg.css';
 
 const schema = yup.object({
     quantity: yup.number().typeError('Numero de unidades incluidas en el Combo').moreThan(0, 'El valor debe ser positivo').required(),
@@ -21,6 +23,10 @@ const schema = yup.object({
 
 
 const ComboItems = () => {
+
+    const { setAuth } = useContext(AuthContext);
+
+    let navigate = useNavigate();
 
     const { register, handleSubmit, reset } = useForm({
         resolver: yupResolver(schema)
@@ -56,8 +62,77 @@ const ComboItems = () => {
             },
             body: JSON.stringify(obj)
         })
-            .then(response => response.json())
-            .then(json => setAccesorios(json));
+            //.then(response => response.json())
+            //.then(json => setAccesorios(json));
+
+            .then(async (resp)=>{ // (primer .then)
+            
+                switch (resp.status) {
+        
+                    // Middleware - Inicio
+                    
+                    case 401:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("Intente autenticarse nuevamente");
+                        navigate("/login");
+                        break;
+        
+                    case 404:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("404");
+                        navigate("/login");
+                        break;
+        
+                    case 403:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("403");
+                        navigate("/");
+                        break;
+                    
+                    // Middleware - Fin
+        
+                    // Códigos del backend - Inicio
+        
+                    case 200:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+        
+                        // Se retorna el json con la información
+                        let json = await resp.json();
+        
+                        setAccesorios(json); // Recibo de información del backend en json (Segundo .then)
+                        //window.alert(json);
+                        //navigate("/");
+                        break;
+        
+                    case 400:
+                        window.alert("400: categoria invalida");
+                        //navigate("/");
+                        break;
+
+                    case 500:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("500");
+                        navigate("/");
+                        break;
+        
+                    // Códigos del backend - Fin
+                
+                    default:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("default case");
+                        navigate("/");
+                        break;
+                }
+        
+            }).catch(error=>{
+                console.error(error);
+            })
 
     }, [])
 
@@ -74,8 +149,72 @@ const ComboItems = () => {
             },
             body: JSON.stringify(obj)
         })
-            .then(response => response.json())
-            .then(json => setTePacketsSmall(json));
+            //.then(response => response.json())
+            //.then(json => setTePacketsSmall(json));
+
+            .then(async (resp)=>{ // (primer .then)
+            
+                switch (resp.status) {
+        
+                    // Middleware - Inicio
+                    
+                    case 401:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("Intente autenticarse nuevamente");
+                        navigate("/login");
+                        break;
+        
+                    case 404:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("404");
+                        navigate("/login");
+                        break;
+        
+                    case 403:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("403");
+                        navigate("/");
+                        break;
+                    
+                    // Middleware - Fin
+        
+                    // Códigos del backend - Inicio
+        
+                    case 200:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+        
+                        // Se retorna el json con la información
+                        let json = await resp.json();
+        
+                        setTePacketsSmall(json); // Recibo de información del backend en json (Segundo .then)
+                        //window.alert(json);
+                        //navigate("/");
+                        break;
+
+                    case 500:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("500");
+                        navigate("/");
+                        break;
+        
+                    // Códigos del backend - Fin
+                
+                    default:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("default case");
+                        navigate("/");
+                        break;
+                }
+        
+            }).catch(error=>{
+                console.error(error);
+            })
 
     }, [])
 
@@ -92,8 +231,72 @@ const ComboItems = () => {
             },
             body: JSON.stringify(obj)
         })
-            .then(response => response.json())
-            .then(json => setTePacketsLarge(json));
+            //.then(response => response.json())
+            //.then(json => setTePacketsLarge(json));
+
+            .then(async (resp)=>{ // (primer .then)
+            
+                switch (resp.status) {
+        
+                    // Middleware - Inicio
+                    
+                    case 401:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("Intente autenticarse nuevamente");
+                        navigate("/login");
+                        break;
+        
+                    case 404:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("404");
+                        navigate("/login");
+                        break;
+        
+                    case 403:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("403");
+                        navigate("/");
+                        break;
+                    
+                    // Middleware - Fin
+        
+                    // Códigos del backend - Inicio
+        
+                    case 200:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+        
+                        // Se retorna el json con la información
+                        let json = await resp.json();
+        
+                        setTePacketsLarge(json); // Recibo de información del backend en json (Segundo .then)
+                        //window.alert(json);
+                        //navigate("/");
+                        break;
+
+                    case 500:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("500");
+                        navigate("/");
+                        break;
+        
+                    // Códigos del backend - Fin
+                
+                    default:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("default case");
+                        navigate("/");
+                        break;
+                }
+        
+            }).catch(error=>{
+                console.error(error);
+            })
 
     }, [])
 
@@ -110,8 +313,72 @@ const ComboItems = () => {
             },
             body: JSON.stringify(obj)
         })
-            .then(response => response.json())
-            .then(json => setInfPacketsSmall(json));
+            //.then(response => response.json())
+            //.then(json => setInfPacketsSmall(json));
+
+            .then(async (resp)=>{ // (primer .then)
+            
+                switch (resp.status) {
+        
+                    // Middleware - Inicio
+                    
+                    case 401:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("Intente autenticarse nuevamente");
+                        navigate("/login");
+                        break;
+        
+                    case 404:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("404");
+                        navigate("/login");
+                        break;
+        
+                    case 403:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("403");
+                        navigate("/");
+                        break;
+                    
+                    // Middleware - Fin
+        
+                    // Códigos del backend - Inicio
+        
+                    case 200:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+        
+                        // Se retorna el json con la información
+                        let json = await resp.json();
+        
+                        setInfPacketsSmall(json); // Recibo de información del backend en json (Segundo .then)
+                        //window.alert(json);
+                        //navigate("/");
+                        break;
+
+                    case 500:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("500");
+                        navigate("/");
+                        break;
+        
+                    // Códigos del backend - Fin
+                
+                    default:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("default case");
+                        navigate("/");
+                        break;
+                }
+        
+            }).catch(error=>{
+                console.error(error);
+            })
 
     }, [])
 
@@ -128,8 +395,72 @@ const ComboItems = () => {
             },
             body: JSON.stringify(obj)
         })
-            .then(response => response.json())
-            .then(json => setInfPacketsLarge(json));
+            //.then(response => response.json())
+            //.then(json => setInfPacketsLarge(json));
+
+            .then(async (resp)=>{ // (primer .then)
+            
+                switch (resp.status) {
+        
+                    // Middleware - Inicio
+                    
+                    case 401:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("Intente autenticarse nuevamente");
+                        navigate("/login");
+                        break;
+        
+                    case 404:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("404");
+                        navigate("/login");
+                        break;
+        
+                    case 403:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("403");
+                        navigate("/");
+                        break;
+                    
+                    // Middleware - Fin
+        
+                    // Códigos del backend - Inicio
+        
+                    case 200:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+        
+                        // Se retorna el json con la información
+                        let json = await resp.json();
+        
+                        setInfPacketsLarge(json); // Recibo de información del backend en json (Segundo .then)
+                        //window.alert(json);
+                        //navigate("/");
+                        break;
+
+                    case 500:
+                        //localStorage.removeItem("token");
+                        //setAuth(false);
+                        window.alert("500");
+                        navigate("/");
+                        break;
+        
+                    // Códigos del backend - Fin
+                
+                    default:
+                        localStorage.removeItem("token");
+                        setAuth(false);
+                        window.alert("default case");
+                        navigate("/");
+                        break;
+                }
+        
+            }).catch(error=>{
+                console.error(error);
+            })
 
     }, [])
 
